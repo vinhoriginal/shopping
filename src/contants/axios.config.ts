@@ -1,12 +1,13 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
+import { TOKEN_KEY } from "../page/utils/contants";
 
 const instance = axios.create({
   baseURL: "http://127.0.0.1:8082",
 });
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem(TOKEN_KEY);
   const configAxios = config;
   if (configAxios && configAxios.headers && token) {
     configAxios.headers.Authorization = `Bearer ${token}`;

@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import path from "../../router/path";
 import { useAppDispatch } from "../../store/hooks";
-import { REGEX_PASSWORD } from "../utils/contants";
+import { REGEX_PASSWORD, TOKEN_KEY } from "../utils/contants";
 import { login } from "./login.reducer";
 import "./login.scss";
 
@@ -15,8 +15,7 @@ const Login = () => {
     dispatch(login(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         const newPayload: any = res.payload;
-        console.log("newPayload", newPayload.data.token);
-        localStorage.setItem("token", newPayload.data.token);
+        localStorage.setItem(TOKEN_KEY, newPayload.data.token);
         navigate(path.home);
       }
     });
