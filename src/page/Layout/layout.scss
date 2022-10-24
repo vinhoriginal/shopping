@@ -3,9 +3,43 @@
   flex-direction: column;
   .header-contact {
     width: 100%;
-    padding: 22px 0;
+    padding: 22px 40px;
     background: #7e33e0;
+    color: white;
+    .anticon-mail,
+    .anticon-phone {
+      font-size: 22px;
+      margin-right: 8px;
+    }
+  }
+  .cart {
+    width: 50%;
+    text-align: end;
+    height: 22px;
+    width: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    img {
+      width: 100%;
+    }
   }
   .header-menu {
   }
+}
+.shopping-cart {
+  width: 300px;
+  height: 300px;
+  background: white;
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.19);
+}
+.logout {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
 }

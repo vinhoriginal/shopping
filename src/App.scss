@@ -1,7 +1,10 @@
 @import "antd/dist/antd.css";
 @import "react-toastify/dist/ReactToastify.css";
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap");
 #root {
   height: 100%;
+  font-family: "Lato", sans-serif;
 }
 .App {
   height: 100%;
