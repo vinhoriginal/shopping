@@ -4,12 +4,16 @@
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  position: relative;
   .img-product {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 46px 52px 12px 40px;
     background: #f6f7fb;
+    img {
+      cursor: pointer;
+    }
   }
   .title {
     margin-top: 15px;
@@ -51,4 +55,38 @@
     line-height: 42px;
     color: #1a0b5b;
   }
+}
+.product-menu {
+  position: absolute;
+  display: flex;
+  top: 10px;
+  left: 10px;
+  & > div:first-child {
+    margin-right: 16px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    cursor: pointer;
+  }
+  & > div:last-child {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    cursor: pointer;
+  }
+}
+.cart:hover {
+  background: #eeeffb;
+  transition: all 0.8s;
+}
+
+.heart:hover {
+  background: #eeeffb;
+  transition: all 0.8s;
 }

@@ -11,7 +11,7 @@ const Router = () => {
   const auth = useAuth();
   return useRoutes([
     {
-      path: path.home,
+      path: "/",
       element: auth ? (
         <Layout />
       ) : (
@@ -20,6 +20,7 @@ const Router = () => {
       children: [
         {
           index: true,
+          path: path.home,
           element: <Home />,
         },
       ],
