@@ -1,14 +1,25 @@
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Col, Dropdown, Row } from "antd";
-import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cart from "../../assets/Group.png";
+import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
+import { USER_INFO } from "../utils/contants";
 import "./layout.scss";
 import ShoppingCart from "./ShoppingCart";
 
 const Layout = () => {
   const navigate = useNavigate();
+  const [userInfo] = useState<IFormUserInfo>(
+    () => JSON.parse(localStorage.getItem(USER_INFO) as string) || []
+  );
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate(path.home);
+    }
+  }, [location, navigate]);
   const handleLogout = () => {
     localStorage.clear();
     navigate(path.login);
@@ -27,7 +38,7 @@ const Layout = () => {
               }}
             >
               <MailOutlined />
-              <span>Mail</span>
+              <span>{userInfo.email}</span>
             </Col>
             <Col
               span={6}
@@ -38,7 +49,7 @@ const Layout = () => {
               }}
             >
               <PhoneOutlined />
-              <span>Phone</span>
+              <span>{userInfo.phone}</span>
             </Col>
             <Col
               span={12}
