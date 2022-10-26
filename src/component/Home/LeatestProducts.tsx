@@ -1,11 +1,12 @@
 import { Col, Row } from "antd";
+import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
-import image1 from "../../assets/image1.png";
+import heart from "../../assets/heart.png";
 import { useAppSelector } from "../../store/hooks";
 
 const LeatestProducts = () => {
-  const dataTopProduct = useAppSelector(
-    (state) => state.homeReducer.dataTopProduct
+  const {dataFeatureProduct, dataTopProduct} = useAppSelector(
+    (state) => state.homeReducer
   );
   return (
     <div style={{ marginTop: "50px" }}>
@@ -17,7 +18,7 @@ const LeatestProducts = () => {
           gutter={20}
           style={{ justifyContent: "center", alignItems: "center" }}
         >
-          {dataTopProduct.map((item) => (
+          {dataFeatureProduct.map((item) => (
             <Col
               span={6}
               style={{
@@ -28,8 +29,21 @@ const LeatestProducts = () => {
               key={item.id}
             >
               <div className="product-detail">
+              <div className="product-menu">
+                  <div className="cart">
+                    <img src={cart} alt="cart" />
+                  </div>
+                  <div className="heart">
+                    <img src={heart} alt="heart" />
+                  </div>
+                </div>
                 <div className="img-product">
-                  <img src={image1} alt="image1" />
+                  <div>
+                    <img
+                      src={`data:image/jpeg;base64,${item.image}`}
+                      alt="image1"
+                    />
+                  </div>
                 </div>
                 <div className="title">
                   <span>{item.name}</span>

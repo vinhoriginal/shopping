@@ -1,10 +1,22 @@
+.products-title {
+  text-align: center;
+  margin-bottom: 30px;
+  span {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 100;
+    font-size: 42px;
+    line-height: 42px;
+    color: #1a0b5b;
+  }
+}
 .container-products {
   display: flex;
   & > div:first-child {
-    width: 30%;
+    width: 25%;
   }
   & > div:last-child {
-    width: 70%;
+    width: 75%;
   }
 }
 .item-filter {
@@ -14,24 +26,24 @@
     margin-left: 0 !important;
   }
 }
-.title{
+.title {
   & > span:first-child {
     font-family: "Josefin Sans";
     font-size: 20px;
     line-height: 30px;
     text-align: center;
     color: #151875;
-    border-bottom: 1px solid #000000;;
+    border-bottom: 1px solid #000000;
   }
 }
 .ant-checkbox-group {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   label {
     margin-left: 0 !important;
     margin: 8px 0;
     & + span:last-child {
-        margin-left: 8px;
+      margin-left: 8px;
       font-family: "Lato";
       font-style: normal;
       font-weight: 400;
@@ -40,5 +52,76 @@
       text-align: center;
       color: #7e81a2;
     }
+  }
+}
+.rating-item.title {
+  img {
+    margin: 0 4px;
+  }
+}
+
+.item-info {
+  & > div {
+    background: #ffffff;
+    box-shadow: 0px 0px 20px 5px rgba(248, 246, 253, 1);
+    padding: 16px;
+    display: flex;
+    & > div:first-child {
+      margin-right: 30px;
+    }
+  }
+  .info {
+    & > span:first-child {
+      font-family: "Josefin Sans";
+      font-style: normal;
+      font-weight: 100;
+      font-size: 18px;
+      line-height: 18px;
+      color: #111c85;
+    }
+    & > span:nth-child(3) {
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 28px;
+      color: #9295aa;
+      display: block;
+      width: 536px;
+      margin-bottom: 30px;
+    }
+  }
+  .price {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 100;
+    font-size: 14px;
+    line-height: 14px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    & > span:first-child {
+      color: #111c85;
+    }
+    & > span:last-child {
+      color: #ff2aaa;
+      text-decoration-line: line-through;
+      margin-left: 12px;
+    }
+  }
+}
+
+.image-products {
+  display: flex;
+  div {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    cursor: pointer;
+    background: #ffffff;
+    box-shadow: 0px 0px 25px rgb(0 0 0 / 10%);
+    margin-right: 8px;
   }
 }
