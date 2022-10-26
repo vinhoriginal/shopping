@@ -1,4 +1,3 @@
-import { Card } from "antd";
 import { useEffect } from "react";
 import FeatureProduct from "../../component/Home/FeatureProduct";
 import LeatestProducts from "../../component/Home/LeatestProducts";
@@ -15,10 +14,10 @@ const Home = () => {
     ]);
   }, [dispatch]);
   return (
-    <Card size="default" style={{ padding: "80px" }}>
+    <>
       <FeatureProduct />
       <LeatestProducts />
-    </Card>
+    </>
   );
 };
 

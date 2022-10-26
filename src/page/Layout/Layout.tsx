@@ -1,15 +1,16 @@
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Col, Dropdown, Row } from "antd";
-import React, { useState, useEffect } from "react";
+import { Card, Col, Dropdown, Row } from "antd";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cart from "../../assets/Group.png";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
-import { USER_INFO } from "../utils/contants";
+import { TAB_MENU, USER_INFO } from "../utils/contants";
 import "./layout.scss";
 import ShoppingCart from "./ShoppingCart";
 
 const Layout = () => {
+  const [keyActive, setKeyActive] = useState("/home");
   const navigate = useNavigate();
   const [userInfo] = useState<IFormUserInfo>(
     () => JSON.parse(localStorage.getItem(USER_INFO) as string) || []
@@ -19,10 +20,19 @@ const Layout = () => {
     if (location.pathname === "/") {
       navigate(path.home);
     }
+    setKeyActive(location.pathname)
   }, [location, navigate]);
   const handleLogout = () => {
     localStorage.clear();
     navigate(path.login);
+  };
+  const handleChangeTab = (item: {
+    name: string;
+    key: string;
+    path: string;
+  }) => {
+    setKeyActive(item.path);
+    navigate(item.path)
   };
   return (
     <div>
@@ -33,7 +43,7 @@ const Layout = () => {
               span={6}
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "flex-start",
                 alignItems: "center",
               }}
             >
@@ -71,11 +81,23 @@ const Layout = () => {
               </div>
             </Col>
           </Row>
-          <div className="header-menu"></div>
+          <div className="header-menu">
+            <div>
+              {TAB_MENU.map((item) => (
+                <span
+                  onClick={() => handleChangeTab(item)}
+                  key={item.key}
+                  style={{ color: keyActive === item.path ? "#FB2E86" : "" }}
+                >
+                  {item.name}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
-        <div>
+        <Card size="default" style={{ padding: "80px 300px" }} bordered={false}>
           <Outlet />
-        </div>
+        </Card>
       </div>
     </div>
   );

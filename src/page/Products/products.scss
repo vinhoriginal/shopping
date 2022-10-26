@@ -1,0 +1,44 @@
+.container-products {
+  display: flex;
+  & > div:first-child {
+    width: 30%;
+  }
+  & > div:last-child {
+    width: 70%;
+  }
+}
+.item-filter {
+  display: flex;
+  flex-direction: column;
+  label {
+    margin-left: 0 !important;
+  }
+}
+.title{
+  & > span:first-child {
+    font-family: "Josefin Sans";
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    color: #151875;
+    border-bottom: 1px solid #000000;;
+  }
+}
+.ant-checkbox-group {
+    display: flex;
+    flex-direction: column;
+  label {
+    margin-left: 0 !important;
+    margin: 8px 0;
+    & + span:last-child {
+        margin-left: 8px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 30px;
+      text-align: center;
+      color: #7e81a2;
+    }
+  }
+}
