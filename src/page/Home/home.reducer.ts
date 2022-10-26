@@ -10,13 +10,16 @@ export const getDataFeatureProduct = createAsyncThunk(
   "home/getDataFeatureProduct",
   async (data: { enums: string }) => {
     const result = await instance.post("/api/v1/customer/product", data);
-    const newArr = result.data.data.map((item: any) => {
-      return {
-        name: item.name,
-        price: item.price,
-        path: item.path[0],
-        id: Date.now(),
-      };
+    const newArr: any[] = [];
+    result.data.data.forEach((item: any, index: number) => {
+      if (item.images && item?.images.length > 0) {
+        newArr.push({
+          name: item?.name,
+          price: item?.price,
+          image: item.images[0],
+          id: index,
+        });
+      }
     });
     return newArr;
   }
@@ -25,13 +28,16 @@ export const getDataTop = createAsyncThunk(
   "home/getDataTop",
   async (data: { enums: string }) => {
     const result = await instance.post("/api/v1/customer/product", data);
-    const newArr = result.data.data.map((item: any) => {
-      return {
-        name: item.name,
-        price: item.price,
-        path: item.path[0],
-        id: Date.now(),
-      };
+    const newArr: any[] = [];
+    result.data.data.forEach((item: any, index: number) => {
+      if (item.images && item?.images.length > 0) {
+        newArr.push({
+          name: item?.name,
+          price: item?.price,
+          image: item.images[0],
+          id: index,
+        });
+      }
     });
     return newArr;
   }

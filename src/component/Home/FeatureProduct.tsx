@@ -1,10 +1,8 @@
-import React from "react";
-import image1 from "../../assets/image1.png";
-import group2 from "../../assets/Group2.png";
-import { Col, Row } from "antd";
-import { useAppSelector } from "../../store/hooks";
+import { Button, Col, Row } from "antd";
 import cart from "../../assets/cart.png";
+import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
+import { useAppSelector } from "../../store/hooks";
 
 const FeatureProduct = () => {
   const dataFeatureProduct = useAppSelector(
@@ -40,7 +38,13 @@ const FeatureProduct = () => {
                   </div>
                 </div>
                 <div className="img-product">
-                  <img src={image1} alt="image1" />
+                  <div>
+                    <img
+                      src={`data:image/jpeg;base64,${item.image}`}
+                      alt="image1"
+                    />
+                    {/* <Button>View Detail</Button> */}
+                  </div>
                 </div>
                 <div className="title">
                   <span>{item.name}</span>
