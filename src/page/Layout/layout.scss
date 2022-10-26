@@ -3,7 +3,7 @@
   flex-direction: column;
   .header-contact {
     width: 100%;
-    padding: 22px 40px;
+    padding: 22px 300px;
     background: #7e33e0;
     color: white;
     .anticon-mail,
@@ -26,6 +26,20 @@
     }
   }
   .header-menu {
+    padding: 20px 300px;
+    & > div:first-child {
+      display: flex;
+      justify-content: space-between;
+      span {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: #0d0e43;
+        cursor: pointer;
+      }
+    }
   }
 }
 .shopping-cart {
@@ -42,4 +56,7 @@
   font-size: 20px;
   font-weight: 600;
   cursor: pointer;
+}
+.ant-card-body {
+  padding: 0;
 }
