@@ -1,13 +1,22 @@
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
-import { useAppSelector } from "../../store/hooks";
+import { setItemProducts } from "../../page/Layout/layout.reducer";
+import { PRODUCTS_ITEM } from "../../page/utils/contants";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const FeatureProduct = () => {
+  const dispatch = useAppDispatch();
   const dataFeatureProduct = useAppSelector(
     (state) => state.homeReducer.dataFeatureProduct
   );
+  const handleAddToCart = (item: any) => {
+    const productItem =
+      JSON.parse(localStorage.getItem(PRODUCTS_ITEM) as string) || [];
+    localStorage.setItem(PRODUCTS_ITEM, JSON.stringify([...productItem, item]));
+    dispatch(setItemProducts(item));
+  };
   return (
     <div>
       <div className="featured-title">
@@ -31,7 +40,11 @@ const FeatureProduct = () => {
               <div className="product-detail">
                 <div className="product-menu">
                   <div className="cart">
-                    <img src={cart} alt="cart" />
+                    <img
+                      src={cart}
+                      alt="cart"
+                      onClick={() => handleAddToCart(item)}
+                    />
                   </div>
                   <div className="heart">
                     <img src={heart} alt="heart" />

@@ -1,16 +1,19 @@
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Card, Col, Dropdown, Row } from "antd";
+import { Card, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cart from "../../assets/Group.png";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
-import { TAB_MENU, USER_INFO } from "../utils/contants";
+import { useAppSelector } from "../../store/hooks";
+import { TAB_MENU, TOKEN_KEY, USER_INFO } from "../utils/contants";
 import "./layout.scss";
-import ShoppingCart from "./ShoppingCart";
 
 const Layout = () => {
   const [keyActive, setKeyActive] = useState("/home");
+  const itemProducts = useAppSelector(
+    (state) => state.layoutReducer.itemProducts
+  );
   const navigate = useNavigate();
   const [userInfo] = useState<IFormUserInfo>(
     () => JSON.parse(localStorage.getItem(USER_INFO) as string) || []
@@ -20,7 +23,7 @@ const Layout = () => {
     if (location.pathname === "/") {
       navigate(path.home);
     }
-    setKeyActive(location.pathname)
+    setKeyActive(location.pathname);
   }, [location, navigate]);
   const handleLogout = () => {
     localStorage.clear();
@@ -32,7 +35,7 @@ const Layout = () => {
     path: string;
   }) => {
     setKeyActive(item.path);
-    navigate(item.path)
+    navigate(item.path);
   };
   return (
     <div>
@@ -69,15 +72,21 @@ const Layout = () => {
                 alignItems: "center",
               }}
             >
-              <Dropdown className="cart" overlay={<ShoppingCart />}>
+              <div className="header-cart">
                 <img src={Cart} alt="cart" />
-              </Dropdown>
+                <div>
+                  <span>{itemProducts.length}</span>
+                </div>
+              </div>
               <div
                 style={{ width: "50%", textAlign: "end" }}
                 className="logout"
-                onClick={handleLogout}
               >
-                <span>Logout</span>
+                {localStorage.getItem(TOKEN_KEY) ? (
+                  <span onClick={handleLogout}>Logout</span>
+                ) : (
+                  <span onClick={() => navigate(path.login)}>Login</span>
+                )}
               </div>
             </Col>
           </Row>

@@ -1,21 +1,48 @@
 import { Checkbox } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
-import React from "react";
-import image1 from "../../assets/item.png";
+import { useEffect, useState } from "react";
 import cart from "../../assets/cart.png";
 import heart from "../../assets/heart.png";
+import { useAppDispatch } from "../../store/hooks";
+import { searchDataProducts } from "../Home/home.reducer";
+import { setItemProducts } from "../Layout/layout.reducer";
 import {
   CATAGORIES,
   DISCOUNT_OFFER,
+  FAKE_PRODUCTS_ITEM,
   PRICE_FILTER,
+  PRODUCTS_ITEM,
   PRODUCT_BRAND,
   RATING_ITEM,
 } from "../utils/contants";
 import "./products.scss";
 const Products = () => {
+  const [dataSearchProducts, setDataSearchProducts] = useState({
+    brandId: [],
+    categoryId: [],
+    star: [],
+    fromPrice: "",
+    toPrice: "",
+  });
+  const dispatch = useAppDispatch();
   const handleChangeProductBrand = (checkedValues: CheckboxValueType[]) => {
     console.log("checkedValues", checkedValues);
   };
+  const handleAddToCart = (item: any) => {
+    const productItem =
+      JSON.parse(localStorage.getItem(PRODUCTS_ITEM) as string) || [];
+    localStorage.setItem(PRODUCTS_ITEM, JSON.stringify([...productItem, item]));
+    dispatch(setItemProducts(item));
+  };
+  useEffect(() => {
+    dispatch(
+      searchDataProducts({
+        ...dataSearchProducts,
+        enums: "PRODUCT_MULTI_SEARCH",
+        name: "",
+      })
+    );
+  });
   return (
     <div>
       <div className="products-title">
@@ -53,7 +80,7 @@ const Products = () => {
               {RATING_ITEM.map((item) => (
                 <div key={item.total}>
                   <Checkbox value={item.total} />
-                  {item.image.map((img,index) => (
+                  {item.image.map((img, index) => (
                     <img src={img} alt="star" key={index} />
                   ))}
                   <span>{`(${item.total})`}</span>
@@ -85,30 +112,33 @@ const Products = () => {
           </div>
         </div>
         <div className="item-info">
-          <div>
-            <div>
-              <img src={image1} alt="item" />
-            </div>
-            <div className="info">
-              <span>Dictum morbi</span>
-              <div className="price">
-                <span>$26.00</span>
-                <span>$26.00</span>
+          {FAKE_PRODUCTS_ITEM.map((item) => (
+            <div key={item.id}>
+              <div>
+                <img src={item?.image} alt="item" />
               </div>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna
-                in est adipiscing in phasellus non in justo.
-              </span>
-              <div className="image-products">
-                <div>
-                  <img src={cart} alt="cart" />
+              <div className="info">
+                <span>{item?.name}</span>
+                <div className="price">
+                  <span>${item.price}</span>
+                  {item?.oldPrice ? <span>${item?.oldPrice}</span> : null}
                 </div>
-                <div>
-                  <img src={heart} alt="heart" />
+                <span>{item?.description}</span>
+                <div className="image-products">
+                  <div>
+                    <img
+                      src={cart}
+                      alt="cart"
+                      onClick={() => handleAddToCart(item)}
+                    />
+                  </div>
+                  <div>
+                    <img src={heart} alt="heart" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

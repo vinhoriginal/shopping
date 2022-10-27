@@ -199,3 +199,16 @@ export const PRICE_FILTER = [
     value: "$450.00",
   },
 ];
+
+export const PRODUCTS_ITEM = "products_item";
+export const FAKE_PRODUCTS_ITEM = [
+  {
+    id: 1,
+    image: require("../../assets/item.png"),
+    name: "Dictum morbi",
+    price: "26.00",
+    oldPrice: "30.00",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magnain est adipiscing in phasellus non in justo",
+  },
+];

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../contants/axios.config";
 import { IFormDataFeatureProduct } from "../../model/feature-product.model";
+import { IFormBodyProducts } from "../../model/products.model";
 
 const initState = {
   dataFeatureProduct: [] as IFormDataFeatureProduct[],
@@ -40,6 +41,13 @@ export const getDataTop = createAsyncThunk(
       }
     });
     return newArr;
+  }
+);
+export const searchDataProducts = createAsyncThunk(
+  "home/searchDataProducts",
+  async (data: IFormBodyProducts) => {
+    const result = await instance.post("/api/v1/customer/product", data);
+    console.log("result", result);
   }
 );
 const homeSlice = createSlice({
