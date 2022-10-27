@@ -1,6 +1,6 @@
-import { Navigate, useLocation, useRoutes } from "react-router-dom";
-import useAuth from "../hook/useAuth";
+import { useRoutes } from "react-router-dom";
 import Blog from "../page/Blog/Blog";
+import CheckOut from "../page/CheckOut/CheckOut";
 import Contact from "../page/Contact/Contact";
 import Home from "../page/Home/Home";
 import Layout from "../page/Layout/Layout";
@@ -12,16 +12,10 @@ import Shop from "../page/Shop/Shop";
 import path from "./path";
 
 const Router = () => {
-  const location = useLocation();
-  const auth = useAuth();
   return useRoutes([
     {
       path: "/",
-      element: auth ? (
-        <Layout />
-      ) : (
-        <Navigate to={path.login} state={{ from: location }} />
-      ),
+      element: <Layout />,
       children: [
         {
           index: true,
@@ -48,23 +42,19 @@ const Router = () => {
           path: path.shop,
           element: <Shop />,
         },
+        {
+          path: path.checkout,
+          element: <CheckOut />,
+        },
       ],
     },
     {
       path: path.login,
-      element: auth ? (
-        <Navigate to={path.home} state={{ from: location }} />
-      ) : (
-        <Login />
-      ),
+      element: <Login />,
     },
     {
       path: path.register,
-      element: auth ? (
-        <Navigate to={path.home} state={{ from: location }} />
-      ) : (
-        <Register />
-      ),
+      element: <Register />,
     },
   ]);
 };

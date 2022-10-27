@@ -7,5 +7,6 @@ const path = {
   blog: "/blog",
   shop: "/shop",
   contact: "/contact",
+  checkout: "/checkout",
 };
 export default path;
