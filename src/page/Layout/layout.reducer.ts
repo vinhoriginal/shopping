@@ -13,7 +13,6 @@ export const addToCard = createAsyncThunk(
       "/api/v2/customer/cart/add-to-cart",
       data
     );
-    console.log("result", result);
     return result;
   }
 );
