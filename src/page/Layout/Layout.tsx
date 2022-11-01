@@ -5,8 +5,9 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cart from "../../assets/Group.png";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { TAB_MENU, TOKEN_KEY, USER_INFO } from "../utils/contants";
+import { viewCart } from "./layout.reducer";
 import "./layout.scss";
 
 const Layout = () => {
@@ -14,6 +15,7 @@ const Layout = () => {
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
   );
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [userInfo] = useState<IFormUserInfo>(
     () => JSON.parse(localStorage.getItem(USER_INFO) as string) || []
@@ -36,6 +38,14 @@ const Layout = () => {
   }) => {
     setKeyActive(item.path);
     navigate(item.path);
+  };
+  useEffect(() => {
+    dispatch(viewCart());
+  }, [dispatch]);
+  const handleToCart = () => {
+    if (location.pathname !== "/checkout") {
+      navigate(path.checkout);
+    }
   };
   return (
     <div>
@@ -72,10 +82,10 @@ const Layout = () => {
                 alignItems: "center",
               }}
             >
-              <div className="header-cart">
+              <div className="header-cart" onClick={handleToCart}>
                 <img src={Cart} alt="cart" />
                 <div>
-                  <span>{itemProducts.length}</span>
+                  <span>{itemProducts?.cartItemList?.length}</span>
                 </div>
               </div>
               <div

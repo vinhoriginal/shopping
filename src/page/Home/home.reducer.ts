@@ -12,13 +12,14 @@ export const getDataFeatureProduct = createAsyncThunk(
   async (data: { enums: string }) => {
     const result = await instance.post("/api/v1/customer/product", data);
     const newArr: any[] = [];
-    result.data.data.forEach((item: any, index: number) => {
+    result.data.data.content.forEach((item: any, index: number) => {
       if (item.images && item?.images.length > 0) {
         newArr.push({
           name: item?.name,
           price: item?.price,
-          image: item.images[0],
+          image: item?.images[0],
           id: index,
+          make: item?.make
         });
       }
     });
@@ -30,13 +31,14 @@ export const getDataTop = createAsyncThunk(
   async (data: { enums: string }) => {
     const result = await instance.post("/api/v1/customer/product", data);
     const newArr: any[] = [];
-    result.data.data.forEach((item: any, index: number) => {
+    result.data.data.content.forEach((item: any, index: number) => {
       if (item.images && item?.images.length > 0) {
         newArr.push({
           name: item?.name,
           price: item?.price,
-          image: item.images[0],
+          image: item?.images[0],
           id: index,
+          make: item?.make
         });
       }
     });
@@ -47,7 +49,7 @@ export const searchDataProducts = createAsyncThunk(
   "home/searchDataProducts",
   async (data: IFormBodyProducts) => {
     const result = await instance.post("/api/v1/customer/product", data);
-    console.log("result", result);
+    return result
   }
 );
 const homeSlice = createSlice({

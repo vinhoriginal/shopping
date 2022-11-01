@@ -5,19 +5,16 @@ import cart from "../../assets/cart.png";
 import heart from "../../assets/heart.png";
 import { useAppDispatch } from "../../store/hooks";
 import { searchDataProducts } from "../Home/home.reducer";
-import { setItemProducts } from "../Layout/layout.reducer";
 import {
   CATAGORIES,
   DISCOUNT_OFFER,
   FAKE_PRODUCTS_ITEM,
-  PRICE_FILTER,
-  PRODUCTS_ITEM,
-  PRODUCT_BRAND,
-  RATING_ITEM,
+  PRICE_FILTER, PRODUCT_BRAND,
+  RATING_ITEM
 } from "../utils/contants";
 import "./products.scss";
 const Products = () => {
-  const [dataSearchProducts, setDataSearchProducts] = useState({
+  const [dataSearchProducts] = useState({
     brandId: [],
     categoryId: [],
     star: [],
@@ -28,12 +25,7 @@ const Products = () => {
   const handleChangeProductBrand = (checkedValues: CheckboxValueType[]) => {
     console.log("checkedValues", checkedValues);
   };
-  const handleAddToCart = (item: any) => {
-    const productItem =
-      JSON.parse(localStorage.getItem(PRODUCTS_ITEM) as string) || [];
-    localStorage.setItem(PRODUCTS_ITEM, JSON.stringify([...productItem, item]));
-    dispatch(setItemProducts(item));
-  };
+  const handleAddToCart = (item: any) => {};
   useEffect(() => {
     dispatch(
       searchDataProducts({
