@@ -22,7 +22,7 @@ const CheckOut = () => {
   useEffect(() => {
     if (itemProducts?.cartItemList?.length) {
       itemProducts?.cartItemList.forEach((item: any, index: number) => {
-        setCountItem((oldState: any) => ({ ...oldState, [index]: 0 }));
+        setCountItem((oldState: any) => ({ ...oldState, [index]: item.quantity}));
       });
     }
   }, [itemProducts]);
@@ -36,7 +36,7 @@ const CheckOut = () => {
             <div>
               <Avatar
                 shape="square"
-                src={`data:image/jpeg;base64,${record.image}`}
+                src={`data:image/jpeg;base64,${record.product.images[0]}`}
                 size={70}
               />
             </div>
@@ -107,7 +107,11 @@ const CheckOut = () => {
   };
   const handleDeleteAll = () => {
     if (itemProducts?.cartItemList?.length) {
-      dispatch(emptyCart({ customerId: userInfo.id }));
+      dispatch(emptyCart({ customerId: userInfo.id })).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          dispatch(viewCart());
+        }
+      });
     }
   };
   const handleDecreaseCount = (index: number) => {

@@ -25,9 +25,9 @@ const FeatureProduct = () => {
     } else {
       const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
       const indexOf = itemProducts?.cartItemList?.findIndex(
-        (cart: any) => cart.id === item.id
+        (cart: any) => cart?.id === item?.id
       );
-      if (indexOf === -1) {
+      if (indexOf !== -1) {
         toast.error("Sản phẩm đã được thêm, vui lòng chọn sản phẩm khác");
         return;
       }

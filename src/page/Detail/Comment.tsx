@@ -1,8 +1,13 @@
-import { Avatar, Input } from "antd";
-import React from "react";
+import { Avatar, Input, InputRef } from "antd";
+import React, { Ref, useRef, useState } from "react";
 import imageTest from "../../assets/image-test.png";
 
 const Comment = () => {
+  const [valueInput, setValueInput] = useState("");
+  const refInp = useRef<InputRef>(null);
+  const handleReply = () => {
+    refInp?.current?.focus();
+  };
   return (
     <div className="comment">
       <div>
@@ -18,7 +23,7 @@ const Comment = () => {
           <span>very good product</span>
           <div className="edit-reply">
             <span>Edit</span>
-            <span>Reply</span>
+            <span onClick={handleReply}>Reply</span>
           </div>
         </div>
       </div>
@@ -32,12 +37,17 @@ const Comment = () => {
           <span>very good product</span>
           <div className="edit-reply">
             <span>Edit</span>
-            <span>Reply</span>
+            <span onClick={handleReply}>Reply</span>
           </div>
         </div>
       </div>
       <div className="inp-comment">
-        <Input placeholder="Write comment ..." />
+        <Input
+          placeholder="Write comment ..."
+          ref={refInp}
+          value={valueInput}
+          onChange={(e) => setValueInput(e.target.value)}
+        />
       </div>
     </div>
   );
