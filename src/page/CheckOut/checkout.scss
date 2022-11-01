@@ -1,0 +1,27 @@
+.count-item {
+  display: flex;
+  align-items: center;
+  & > div:nth-child(2) {
+    margin: 0 20px;
+  }
+}
+.empty-cart {
+  text-align: end;
+  margin-bottom: 12px;
+}
+.products-item {
+  display: flex;
+  & > div:last-child {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+    & > span:first-child {
+      font-family: "Josefin Sans";
+      font-style: normal;
+      font-weight: 100;
+      font-size: 14px;
+      line-height: 14px;
+      color: #000000;
+    }
+  }
+}

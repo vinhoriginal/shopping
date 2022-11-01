@@ -1,13 +1,47 @@
 import { Col, Row } from "antd";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
-import { useAppSelector } from "../../store/hooks";
+import { addToCard, viewCart } from "../../page/Layout/layout.reducer";
+import { TOKEN_KEY, USER_INFO } from "../../page/utils/contants";
+import path from "../../router/path";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const LeatestProducts = () => {
-  const {dataFeatureProduct, dataTopProduct} = useAppSelector(
-    (state) => state.homeReducer
+  const { dataTopProduct } = useAppSelector((state) => state.homeReducer);
+  const itemProducts = useAppSelector(
+    (state) => state.layoutReducer.itemProducts
   );
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const handleAddToCart = (item: any) => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      navigate(path.login);
+    } else {
+      const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
+      const indexOf = itemProducts?.cartItemList?.findIndex(
+        (cart: any) => cart.id === item.id
+      );
+      if (indexOf === -1) {
+        toast.error("Sản phẩm đã được thêm, vui lòng chọn sản phẩm khác");
+        return;
+      }
+      dispatch(
+        addToCard({
+          productId: item.id,
+          customerId: userInfo.id,
+          quantity: item.make.id,
+        })
+      ).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          dispatch(viewCart());
+        }
+      });
+    }
+  };
   return (
     <div style={{ marginTop: "50px" }}>
       <div className="featured-title">
@@ -18,7 +52,7 @@ const LeatestProducts = () => {
           gutter={20}
           style={{ justifyContent: "center", alignItems: "center" }}
         >
-          {dataFeatureProduct.map((item) => (
+          {dataTopProduct.map((item) => (
             <Col
               span={6}
               style={{
@@ -29,9 +63,13 @@ const LeatestProducts = () => {
               key={item.id}
             >
               <div className="product-detail">
-              <div className="product-menu">
+                <div className="product-menu">
                   <div className="cart">
-                    <img src={cart} alt="cart" />
+                    <img
+                      src={cart}
+                      alt="cart"
+                      onClick={() => handleAddToCart(item)}
+                    />
                   </div>
                   <div className="heart">
                     <img src={heart} alt="heart" />
