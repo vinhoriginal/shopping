@@ -80,6 +80,7 @@ const FeatureProduct = () => {
                 <div className="img-product">
                   <div>
                     <img
+                      onClick={() => navigate(`/detail/${item.id}`)}
                       src={`data:image/jpeg;base64,${item.image}`}
                       alt="image1"
                     />

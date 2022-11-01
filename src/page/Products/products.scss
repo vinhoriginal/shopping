@@ -91,22 +91,22 @@
       margin-bottom: 30px;
     }
   }
-  .price {
-    font-family: "Josefin Sans";
-    font-style: normal;
-    font-weight: 100;
-    font-size: 14px;
-    line-height: 14px;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    & > span:first-child {
-      color: #111c85;
-    }
-    & > span:last-child {
-      color: #ff2aaa;
-      text-decoration-line: line-through;
-      margin-left: 12px;
-    }
+}
+.price {
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 100;
+  font-size: 14px;
+  line-height: 14px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  & > span:first-child {
+    color: #111c85;
+  }
+  & > span:last-child {
+    color: #ff2aaa;
+    text-decoration-line: line-through;
+    margin-left: 12px;
   }
 }
 

@@ -8,5 +8,6 @@ const path = {
   shop: "/shop",
   contact: "/contact",
   checkout: "/checkout",
+  detail: "/detail/:id",
 };
 export default path;

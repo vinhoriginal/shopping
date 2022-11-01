@@ -1,6 +1,7 @@
 import { Checkbox } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import cart from "../../assets/cart.png";
 import heart from "../../assets/heart.png";
 import { useAppDispatch } from "../../store/hooks";
@@ -9,8 +10,9 @@ import {
   CATAGORIES,
   DISCOUNT_OFFER,
   FAKE_PRODUCTS_ITEM,
-  PRICE_FILTER, PRODUCT_BRAND,
-  RATING_ITEM
+  PRICE_FILTER,
+  PRODUCT_BRAND,
+  RATING_ITEM,
 } from "../utils/contants";
 import "./products.scss";
 const Products = () => {
@@ -21,6 +23,7 @@ const Products = () => {
     fromPrice: "",
     toPrice: "",
   });
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handleChangeProductBrand = (checkedValues: CheckboxValueType[]) => {
     console.log("checkedValues", checkedValues);
@@ -107,7 +110,12 @@ const Products = () => {
           {FAKE_PRODUCTS_ITEM.map((item) => (
             <div key={item.id}>
               <div>
-                <img src={item?.image} alt="item" />
+                <img
+                  src={item?.image}
+                  alt="item"
+                  onClick={() => navigate(`/detail/3`)}
+                  style={{ cursor: "pointer" }}
+                />
               </div>
               <div className="info">
                 <span>{item?.name}</span>

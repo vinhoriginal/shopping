@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom";
 import Blog from "../page/Blog/Blog";
 import CheckOut from "../page/CheckOut/CheckOut";
 import Contact from "../page/Contact/Contact";
+import Detail from "../page/Detail/Detail";
 import Home from "../page/Home/Home";
 import Layout from "../page/Layout/Layout";
 import Login from "../page/Login/Login";
@@ -45,6 +46,10 @@ const Router = () => {
         {
           path: path.checkout,
           element: <CheckOut />,
+        },
+        {
+          path: path.detail,
+          element: <Detail />,
         },
       ],
     },
