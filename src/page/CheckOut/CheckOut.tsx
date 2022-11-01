@@ -3,7 +3,7 @@ import {
   MinusCircleOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Checkbox } from "antd";
 import Table, { ColumnsType } from "antd/lib/table";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -28,7 +28,7 @@ const CheckOut = () => {
   }, [itemProducts]);
   const columns: ColumnsType<any> = [
     {
-      title: "Products",
+      title: <span className="cart-title">Products</span>,
       dataIndex: "products",
       render(_, record) {
         return (
@@ -50,14 +50,14 @@ const CheckOut = () => {
       },
     },
     {
-      title: "Price",
+      title: <span className="cart-title">Price</span>,
       dataIndex: "price",
       render(_, record) {
         return <span>{record.product.price}</span>;
       },
     },
     {
-      title: "Quantity",
+      title: <span className="cart-title">Quantity</span>,
       dataIndex: "quantity",
       render: (value, record, index) => {
         return (
@@ -74,12 +74,12 @@ const CheckOut = () => {
       },
     },
     {
-      title: "Total",
+      title: <span className="cart-title">Total</span>,
       dataIndex: "total",
       render: (_, record, index) => record.product.price * countItem[index],
     },
     {
-      title: "Hành động",
+      title: <span className="cart-title">Hành động</span>,
       dataIndex: "action",
       render: (_, record) => (
         <div>
@@ -123,16 +123,58 @@ const CheckOut = () => {
   };
   return (
     <div className="checkout">
+      <div className="empty-cart">
+        <Button danger onClick={handleDeleteAll}>
+          Empty Cart
+        </Button>
+      </div>
       <div>
-        <div className="empty-cart">
-          <Button danger onClick={handleDeleteAll}>
-            Empty Cart
-          </Button>
-        </div>
         <div className="item-checkout">
           <Table columns={columns} dataSource={itemProducts?.cartItemList} />
         </div>
-        <div className="checkout-price"></div>
+        <div className="checkout-price">
+          <div className="cart-total">
+            <span className="title">Cart Totals</span>
+            <div>
+              <div className="sub-totals">
+                <span>Subtotals:</span>
+                <span>$200.00</span>
+              </div>
+              <div className="tax-rate">
+                <span>Tax Rate (%):</span>
+                <span>5%</span>
+              </div>
+              <div className="total">
+                <span>Total:</span>
+                <span>$200.00</span>
+              </div>
+              <Checkbox className="shipping-checkbox">
+                <span className="shipping">
+                  Shipping & taxes calculated at checkout
+                </span>
+              </Checkbox>
+              <div className="custom-btn-checkout">
+                <Button>
+                  <span>Proceed To Checkout</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="calculate-shipping">
+            <span className="title">Calculate Shopping</span>
+            <div>
+              <div className="tinh">
+                <span>Tỉnh</span>
+              </div>
+              <div className="quan">
+                <span>Quận huyện</span>
+              </div>
+              <div className="phuong">
+                <span>Xã phường</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

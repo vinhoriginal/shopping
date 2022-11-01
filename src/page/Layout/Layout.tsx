@@ -85,7 +85,7 @@ const Layout = () => {
               <div className="header-cart" onClick={handleToCart}>
                 <img src={Cart} alt="cart" />
                 <div>
-                  <span>{itemProducts?.cartItemList?.length}</span>
+                  <span>{itemProducts?.cartItemList?.length || 0}</span>
                 </div>
               </div>
               <div
