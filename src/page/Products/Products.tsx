@@ -37,7 +37,7 @@ const Products = () => {
         name: "",
       })
     );
-  });
+  }, []);
   return (
     <div>
       <div className="products-title">

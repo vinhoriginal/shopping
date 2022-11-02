@@ -12,6 +12,9 @@ import "./layout.scss";
 
 const Layout = () => {
   const [keyActive, setKeyActive] = useState("/home");
+  const [token, setToken] = useState(
+    () => localStorage.getItem(TOKEN_KEY) || ""
+  );
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
   );
@@ -26,6 +29,7 @@ const Layout = () => {
       navigate(path.home);
     }
     setKeyActive(location.pathname);
+    setToken(localStorage.getItem(TOKEN_KEY) as string);
   }, [location, navigate]);
   const handleLogout = () => {
     localStorage.clear();
@@ -40,7 +44,10 @@ const Layout = () => {
     navigate(item.path);
   };
   useEffect(() => {
-    dispatch(viewCart());
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (token) {
+      dispatch(viewCart());
+    }
   }, [dispatch]);
   const handleToCart = () => {
     if (location.pathname !== "/checkout") {
@@ -92,7 +99,7 @@ const Layout = () => {
                 style={{ width: "50%", textAlign: "end" }}
                 className="logout"
               >
-                {localStorage.getItem(TOKEN_KEY) ? (
+                {token ? (
                   <span onClick={handleLogout}>Logout</span>
                 ) : (
                   <span onClick={() => navigate(path.login)}>Login</span>
