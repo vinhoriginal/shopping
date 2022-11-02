@@ -21,6 +21,7 @@ instance.interceptors.response.use(
     const status = error.status || (error.response ? error.response.status : 0);
     if (status === 401) {
       toast.error("Hết phiên đăng nhập", { toastId: 401 });
+      localStorage.clear();
       redirect("/login");
     }
     if (status === 400) {

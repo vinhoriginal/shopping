@@ -1,5 +1,5 @@
 import { Avatar, Input, InputRef } from "antd";
-import React, { Ref, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import imageTest from "../../assets/image-test.png";
 
 const Comment = () => {
