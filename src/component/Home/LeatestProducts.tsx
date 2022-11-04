@@ -1,6 +1,5 @@
 import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
@@ -11,9 +10,6 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const LeatestProducts = () => {
   const { dataTopProduct } = useAppSelector((state) => state.homeReducer);
-  const itemProducts = useAppSelector(
-    (state) => state.layoutReducer.itemProducts
-  );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handleAddToCart = (item: any) => {
@@ -22,13 +18,6 @@ const LeatestProducts = () => {
       navigate(path.login);
     } else {
       const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
-      const indexOf = itemProducts?.cartItemList?.findIndex(
-        (cart: any) => cart.id === item.id
-      );
-      if (indexOf === -1) {
-        toast.error("Sản phẩm đã được thêm, vui lòng chọn sản phẩm khác");
-        return;
-      }
       dispatch(
         addToCard({
           productId: item.id,
@@ -80,6 +69,7 @@ const LeatestProducts = () => {
                     <img
                       src={`data:image/jpeg;base64,${item.image}`}
                       alt="image1"
+                      onClick={() => navigate(`/detail/${item.id}`)}
                     />
                   </div>
                 </div>
