@@ -1,6 +1,5 @@
 import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
@@ -15,22 +14,12 @@ const FeatureProduct = () => {
   const dataFeatureProduct = useAppSelector(
     (state) => state.homeReducer.dataFeatureProduct
   );
-  const itemProducts = useAppSelector(
-    (state) => state.layoutReducer.itemProducts
-  );
   const handleAddToCart = (item: any) => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) {
       navigate(path.login);
     } else {
       const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
-      const indexOf = itemProducts?.cartItemList?.findIndex(
-        (cart: any) => cart?.id === item?.id
-      );
-      if (indexOf !== -1) {
-        toast.error("Sản phẩm đã được thêm, vui lòng chọn sản phẩm khác");
-        return;
-      }
       dispatch(
         addToCard({
           productId: item.id,

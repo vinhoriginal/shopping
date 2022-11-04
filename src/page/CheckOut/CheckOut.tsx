@@ -36,13 +36,13 @@ const CheckOut = () => {
             <div>
               <Avatar
                 shape="square"
-                src={`data:image/jpeg;base64,${record.product.images[0]}`}
+                src={`data:image/jpeg;base64,${record?.product?.images[0]}`}
                 size={70}
               />
             </div>
             <div>
-              <span>{record.product.name}</span>
-              <span>Type: {record.product?.productType.name}</span>
+              <span>{record?.product?.name}</span>
+              <span>Type: {record.product?.productType?.name}</span>
               <span>Stock: {record.product?.stockQty}</span>
             </div>
           </div>
@@ -53,7 +53,7 @@ const CheckOut = () => {
       title: <span className="cart-title">Price</span>,
       dataIndex: "price",
       render(_, record) {
-        return <span>{record.product.price}</span>;
+        return <span>{record?.product?.price}</span>;
       },
     },
     {
@@ -76,7 +76,7 @@ const CheckOut = () => {
     {
       title: <span className="cart-title">Total</span>,
       dataIndex: "total",
-      render: (_, record, index) => record.product.price * countItem[index],
+      render: (_, record, index) => record?.product?.price * countItem[index] || 0,
     },
     {
       title: <span className="cart-title">Hành động</span>,
