@@ -212,3 +212,6 @@ export const FAKE_PRODUCTS_ITEM = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magnain est adipiscing in phasellus non in justo",
   },
 ];
+
+export const VALUE_MEMO = 'asdasfsdg'
+export const VALUE_INP_COMMENT = 'sdgvbcnvbcn'

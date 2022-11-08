@@ -4,19 +4,26 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cart from "../../assets/cart.png";
 import heart from "../../assets/heart.png";
-import { useAppDispatch } from "../../store/hooks";
-import { searchDataProducts } from "../Home/home.reducer";
+import path from "../../router/path";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  getBrand,
+  getCategory,
+  searchDataProducts,
+} from "../Home/home.reducer";
+import { addToCard, viewCart } from "../Layout/layout.reducer";
 import {
   CATAGORIES,
   DISCOUNT_OFFER,
-  FAKE_PRODUCTS_ITEM,
   PRICE_FILTER,
   PRODUCT_BRAND,
   RATING_ITEM,
+  TOKEN_KEY,
+  USER_INFO,
 } from "../utils/contants";
 import "./products.scss";
 const Products = () => {
-  const [dataSearchProducts] = useState({
+  const [dataSearchProducts, setDataSearchProducts] = useState({
     brandId: [],
     categoryId: [],
     star: [],
@@ -25,19 +32,48 @@ const Products = () => {
   });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const searchProducts = useAppSelector(
+    (state) => state.homeReducer.dataSearchProducts
+  );
   const handleChangeProductBrand = (checkedValues: CheckboxValueType[]) => {
     console.log("checkedValues", checkedValues);
   };
-  const handleAddToCart = (item: any) => {};
+  const handleAddToCart = (item: any) => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      navigate(path.login);
+    } else {
+      const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
+      dispatch(
+        addToCard({
+          productId: item?.id,
+          customerId: userInfo.customerId,
+          quantity: item?.make?.id,
+        })
+      ).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          dispatch(viewCart());
+        }
+      });
+    }
+  };
   useEffect(() => {
-    dispatch(
-      searchDataProducts({
-        ...dataSearchProducts,
-        enums: "PRODUCT_MULTI_SEARCH",
-        name: "",
-      })
-    );
-  }, []);
+    Promise.all([
+      dispatch(
+        searchDataProducts({
+          enums: "PRODUCT_MULTI_SEARCH",
+          name: "",
+          brandId: [],
+          categoryId: [],
+          star: [],
+          fromPrice: "",
+          toPrice: "",
+        })
+      ),
+      dispatch(getBrand()),
+      dispatch(getCategory()),
+    ]);
+  }, [dispatch]);
   return (
     <div>
       <div className="products-title">
@@ -107,13 +143,13 @@ const Products = () => {
           </div>
         </div>
         <div className="item-info">
-          {FAKE_PRODUCTS_ITEM.map((item) => (
+          {searchProducts.map((item) => (
             <div key={item.id}>
               <div>
                 <img
-                  src={item?.image}
+                  src={`data:image/jpeg;base64,${item?.images[0]}`}
                   alt="item"
-                  onClick={() => navigate(`/detail/3`)}
+                  onClick={() => navigate(`/detail/${item.id}`)}
                   style={{ cursor: "pointer" }}
                 />
               </div>

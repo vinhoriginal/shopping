@@ -1,8 +1,18 @@
 import { Avatar, Input, InputRef } from "antd";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import ReactTimeAgo from "react-time-ago";
+import { toast } from "react-toastify";
 import imageTest from "../../assets/image-test.png";
+import { IFormValueMemo } from "../../model/login.model";
+import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { USER_INFO } from "../utils/contants";
+import {
+  TOKEN_KEY,
+  USER_INFO,
+  VALUE_INP_COMMENT,
+  VALUE_MEMO,
+} from "../utils/contants";
 import {
   addComment,
   getAllChildComment,
@@ -21,6 +31,16 @@ const Comment = ({
   >;
 }) => {
   const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
+  const valueMemo: IFormValueMemo = JSON.parse(
+    localStorage.getItem(VALUE_MEMO) as string
+  );
+  const [starArr, setStarArr] = useState(() =>
+    Array.from({ length: 5 }, (_, index) => ({
+      value: index + 1,
+      star: require("../../assets/rate-none.png"),
+    }))
+  );
+  const [valueStar, setValueStar] = useState<number | null>(null);
   const [valueInput, setValueInput] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [replyCommentIdChild, setReplyCommentIdChild] = useState<number | null>(
@@ -28,11 +48,26 @@ const Comment = ({
   );
   const [commentId, setCommentId] = useState<number | null>(null);
   const [commentParentId, setCommentParentId] = useState<number | null>(null);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { dataComment, dataChildComment, isShowChild } = useAppSelector(
     (state) => state.detailReducer
   );
+  const location = useLocation();
   const refInp = useRef<InputRef>(null);
+  useEffect(() => {
+    if (localStorage.getItem(VALUE_INP_COMMENT)) {
+      setValueInput(localStorage.getItem(VALUE_INP_COMMENT) as string);
+      refInp?.current?.focus();
+    }
+    if (valueMemo && Object.keys(valueMemo).length) {
+      setReplyCommentIdChild(valueMemo.replyCommentIdChild);
+      setCommentId(valueMemo.commentId);
+      setCommentParentId(valueMemo.commentParentId);
+    }
+    localStorage.removeItem(VALUE_INP_COMMENT);
+    localStorage.removeItem(VALUE_MEMO);
+  }, [refInp, valueMemo]);
   const handleReplyParent = (name: string, id: number) => {
     refInp?.current?.focus();
     setValueInput(`@${name} `);
@@ -45,7 +80,23 @@ const Comment = ({
     setReplyCommentIdChild(id);
   };
   const handleComment = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const token = localStorage.getItem(TOKEN_KEY);
     if (e.key === "Enter") {
+      if (!token) {
+        localStorage.setItem(
+          VALUE_MEMO,
+          JSON.stringify({
+            path: location.pathname,
+            replyCommentIdChild,
+            commentId,
+            commentParentId,
+          })
+        );
+        localStorage.setItem(VALUE_INP_COMMENT, valueInput);
+        toast.error("Vui lòng đăng nhập");
+        navigate(path.login);
+        return;
+      }
       if (isUpdate) {
         dispatch(
           updateComment({
@@ -77,7 +128,7 @@ const Comment = ({
             content: valueInput,
             customerId: userInfo.customerId,
             productId: params.id,
-            star: 4,
+            star: valueStar,
             replyCommentId: replyCommentIdChild,
           })
         ).then((res) => {
@@ -126,25 +177,56 @@ const Comment = ({
     setValueInput(`${content} `);
     setIsUpdate(true);
   };
+  const handleChangeStar = (value: number) => {
+    setValueStar(value)
+    const newArrStar: {
+      value: number;
+      star: any;
+    }[] = Array.from({ length: value }, (_, index) => ({
+      value: index + 1,
+      star: require("../../assets/rate.png"),
+    }));
+    const newArrNonstar: {
+      value: number;
+      star: any;
+    }[] = Array.from({ length: 5 - value }, (_, index) => ({
+      value: value + index + 1,
+      star: require("../../assets/rate-none.png"),
+    }));
+    setStarArr(newArrStar.concat(newArrNonstar));
+  };
 
   return (
     <div className="comment">
-      <div>
+      <div className="title-comment">
         <span>Comment</span>
+        <div>
+          {starArr.map((item) => (
+            <img
+              src={item.star}
+              key={item.value}
+              alt="star"
+              style={{ cursor: "pointer", width: "24px", marginRight: "12px" }}
+              onClick={() => handleChangeStar(item.value)}
+            />
+          ))}
+        </div>
       </div>
       <div>
         {dataComment?.map((item) => (
-          <>
+          <div key={item.commentId}>
             <div className="comment-info">
               <div>
                 <Avatar src={imageTest} size={50} />
               </div>
               <div>
                 <span>{item?.customerDTO?.fullName}</span>
-                <span>3h ago</span>
+                <span>
+                  <ReactTimeAgo date={item.lastModifiedDate} />
+                </span>
                 <span>{item?.content}</span>
                 <div className="edit-reply">
-                  {userInfo.customerId === item.customerDTO.customerId ? (
+                  {userInfo?.customerId === item?.customerDTO?.customerId ? (
                     <span
                       onClick={() =>
                         handleEditComment(item.commentId, item.content)
@@ -188,7 +270,9 @@ const Comment = ({
                     </div>
                     <div>
                       <span>{item?.customerDTO?.fullName}</span>
-                      <span>3h ago</span>
+                      <span>
+                        <ReactTimeAgo date={item.lastModifiedDate} />
+                      </span>
                       <span>{item?.content}</span>
                       <div className="edit-reply">
                         {userInfo.customerId === item.customerDTO.customerId ? (
@@ -220,7 +304,7 @@ const Comment = ({
             ) : (
               ""
             )}
-          </>
+          </div>
         ))}
       </div>
       <div className="inp-comment">

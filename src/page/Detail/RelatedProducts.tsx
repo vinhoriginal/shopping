@@ -29,31 +29,33 @@ const RelatedProducts = () => {
       </div>
       <div>
         <Row
-          gutter={40}
+        gutter={20}
           style={{ justifyContent: "flex-start", alignItems: "center" }}
         >
           {relateData?.map((item) => (
-            <Col span={6} style={{ marginBottom: "24px" }}>
-              <div
-                className="image-related"
-                style={{ cursor: "pointer" }}
-                onClick={() => navigate(`/detail/${item.id}`)}
-              >
-                <img
-                  src={`data:image/jpeg;base64,${item?.images[0]}`}
-                  alt="related"
-                />
-              </div>
-              <div className="title">
-                <div>
-                  <span>{item?.name}</span>
-                  <div>
-                    {item?.arrStar?.map((item) => (
-                      <img src={item} alt="star" />
-                    ))}
-                  </div>
+            <Col span={6} key={item.id}>
+              <div  className="item-related">
+                <div
+                  className="image-related"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(`/detail/${item.id}`)}
+                >
+                  <img
+                    src={`data:image/jpeg;base64,${item?.images[0]}`}
+                    alt="related"
+                  />
                 </div>
-                <span>${item?.price}</span>
+                <div className="title">
+                  <div>
+                    <span>{item?.name}</span>
+                    <div>
+                      {item?.arrStar?.map((item, index) => (
+                        <img src={item} alt="star" key={index} />
+                      ))}
+                    </div>
+                  </div>
+                  <span>${item?.price}</span>
+                </div>
               </div>
             </Col>
           ))}

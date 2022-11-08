@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Button, Checkbox } from "antd";
 import Table, { ColumnsType } from "antd/lib/table";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { emptyCart, removeCart, viewCart } from "../Layout/layout.reducer";
@@ -15,6 +15,7 @@ import "./checkout.scss";
 const CheckOut = () => {
   const [countItem, setCountItem] = useState<any>({});
   const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
+  const [totalPrice, setTotalPrice] = useState<any>({});
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
   );
@@ -22,7 +23,14 @@ const CheckOut = () => {
   useEffect(() => {
     if (itemProducts?.cartItemList?.length) {
       itemProducts?.cartItemList.forEach((item: any, index: number) => {
-        setCountItem((oldState: any) => ({ ...oldState, [index]: item.quantity}));
+        setTotalPrice((totalPrice: any) => ({
+          ...totalPrice,
+          [index]: item?.product?.price * item?.quantity,
+        }));
+        setCountItem((oldState: any) => ({
+          ...oldState,
+          [index]: item?.quantity,
+        }));
       });
     }
   }, [itemProducts]);
@@ -63,11 +71,15 @@ const CheckOut = () => {
         return (
           <div className="count-item">
             <div>
-              <MinusCircleOutlined onClick={() => handleDecreaseCount(index)} />
+              <MinusCircleOutlined
+                onClick={() => handleDecreaseCount(index, record)}
+              />
             </div>
             <div>{countItem[index]}</div>
             <div>
-              <PlusCircleOutlined onClick={() => handleIncreaseCount(index)} />
+              <PlusCircleOutlined
+                onClick={() => handleIncreaseCount(index, record)}
+              />
             </div>
           </div>
         );
@@ -76,7 +88,9 @@ const CheckOut = () => {
     {
       title: <span className="cart-title">Total</span>,
       dataIndex: "total",
-      render: (_, record, index) => record?.product?.price * countItem[index] || 0,
+      render: (_, record, index) => {
+        return record?.product?.price * countItem[index] || 0;
+      },
     },
     {
       title: <span className="cart-title">Hành động</span>,
@@ -114,17 +128,36 @@ const CheckOut = () => {
       });
     }
   };
-  const handleDecreaseCount = (index: number) => {
+  const handleDecreaseCount = (index: number, record: any) => {
     if (countItem[index] === 0) {
       return;
     }
     countItem[index]--;
     setCountItem({ ...countItem, [index]: countItem[index] });
+    setTotalPrice({
+      ...totalPrice,
+      [index]: record?.product?.price * countItem[index],
+    });
   };
-  const handleIncreaseCount = (index: number) => {
+  const handleIncreaseCount = (index: number, record: any) => {
     countItem[index]++;
     setCountItem({ ...countItem, [index]: countItem[index] });
+    setTotalPrice({
+      ...totalPrice,
+      [index]: record?.product?.price * countItem[index],
+    });
   };
+  const calculatedTotalPrice = () => {
+    if (Object.keys(totalPrice).length) {
+      console.log("value", Object.values(totalPrice));
+      // Object.values(totalPrice).reduce((total: any, currentValue: any) => {
+      //   console.log("total", total);
+      //   console.log("currentValue", currentValue);
+      // });
+    }
+  };
+  calculatedTotalPrice();
+  // const memoCalculate = useMemo(() => calculatedTotalPrice(), [countItem]);
   return (
     <div className="checkout">
       <div className="empty-cart">
@@ -142,11 +175,11 @@ const CheckOut = () => {
             <div>
               <div className="sub-totals">
                 <span>Subtotals:</span>
-                <span>$200.00</span>
+                <span>$</span>
               </div>
               <div className="tax-rate">
                 <span>Tax Rate (%):</span>
-                <span>5%</span>
+                <span>{itemProducts?.taxRate}%</span>
               </div>
               <div className="total">
                 <span>Total:</span>
@@ -161,20 +194,6 @@ const CheckOut = () => {
                 <Button>
                   <span>Proceed To Checkout</span>
                 </Button>
-              </div>
-            </div>
-          </div>
-          <div className="calculate-shipping">
-            <span className="title">Calculate Shopping</span>
-            <div>
-              <div className="tinh">
-                <span>Tỉnh</span>
-              </div>
-              <div className="quan">
-                <span>Quận huyện</span>
-              </div>
-              <div className="phuong">
-                <span>Xã phường</span>
               </div>
             </div>
           </div>

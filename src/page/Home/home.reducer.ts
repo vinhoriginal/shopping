@@ -1,57 +1,45 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../contants/axios.config";
-import { IFormDataFeatureProduct } from "../../model/feature-product.model";
+import { IFormDetailProducts } from "../../model/detail.model";
 import { IFormBodyProducts } from "../../model/products.model";
 
 const initState = {
-  dataFeatureProduct: [] as IFormDataFeatureProduct[],
-  dataTopProduct: [] as IFormDataFeatureProduct[],
+  dataFeatureProduct: [] as IFormDetailProducts[],
+  dataTopProduct: [] as IFormDetailProducts[],
+  dataSearchProducts: [] as IFormDetailProducts[],
 };
 export const getDataFeatureProduct = createAsyncThunk(
   "home/getDataFeatureProduct",
   async (data: { enums: string }) => {
     const result = await instance.post("/api/v1/customer/product", data);
-    const newArr: any[] = [];
-    result.data.data.content.forEach((item: any, index: number) => {
-      if (item.images && item?.images.length > 0) {
-        newArr.push({
-          name: item?.name,
-          price: item?.price,
-          image: item?.images[0],
-          id: index,
-          make: item?.make
-        });
-      }
-    });
-    return newArr;
+    return result;
   }
 );
 export const getDataTop = createAsyncThunk(
   "home/getDataTop",
   async (data: { enums: string }) => {
     const result = await instance.post("/api/v1/customer/product", data);
-    const newArr: any[] = [];
-    result.data.data.content.forEach((item: any, index: number) => {
-      if (item.images && item?.images.length > 0) {
-        newArr.push({
-          name: item?.name,
-          price: item?.price,
-          image: item?.images[0],
-          id: index,
-          make: item?.make
-        });
-      }
-    });
-    return newArr;
+    return result;
   }
 );
 export const searchDataProducts = createAsyncThunk(
   "home/searchDataProducts",
   async (data: IFormBodyProducts) => {
     const result = await instance.post("/api/v1/customer/product", data);
-    return result
+    return result;
   }
 );
+
+export const getBrand = createAsyncThunk("home/getBrand", async () => {
+  const result = await instance.get("/api/v1/make/get-list");
+  return result;
+});
+
+export const getCategory = createAsyncThunk("home/getCategory", async () => {
+  const result = await instance.get("/api/v1/product-type/get-list");
+  return result;
+});
+
 const homeSlice = createSlice({
   name: "home",
   initialState: initState,
@@ -59,10 +47,13 @@ const homeSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getDataFeatureProduct.fulfilled, (state, action) => {
-        state.dataFeatureProduct = action.payload;
+        state.dataFeatureProduct = action.payload.data.data.content;
       })
       .addCase(getDataTop.fulfilled, (state, action) => {
-        state.dataTopProduct = action.payload;
+        state.dataTopProduct = action.payload.data.data.content;
+      })
+      .addCase(searchDataProducts.fulfilled, (state, action) => {
+        state.dataSearchProducts = action.payload.data.data.content;
       });
   },
 });
