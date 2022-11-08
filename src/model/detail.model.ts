@@ -7,6 +7,8 @@ export interface IFormComment {
   customerDTO: IFormCustomerDTO;
   isReply?: boolean;
   replyTo?: string;
+  lastModifiedBy:string
+  lastModifiedDate:number | Date
 }
 export interface IFormCustomerDTO {
   allowReceiveExcel: string;
@@ -61,6 +63,7 @@ export interface IFormDetailProducts {
   stockQty: number;
   weight: number;
   arrStar?: any[];
+  oldPrice?: string;
 }
 
 export interface IFormDataGetAllChild {
@@ -71,7 +74,7 @@ export interface IFormDataGetAllChild {
 export interface IFormDataAddComment {
   customerId: number;
   content: string;
-  star: number;
+  star: number | null;
   productId: string | undefined;
   replyCommentId?: number;
 }

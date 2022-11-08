@@ -1,9 +1,14 @@
-import { Form, Row, Col, Input, Button } from "antd";
-import React from "react";
+import { Button, Col, Form, Input, Row } from "antd";
 import { useNavigate } from "react-router-dom";
+import { IFormValueMemo } from "../../model/login.model";
 import path from "../../router/path";
 import { useAppDispatch } from "../../store/hooks";
-import { REGEX_PASSWORD, TOKEN_KEY, USER_INFO } from "../utils/contants";
+import {
+  REGEX_PASSWORD,
+  TOKEN_KEY,
+  USER_INFO,
+  VALUE_MEMO
+} from "../utils/contants";
 import { login } from "./login.reducer";
 import "./login.scss";
 
@@ -20,7 +25,12 @@ const Login = () => {
           USER_INFO,
           JSON.stringify(newPayload.data.customerDTO)
         );
-        navigate(path.home);
+        const valueMemo:IFormValueMemo = JSON.parse(localStorage.getItem(VALUE_MEMO) as string)
+        if (Object.keys(valueMemo).length) {
+          navigate(valueMemo.path)
+        } else {
+          navigate(path.home);
+        }
       }
     });
   };

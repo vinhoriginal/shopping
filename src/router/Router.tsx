@@ -51,15 +51,15 @@ const Router = () => {
           path: path.detail,
           element: <Detail />,
         },
+        {
+          path: path.login,
+          element: <Login />,
+        },
+        {
+          path: path.register,
+          element: <Register />,
+        },
       ],
-    },
-    {
-      path: path.login,
-      element: <Login />,
-    },
-    {
-      path: path.register,
-      element: <Register />,
     },
   ]);
 };

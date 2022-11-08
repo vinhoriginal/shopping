@@ -51,7 +51,7 @@ const FeatureProduct = () => {
                 justifyContent: "center",
                 marginTop: "20px",
               }}
-              key={item.id}
+              key={item?.id}
             >
               <div className="product-detail">
                 <div className="product-menu">
@@ -69,18 +69,17 @@ const FeatureProduct = () => {
                 <div className="img-product">
                   <div>
                     <img
-                      onClick={() => navigate(`/detail/${item.id}`)}
-                      src={`data:image/jpeg;base64,${item.image}`}
+                      onClick={() => navigate(`/detail/${item?.id}`)}
+                      src={`data:image/jpeg;base64,${item?.images[0]}`}
                       alt="image1"
                     />
-                    {/* <Button>View Detail</Button> */}
                   </div>
                 </div>
                 <div className="title">
-                  <span>{item.name}</span>
+                  <span>{item?.name}</span>
                   <img src={group2} alt="group2" />
                   <span>Code - Y523201</span>
-                  <span>${item.price}</span>
+                  <span>${item?.price}</span>
                 </div>
               </div>
             </Col>

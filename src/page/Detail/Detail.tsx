@@ -47,7 +47,7 @@ const Detail = () => {
       setStarImage(arrStar.concat(arrNonstar));
     }
   }, [dataDetail]);
-  const handleAddToCart = (item: any) => {
+  const handleAddToCart = () => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) {
       navigate(path.login);
