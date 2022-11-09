@@ -11,7 +11,13 @@ export const getProvince = createAsyncThunk(
   "checkout/getProvince",
   async () => {
     const result = await instance.get("api/v1/web-service/province/list");
-    return result;
+    const newArr = result.data.data.map((item: any) => {
+      return {
+        value: item.provinceID,
+        label: item.provinceName,
+      };
+    });
+    return newArr;
   }
 );
 
@@ -21,7 +27,13 @@ export const getDataDistrict = createAsyncThunk(
     const result = await instance.get(
       `/api/v1/web-service/district/list?provinceId=${id}`
     );
-    return result;
+    const newArr = result.data.data.map((item: any) => {
+      return {
+        value: item.districtID,
+        label: item.districtName,
+      };
+    });
+    return newArr;
   }
 );
 
@@ -31,6 +43,7 @@ export const getDataWard = createAsyncThunk(
     const result = await instance.get(
       `/api/v1/web-service/district/list?provinceId=${id}`
     );
+    console.log('result', result)
     return result;
   }
 );
@@ -58,10 +71,10 @@ const checkoutSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getProvince.fulfilled, (state, action) => {
-        state.dataProvince = action.payload.data;
+        state.dataProvince = action.payload;
       })
       .addCase(getDataDistrict.fulfilled, (state, action) => {
-        state.dataDistrict = action.payload.data;
+        state.dataDistrict = action.payload;
       })
       .addCase(getDataWard.fulfilled, (state, action) => {
         state.dataWard = action.payload.data;

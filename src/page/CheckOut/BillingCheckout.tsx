@@ -1,9 +1,14 @@
 import { Button, Col, DatePicker, Form, Input, Radio, Row, Select } from "antd";
 import moment from "moment";
 import React, { useEffect } from "react";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { FORMAT_DATE } from "../utils/contants";
-import { shipFee } from "./checkout.reducer";
+import {
+  getDataDistrict,
+  getDataWard,
+  getProvince,
+  shipFee,
+} from "./checkout.reducer";
 import "./checkout.scss";
 
 const BillingCheckout = () => {
@@ -11,6 +16,9 @@ const BillingCheckout = () => {
   const [form] = Form.useForm();
   const districtId = Form.useWatch("district");
   const wardId = Form.useWatch("ward");
+  const { dataProvince, dataDistrict, dataWard } = useAppSelector(
+    (state) => state.checkoutReducer
+  );
   useEffect(() => {
     dispatch(
       shipFee({
@@ -18,10 +26,30 @@ const BillingCheckout = () => {
         from_district: 1542,
         to_district: 1448,
       })
-    );
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        form.setFieldsValue({
+          service: (res.payload as any).data.data[0].short_name,
+        });
+      }
+    });
+    dispatch(getProvince());
   }, []);
   const handleSubmit = (data: any) => {
     console.log("data", moment(data.birthDay).format(FORMAT_DATE.YYYY_MM_DD));
+  };
+  const handleChangeProvince = (value: any) => {
+    console.log('value', value)
+    if (!value) {
+      return form.setFieldsValue({ district: undefined, ward: undefined });
+    }
+    dispatch(getDataDistrict(value));
+  };
+  const handleChangeDistrict = (value: any) => {
+    if (!value) {
+      return form.setFieldsValue({ ward: undefined });
+    }
+    dispatch(getDataWard(value));
   };
   const validateDate = (_: any, value: any) => {
     const currentTime = new Date(value).getTime();
@@ -177,6 +205,9 @@ const BillingCheckout = () => {
                   showArrow={false}
                   bordered={false}
                   className="custom-inp"
+                  options={dataProvince}
+                  onChange={handleChangeProvince}
+                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -196,6 +227,9 @@ const BillingCheckout = () => {
                   showArrow={false}
                   bordered={false}
                   className="custom-inp"
+                  options={dataDistrict}
+                  onChange={handleChangeDistrict}
+                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -215,6 +249,7 @@ const BillingCheckout = () => {
                   showArrow={false}
                   bordered={false}
                   className="custom-inp"
+                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -237,12 +272,20 @@ const BillingCheckout = () => {
                 />
               </Form.Item>
             </Col>
+            <Col span={12}>
+              <Form.Item
+                name="service"
+                label={<span className="label-title">Dịch vụ khả dụng</span>}
+              >
+                <Input className="custom-inp" bordered={false} allowClear />
+              </Form.Item>
+            </Col>
           </Row>
           <Row>
             <Col span={24} style={{ textAlign: "end" }}>
               <Form.Item>
                 <Button
-                  //   disabled={districtId && wardId ? false : true}
+                  disabled={districtId && wardId ? false : true}
                   htmlType="submit"
                   type="link"
                   className="custom-btn"
