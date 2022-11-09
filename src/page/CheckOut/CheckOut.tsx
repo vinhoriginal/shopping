@@ -6,7 +6,9 @@ import {
 import { Avatar, Button, Checkbox } from "antd";
 import Table, { ColumnsType } from "antd/lib/table";
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { emptyCart, removeCart, viewCart } from "../Layout/layout.reducer";
 import { USER_INFO } from "../utils/contants";
@@ -19,6 +21,7 @@ const CheckOut = () => {
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
   );
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (itemProducts?.cartItemList?.length) {
@@ -191,7 +194,7 @@ const CheckOut = () => {
                 </span>
               </Checkbox>
               <div className="custom-btn-checkout">
-                <Button>
+                <Button onClick={() => navigate(path.billingAddress)}>
                   <span>Proceed To Checkout</span>
                 </Button>
               </div>

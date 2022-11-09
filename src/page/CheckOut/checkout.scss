@@ -130,3 +130,41 @@
 .shipping-checkbox {
   margin-bottom: 10px;
 }
+
+.custom-inp,
+.custom-inp:hover {
+  border-bottom: 1px solid #ccc;
+  border-color: #ccc !important;
+}
+
+.billing-address {
+  font-family: "Lato";
+  font-style: normal;
+  .custom-btn {
+    background: #fb2e86;
+    color: white;
+  }
+  .ant-btn-link[disabled] {
+    background-color: #ccc;
+    color: black;
+  }
+  .title {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 38px;
+    letter-spacing: 0.02em;
+    color: #596387;
+  }
+  .label-title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.02em;
+    color: #596387;
+  }
+  .custom-style {
+    .ant-form-item-control-input-content {
+      border-bottom: 1px solid #ccc;
+    }
+  }
+}

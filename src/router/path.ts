@@ -9,5 +9,6 @@ const path = {
   contact: "/contact",
   checkout: "/checkout",
   detail: "/detail/:id",
+  billingAddress: "/checkout/billing-address",
 };
 export default path;
