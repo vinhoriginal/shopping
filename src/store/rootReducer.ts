@@ -4,12 +4,14 @@ import registerReducer from "../page/Register/register.reducer";
 import homeReducer from "../page/Home/home.reducer";
 import layoutReducer from "../page/Layout/layout.reducer";
 import detailReducer from "../page/Detail/details.reducer";
+import checkoutReducer from "../page/CheckOut/checkout.reducer";
 
 const rootReducer = combineReducers({
   loginReducer,
   registerReducer,
   homeReducer,
   layoutReducer,
-  detailReducer
+  detailReducer,
+  checkoutReducer,
 });
 export default rootReducer;

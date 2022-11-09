@@ -4,6 +4,10 @@ export const REGEX_PASSWORD =
 
 export const TOKEN_KEY = "shopping_end";
 export const USER_INFO = "shopping_user";
+export const FORMAT_DATE = {
+  YYYY_MM_DD: "YYYY-MM-DD",
+  YYYYMMDD: "DD/MM/YYYY",
+};
 export const TAB_MENU = [
   { name: "Home", key: "home", path: "/home" },
   {
@@ -213,5 +217,5 @@ export const FAKE_PRODUCTS_ITEM = [
   },
 ];
 
-export const VALUE_MEMO = 'asdasfsdg'
-export const VALUE_INP_COMMENT = 'sdgvbcnvbcn'
+export const VALUE_MEMO = "asdasfsdg";
+export const VALUE_INP_COMMENT = "sdgvbcnvbcn";

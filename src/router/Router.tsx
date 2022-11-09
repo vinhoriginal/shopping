@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import Blog from "../page/Blog/Blog";
+import BillingCheckout from "../page/CheckOut/BillingCheckout";
 import CheckOut from "../page/CheckOut/CheckOut";
 import Contact from "../page/Contact/Contact";
 import Detail from "../page/Detail/Detail";
@@ -58,6 +59,10 @@ const Router = () => {
         {
           path: path.register,
           element: <Register />,
+        },
+        {
+          path: path.billingAddress,
+          element: <BillingCheckout />,
         },
       ],
     },
