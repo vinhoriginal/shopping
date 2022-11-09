@@ -4,6 +4,7 @@ import {
   PlusCircleOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Checkbox } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import Table, { ColumnsType } from "antd/lib/table";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,8 @@ const CheckOut = () => {
   const [countItem, setCountItem] = useState<any>({});
   const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
   const [totalPrice, setTotalPrice] = useState<any>({});
+  const [isChecked, setIsChecked] = useState(false);
+  const [subTotal, setSubTotal] = useState(0);
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
   );
@@ -150,59 +153,70 @@ const CheckOut = () => {
       [index]: record?.product?.price * countItem[index],
     });
   };
-  const calculatedTotalPrice = () => {
-    if (Object.keys(totalPrice).length) {
-      console.log("value", Object.values(totalPrice));
-      // Object.values(totalPrice).reduce((total: any, currentValue: any) => {
-      //   console.log("total", total);
-      //   console.log("currentValue", currentValue);
-      // });
+  const handleChangeCheckbox = (e: CheckboxChangeEvent) => {
+    setIsChecked(e.target.checked);
+  };
+  useEffect(() => {
+    calculatedTotalPrice(totalPrice);
+  }, [totalPrice]);
+  const calculatedTotalPrice = (totalPrice: any) => {
+    if (totalPrice && Object.keys(totalPrice).length) {
+      const totalValue: any = Object.values(totalPrice).reduce(
+        (total: any, currentValue: any) => {
+          return total + currentValue;
+        }
+      );
+      setSubTotal(totalValue);
     }
   };
-  calculatedTotalPrice();
-  // const memoCalculate = useMemo(() => calculatedTotalPrice(), [countItem]);
   return (
-    <div className="checkout">
-      <div className="empty-cart">
-        <Button danger onClick={handleDeleteAll}>
-          Empty Cart
-        </Button>
-      </div>
-      <div>
-        <div className="item-checkout">
-          <Table columns={columns} dataSource={itemProducts?.cartItemList} />
+    <>
+      <div className="checkout">
+        <div className="empty-cart">
+          <Button danger onClick={handleDeleteAll}>
+            Empty Cart
+          </Button>
         </div>
-        <div className="checkout-price">
-          <div className="cart-total">
-            <span className="title">Cart Totals</span>
-            <div>
-              <div className="sub-totals">
-                <span>Subtotals:</span>
-                <span>$</span>
-              </div>
-              <div className="tax-rate">
-                <span>Tax Rate (%):</span>
-                <span>{itemProducts?.taxRate}%</span>
-              </div>
-              <div className="total">
-                <span>Total:</span>
-                <span>$200.00</span>
-              </div>
-              <Checkbox className="shipping-checkbox">
-                <span className="shipping">
-                  Shipping & taxes calculated at checkout
-                </span>
-              </Checkbox>
-              <div className="custom-btn-checkout">
-                <Button onClick={() => navigate(path.billingAddress)}>
-                  <span>Proceed To Checkout</span>
-                </Button>
+        <div>
+          <div className="item-checkout">
+            <Table columns={columns} dataSource={itemProducts?.cartItemList} />
+          </div>
+          <div className="checkout-price">
+            <div className="cart-total">
+              <span className="title">Cart Totals</span>
+              <div>
+                <div className="sub-totals">
+                  <span>Subtotals:</span>
+                  <span>${subTotal}</span>
+                </div>
+                <div className="tax-rate">
+                  <span>Tax Rate (%):</span>
+                  <span>{itemProducts?.taxRate}%</span>
+                </div>
+                <div className="total">
+                  <span>Total:</span>
+                  <span>${subTotal * itemProducts?.taxRate / 100 + subTotal}</span>
+                </div>
+                <Checkbox
+                  className="shipping-checkbox"
+                  onChange={handleChangeCheckbox}
+                  checked={isChecked}
+                >
+                  <span className="shipping">
+                    Shipping & taxes calculated at checkout
+                  </span>
+                </Checkbox>
+                <div className="custom-btn-checkout">
+                  <Button onClick={() => navigate(path.billingAddress)}>
+                    <span>Proceed To Checkout</span>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
