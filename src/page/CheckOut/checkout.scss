@@ -37,12 +37,12 @@
   background-color: transparent;
   border-bottom: none;
 }
+.ant-table-cell::before {
+  background-color: transparent !important;
+}
 .checkout {
   display: flex;
   flex-direction: column;
-  .ant-table-cell::before {
-    background-color: transparent !important;
-  }
   & > div:last-child {
     display: flex;
     .item-checkout {

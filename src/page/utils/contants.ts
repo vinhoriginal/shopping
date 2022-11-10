@@ -26,14 +26,14 @@ export const TAB_MENU = [
     path: "/blog",
   },
   {
-    name: "Shop",
-    key: "shop",
-    path: "/shop",
+    name: "Lịch sử mua hàng",
+    key: "history",
+    path: "/history",
   },
   {
-    name: "Contact",
-    key: "contact",
-    path: "/contact",
+    name: "Danh sách yêu thích",
+    key: "listLike",
+    path: "/list-like",
   },
 ];
 export const PRODUCT_BRAND = [
