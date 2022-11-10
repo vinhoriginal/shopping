@@ -4,9 +4,12 @@ import BillingCheckout from "../page/CheckOut/BillingCheckout";
 import CheckOut from "../page/CheckOut/CheckOut";
 import Contact from "../page/Contact/Contact";
 import Detail from "../page/Detail/Detail";
+import History from "../page/History/History";
 import Home from "../page/Home/Home";
 import Layout from "../page/Layout/Layout";
+import ListLike from "../page/ListLike/ListLike";
 import Login from "../page/Login/Login";
+import DetailOrder from "../page/Order/DetailOrder";
 import Pages from "../page/Pages/Pages";
 import Products from "../page/Products/Products";
 import Register from "../page/Register/Register";
@@ -63,6 +66,18 @@ const Router = () => {
         {
           path: path.billingAddress,
           element: <BillingCheckout />,
+        },
+        {
+          path: path.history,
+          element: <History />,
+        },
+        {
+          path: path.listLike,
+          element: <ListLike />,
+        },
+        {
+          path: path.detailOrder,
+          element: <DetailOrder />,
         },
       ],
     },

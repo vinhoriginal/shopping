@@ -10,5 +10,8 @@ const path = {
   checkout: "/checkout",
   detail: "/detail/:id",
   billingAddress: "/checkout/billing-address",
+  history: "/history",
+  listLike: "/list-like",
+  detailOrder: "/detail-order",
 };
 export default path;
