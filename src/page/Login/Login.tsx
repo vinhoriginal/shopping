@@ -20,6 +20,7 @@ const Login = () => {
     dispatch(login(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         const newPayload: any = res.payload;
+        console.log('res', newPayload)
         localStorage.setItem(TOKEN_KEY, newPayload.data.token);
         localStorage.setItem(
           USER_INFO,
@@ -28,7 +29,7 @@ const Login = () => {
         const valueMemo: IFormValueMemo = JSON.parse(
           localStorage.getItem(VALUE_MEMO) as string
         );
-        if (Object.keys(valueMemo).length) {
+        if (valueMemo && Object.keys(valueMemo).length) {
           navigate(valueMemo.path);
         } else {
           navigate(path.home);

@@ -9,18 +9,21 @@ import Table, { ColumnsType } from "antd/lib/table";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { emptyCart, removeCart, viewCart } from "../Layout/layout.reducer";
 import { USER_INFO } from "../utils/contants";
+import { updateCart } from "./checkout.reducer";
 import "./checkout.scss";
 
 const CheckOut = () => {
   const [countItem, setCountItem] = useState<any>({});
-  const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
+  const userInfo: IFormUserInfo = JSON.parse(
+    localStorage.getItem(USER_INFO) as string
+  );
   const [totalPrice, setTotalPrice] = useState<any>({});
   const [isChecked, setIsChecked] = useState(false);
-  const [subTotal, setSubTotal] = useState(0);
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
   );
@@ -115,7 +118,7 @@ const CheckOut = () => {
     dispatch(
       removeCart({
         productId: record.product.id,
-        customerId: userInfo.id,
+        customerId: userInfo.customerId,
         quantity: record.product.make.id,
       })
     ).then((res) => {
@@ -127,7 +130,7 @@ const CheckOut = () => {
   };
   const handleDeleteAll = () => {
     if (itemProducts?.cartItemList?.length) {
-      dispatch(emptyCart({ customerId: userInfo.id })).then((res) => {
+      dispatch(emptyCart({ customerId: userInfo?.customerId })).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           dispatch(viewCart());
         }
@@ -152,22 +155,22 @@ const CheckOut = () => {
       ...totalPrice,
       [index]: record?.product?.price * countItem[index],
     });
+    const data = {
+      productId: 4,
+      quantity: countItem[index],
+      customerId: 4,
+    };
+    console.log("data", data);
+    // dispatch(
+    //   updateCart({
+    //     productId: 4,
+    //     quantity: countItem[index],
+    //     customerId: 4,
+    //   })
+    // );
   };
   const handleChangeCheckbox = (e: CheckboxChangeEvent) => {
     setIsChecked(e.target.checked);
-  };
-  useEffect(() => {
-    calculatedTotalPrice(totalPrice);
-  }, [totalPrice]);
-  const calculatedTotalPrice = (totalPrice: any) => {
-    if (totalPrice && Object.keys(totalPrice).length) {
-      const totalValue: any = Object.values(totalPrice).reduce(
-        (total: any, currentValue: any) => {
-          return total + currentValue;
-        }
-      );
-      setSubTotal(totalValue);
-    }
   };
   return (
     <>
@@ -187,7 +190,7 @@ const CheckOut = () => {
               <div>
                 <div className="sub-totals">
                   <span>Subtotals:</span>
-                  <span>${subTotal}</span>
+                  <span>${itemProducts?.subTotal}</span>
                 </div>
                 <div className="tax-rate">
                   <span>Tax Rate (%):</span>
@@ -195,7 +198,7 @@ const CheckOut = () => {
                 </div>
                 <div className="total">
                   <span>Total:</span>
-                  <span>${subTotal * itemProducts?.taxRate / 100 + subTotal}</span>
+                  <span>${itemProducts?.grandTotal}</span>
                 </div>
                 <Checkbox
                   className="shipping-checkbox"
