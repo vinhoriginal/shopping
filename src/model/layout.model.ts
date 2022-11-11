@@ -1,5 +1,5 @@
 export interface IFormBodyAddToCard {
-  productId: number;
-  quantity: number;
-  customerId: number;
+  productId: string | number;
+  quantity: string | number;
+  customerId: string | number;
 }

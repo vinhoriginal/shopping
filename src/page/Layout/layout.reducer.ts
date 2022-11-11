@@ -44,6 +44,15 @@ export const emptyCart = createAsyncThunk(
   }
 );
 
+export const addToLike = createAsyncThunk(
+  "layout/addToLike",
+  async (data: { customerId: string; productId: number }) => {
+    const result = await instance.post("/api/v2/customer/favorite/add", data);
+    console.log("result", result);
+    return result;
+  }
+);
+
 const layoutSlice = createSlice({
   name: "layout",
   initialState: initState,
