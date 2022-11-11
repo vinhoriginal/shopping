@@ -168,3 +168,27 @@
     }
   }
 }
+
+.billing-info {
+  display: flex;
+  width: 70%;
+  align-items: center;
+  justify-content: space-around;
+  span {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    line-height: 18px;
+  }
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+    span {
+      display: inline-block;
+      margin: 8px 0;
+    }
+    & > span:first-child {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+}
