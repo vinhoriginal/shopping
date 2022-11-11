@@ -6,6 +6,7 @@ import layoutReducer from "../page/Layout/layout.reducer";
 import detailReducer from "../page/Detail/details.reducer";
 import checkoutReducer from "../page/CheckOut/checkout.reducer";
 import historyReducer from "../page/History/history.reducer";
+import detailOrderReducer from "../page/Order/detail-order.reducer";
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   layoutReducer,
   detailReducer,
   checkoutReducer,
-  historyReducer
+  historyReducer,
+  detailOrderReducer,
 });
 export default rootReducer;

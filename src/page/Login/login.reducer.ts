@@ -13,6 +13,17 @@ export const login = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  "login/forgotPassword",
+  async (email: string) => {
+    const result = await instance.post(
+      `/api/v1/customer/send-verify-code?email=`,
+      email
+    );
+    return result;
+  }
+);
+
 const loginSlice = createSlice({
   name: "Login",
   initialState: initState,

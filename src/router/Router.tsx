@@ -4,6 +4,7 @@ import BillingCheckout from "../page/CheckOut/BillingCheckout";
 import CheckOut from "../page/CheckOut/CheckOut";
 import Contact from "../page/Contact/Contact";
 import Detail from "../page/Detail/Detail";
+import ForgotPass from "../page/Forgot/ForgotPass";
 import History from "../page/History/History";
 import Home from "../page/Home/Home";
 import Layout from "../page/Layout/Layout";
@@ -78,6 +79,10 @@ const Router = () => {
         {
           path: path.detailOrder,
           element: <DetailOrder />,
+        },
+        {
+          path: path.forgot,
+          element: <ForgotPass />,
         },
       ],
     },

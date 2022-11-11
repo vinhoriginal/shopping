@@ -7,7 +7,7 @@ import {
   REGEX_PASSWORD,
   TOKEN_KEY,
   USER_INFO,
-  VALUE_MEMO
+  VALUE_MEMO,
 } from "../utils/contants";
 import { login } from "./login.reducer";
 import "./login.scss";
@@ -25,9 +25,11 @@ const Login = () => {
           USER_INFO,
           JSON.stringify(newPayload.data.customerDTO)
         );
-        const valueMemo:IFormValueMemo = JSON.parse(localStorage.getItem(VALUE_MEMO) as string)
+        const valueMemo: IFormValueMemo = JSON.parse(
+          localStorage.getItem(VALUE_MEMO) as string
+        );
         if (Object.keys(valueMemo).length) {
-          navigate(valueMemo.path)
+          navigate(valueMemo.path);
         } else {
           navigate(path.home);
         }
@@ -96,6 +98,12 @@ const Login = () => {
             >
               Bạn chưa có tài khoản? Bấm vào đây để đăng ký
             </span>
+            <p
+              style={{ cursor: "pointer", marginTop: "12px" }}
+              onClick={() => navigate(path.forgot)}
+            >
+              Quên mật khẩu
+            </p>
           </Col>
         </Row>
       </Form>

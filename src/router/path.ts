@@ -13,5 +13,6 @@ const path = {
   history: "/history",
   listLike: "/list-like",
   detailOrder: "/detail-order/:id",
+  forgot: "/forgot-password",
 };
 export default path;
