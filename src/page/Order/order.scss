@@ -26,3 +26,44 @@
     }
   }
 }
+
+.payment-method {
+  & > div:last-child {
+    & > div:first-child,
+    & > div:last-child {
+      display: flex;
+      justify-content: space-between;
+      margin: 12px 0;
+    }
+  }
+}
+.title-table {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.list-order {
+  .ant-table-thead > tr > th {
+    background-color: #fb2e86;
+  }
+}
+
+.delivery-address {
+  & > div:last-child {
+    background-color: #ebf0fa;
+    padding: 8px;
+  }
+}
+
+.payment-method {
+  background-color: #ebf0fa;
+  padding: 8px;
+}

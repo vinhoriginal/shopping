@@ -6,23 +6,23 @@ import "./order.scss";
 const DetailOrder = () => {
   const columns: ColumnsType<any> = [
     {
-      title: <span>Tên sản phẩm</span>,
+      title: <span className="title-table">Tên sản phẩm</span>,
       dataIndex: "",
     },
     {
-      title: <span>Danh mục</span>,
+      title: <span className="title-table">Danh mục</span>,
       dataIndex: "",
     },
     {
-      title: <span>Số lượng</span>,
+      title: <span className="title-table">Số lượng</span>,
       dataIndex: "",
     },
     {
-      title: <span>Giá</span>,
+      title: <span className="title-table">Giá</span>,
       dataIndex: "",
     },
     {
-      title: <span>Thành tiền</span>,
+      title: <span className="title-table">Thành tiền</span>,
       dataIndex: "",
     },
   ];
