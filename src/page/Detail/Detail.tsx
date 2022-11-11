@@ -57,7 +57,7 @@ const Detail = () => {
         addToCard({
           productId: dataDetail?.id,
           customerId: userInfo.customerId,
-          quantity: dataDetail?.make?.id,
+          quantity: '1',
         })
       ).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {

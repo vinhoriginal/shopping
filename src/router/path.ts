@@ -12,6 +12,6 @@ const path = {
   billingAddress: "/checkout/billing-address",
   history: "/history",
   listLike: "/list-like",
-  detailOrder: "/detail-order",
+  detailOrder: "/detail-order/:id",
 };
 export default path;

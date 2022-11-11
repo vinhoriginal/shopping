@@ -1,10 +1,21 @@
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import Table, { ColumnsType } from "antd/lib/table";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { IFormUserInfo } from "../../model/userInfo.model";
+import { useAppDispatch } from "../../store/hooks";
+import { USER_INFO } from "../utils/contants";
+import { getListHistoryOrder } from "./history.reducer";
 
 const History = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+  const userInfo: IFormUserInfo = JSON.parse(
+    localStorage.getItem(USER_INFO) as string
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getListHistoryOrder(userInfo?.customerId));
+  }, []);
   const columns: ColumnsType<any> = [
     {
       title: <span className="cart-title">STT</span>,

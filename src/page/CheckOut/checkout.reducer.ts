@@ -6,6 +6,8 @@ const initState = {
   dataProvince: [],
   dataDistrict: [],
   dataWard: [],
+  dataShipFee: [] as any[],
+  dataCalculate: null as any,
 };
 export const getProvince = createAsyncThunk(
   "checkout/getProvince",
@@ -41,9 +43,22 @@ export const getDataWard = createAsyncThunk(
   "checkout/getDataWard",
   async (id: number) => {
     const result = await instance.get(
-      `/api/v1/web-service/district/list?provinceId=${id}`
+      `/api/v1/web-service/ward/list?districtId=${id}`
     );
-    console.log('result', result)
+    const newArr = result.data.data.map((item: any) => {
+      return {
+        value: item.wardCode,
+        label: item.wardName,
+      };
+    });
+    return newArr;
+  }
+);
+
+export const updateUserInfo = createAsyncThunk(
+  "checkout/updateUserInfo",
+  async (data: FormData) => {
+    const result = await instance.post("/api/v1/customer/update", data);
     return result;
   }
 );
@@ -64,6 +79,23 @@ export const shipFee = createAsyncThunk(
   }
 );
 
+export const calculateShip = createAsyncThunk(
+  "checkout/ calculateShip",
+  async (data: any) => {
+    const result = axios.post(
+      "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+      data,
+      {
+        headers: {
+          token: "716d97f1-47f3-11ed-ad26-3a4226f77ff0",
+        },
+      }
+    );
+    console.log("result", result);
+    return result;
+  }
+);
+
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState: initState,
@@ -77,7 +109,13 @@ const checkoutSlice = createSlice({
         state.dataDistrict = action.payload;
       })
       .addCase(getDataWard.fulfilled, (state, action) => {
-        state.dataWard = action.payload.data;
+        state.dataWard = action.payload;
+      })
+      .addCase(shipFee.fulfilled, (state, action) => {
+        state.dataShipFee = action.payload.data.data;
+      })
+      .addCase(calculateShip.fulfilled, (state, action) => {
+        state.dataCalculate = action.payload.data.data;
       });
   },
 });

@@ -1,24 +1,37 @@
-import { Button, Col, DatePicker, Form, Input, Radio, Row, Select } from "antd";
+import {
+  Button,
+  Checkbox,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Select,
+} from "antd";
 import moment from "moment";
 import React, { useEffect } from "react";
+import { IFormUserInfo } from "../../model/userInfo.model";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { FORMAT_DATE } from "../utils/contants";
+import { FORMAT_DATE, USER_INFO } from "../utils/contants";
 import {
+  calculateShip,
   getDataDistrict,
   getDataWard,
   getProvince,
   shipFee,
+  updateUserInfo,
 } from "./checkout.reducer";
 import "./checkout.scss";
 
 const BillingCheckout = () => {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-  const districtId = Form.useWatch("district");
-  const wardId = Form.useWatch("ward");
-  const { dataProvince, dataDistrict, dataWard } = useAppSelector(
-    (state) => state.checkoutReducer
-  );
+  const districtId = Form.useWatch("district", form);
+  const wardId = Form.useWatch("ward", form);
+  const { dataProvince, dataDistrict, dataWard, dataShipFee, dataCalculate } =
+    useAppSelector((state) => state.checkoutReducer);
+  const { itemProducts } = useAppSelector((state) => state.layoutReducer);
   useEffect(() => {
     dispatch(
       shipFee({
@@ -36,10 +49,22 @@ const BillingCheckout = () => {
     dispatch(getProvince());
   }, []);
   const handleSubmit = (data: any) => {
-    console.log("data", moment(data.birthDay).format(FORMAT_DATE.YYYY_MM_DD));
+    const userInfo: IFormUserInfo = JSON.parse(
+      localStorage.getItem(USER_INFO) as string
+    );
+    const formData = new FormData();
+    formData.append("customerId", userInfo.customerId);
+    Object.keys(data).forEach((item) => {
+      if (data[item] && item !== "birthday" && item !== "service") {
+        formData.append(item, data[item]);
+      }
+      if (item === "birthday") {
+        formData.append(item, moment(data[item]).format(FORMAT_DATE.DDMMYYYY));
+      }
+    });
+    dispatch(updateUserInfo(formData));
   };
   const handleChangeProvince = (value: any) => {
-    console.log('value', value)
     if (!value) {
       return form.setFieldsValue({ district: undefined, ward: undefined });
     }
@@ -62,6 +87,19 @@ const BillingCheckout = () => {
     }
     return Promise.resolve();
   };
+  const handleCalculateShip = () => {
+    const data = {
+      service_id: dataShipFee[0]?.service_id,
+      from_district_id: 1454,
+      insurance_value: itemProducts?.subTotal,
+      to_district_id: districtId,
+      to_ward_code: wardId,
+      weight: itemProducts?.weightTotal,
+      coupon: null,
+    };
+    dispatch(calculateShip(data));
+  };
+  const handleUpdateAddress = () => {};
   return (
     <div style={{ display: "flex" }} className="billing-address">
       <div style={{ width: "50%" }}>
@@ -79,7 +117,7 @@ const BillingCheckout = () => {
           <Row gutter={40}>
             <Col span={12}>
               <Form.Item
-                name="name"
+                name="fullName"
                 label={<span className="label-title">Họ tên</span>}
                 rules={[
                   {
@@ -127,7 +165,7 @@ const BillingCheckout = () => {
           <Row gutter={40}>
             <Col span={12}>
               <Form.Item
-                name="phoneNumber"
+                name="phone"
                 label={<span className="label-title">Số điện thoại</span>}
                 rules={[
                   {
@@ -157,8 +195,8 @@ const BillingCheckout = () => {
                 ]}
               >
                 <Radio.Group>
-                  <Radio value="Male">Nam</Radio>
-                  <Radio value="Female">Nữ</Radio>
+                  <Radio value="1">Nam</Radio>
+                  <Radio value="0">Nữ</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
@@ -166,7 +204,7 @@ const BillingCheckout = () => {
           <Row gutter={40}>
             <Col span={12}>
               <Form.Item
-                name="birthDay"
+                name="birthday"
                 label={<span className="label-title">Ngày sinh</span>}
                 rules={[
                   {
@@ -181,7 +219,7 @@ const BillingCheckout = () => {
               >
                 <DatePicker
                   style={{ width: "100%" }}
-                  format={FORMAT_DATE.YYYYMMDD}
+                  format={FORMAT_DATE.DDMMYYYY}
                   allowClear
                   bordered={false}
                 />
@@ -193,12 +231,6 @@ const BillingCheckout = () => {
               <Form.Item
                 name="province"
                 label={<span className="label-title">Tỉnh</span>}
-                rules={[
-                  {
-                    required: true,
-                    message: "Tỉnh không được để trống",
-                  },
-                ]}
               >
                 <Select
                   placeholder="Tỉnh"
@@ -215,12 +247,6 @@ const BillingCheckout = () => {
               <Form.Item
                 name="district"
                 label={<span className="label-title">Quận huyện</span>}
-                rules={[
-                  {
-                    required: true,
-                    message: "Quận huyện không được để trống",
-                  },
-                ]}
               >
                 <Select
                   placeholder="Quận huyện"
@@ -237,12 +263,6 @@ const BillingCheckout = () => {
               <Form.Item
                 name="ward"
                 label={<span className="label-title">Xã phường</span>}
-                rules={[
-                  {
-                    required: true,
-                    message: "Xã phường không được để trống",
-                  },
-                ]}
               >
                 <Select
                   placeholder="Xã phường"
@@ -250,6 +270,7 @@ const BillingCheckout = () => {
                   bordered={false}
                   className="custom-inp"
                   allowClear
+                  options={dataWard}
                 />
               </Form.Item>
             </Col>
@@ -257,12 +278,6 @@ const BillingCheckout = () => {
               <Form.Item
                 name="address"
                 label={<span className="label-title">Địa chỉ</span>}
-                rules={[
-                  {
-                    required: true,
-                    message: "Địa chỉ không được để trống",
-                  },
-                ]}
               >
                 <Input
                   bordered={false}
@@ -284,20 +299,104 @@ const BillingCheckout = () => {
           <Row>
             <Col span={24} style={{ textAlign: "end" }}>
               <Form.Item>
-                <Button
-                  disabled={districtId && wardId ? false : true}
-                  htmlType="submit"
-                  type="link"
-                  className="custom-btn"
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <span>Tính gói cước</span>
-                </Button>
+                  <div>
+                    <Button
+                      type="link"
+                      className="custom-btn"
+                      htmlType="submit"
+                      onClick={handleUpdateAddress}
+                    >
+                      Cập nhật địa chỉ
+                    </Button>
+                  </div>
+                  <div>
+                    <Button
+                      disabled={districtId && wardId ? false : true}
+                      type="link"
+                      className="custom-btn"
+                      style={{ marginRight: "20px" }}
+                      onClick={handleCalculateShip}
+                    >
+                      <span>Tính gói cước</span>
+                    </Button>
+                    <span>Cước: {dataCalculate?.total}</span>
+                  </div>
+                </div>
               </Form.Item>
             </Col>
           </Row>
         </Form>
       </div>
-      <div style={{ width: "50%" }}>Thông tin hàng</div>
+      <div
+        style={{
+          width: "50%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          marginLeft: "20%",
+        }}
+      >
+        <div>
+          {itemProducts?.cartItemList?.map((item: any) => (
+            <div key={item?.id}>
+              <div>
+                <img src={`data:image/jpeg;base64,${item?.product?.images[0]}`} />
+              </div>
+              <div>
+                <div>
+                  <p>{item?.product?.name}</p>
+                  <p>Loại sản phẩm: {item?.product?.productType?.name}</p>
+                  <p>Số lượng: {item?.quantity}</p>
+                </div>
+                <div>
+                  <p>Giá tiền</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="checkout">
+          <div>
+            <div className="checkout-price">
+              <div className="cart-total">
+                <div>
+                  <div className="sub-totals">
+                    <span>Subtotals:</span>
+                    <span>$</span>
+                  </div>
+                  <div className="tax-rate">
+                    <span>Tax Rate (%):</span>
+                    <span>%</span>
+                  </div>
+                  <div className="total">
+                    <span>Total:</span>
+                    <span>$</span>
+                  </div>
+                  <Checkbox
+                    className="shipping-checkbox"
+                    // onChange={handleChangeCheckbox}
+                    // checked={isChecked}
+                  >
+                    <span className="shipping">
+                      Shipping & taxes calculated at checkout
+                    </span>
+                  </Checkbox>
+                  <div className="custom-btn-checkout">
+                    <Button
+                    // onClick={() => navigate(path.billingAddress)}
+                    >
+                      <span>Proceed To Checkout</span>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
