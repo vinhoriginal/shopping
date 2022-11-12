@@ -1,12 +1,12 @@
 import {
   DeleteOutlined,
   MinusCircleOutlined,
-  PlusCircleOutlined,
+  PlusCircleOutlined
 } from "@ant-design/icons";
 import { Avatar, Button, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import Table, { ColumnsType } from "antd/lib/table";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IFormUserInfo } from "../../model/userInfo.model";
@@ -22,7 +22,6 @@ const CheckOut = () => {
   const userInfo: IFormUserInfo = JSON.parse(
     localStorage.getItem(USER_INFO) as string
   );
-  const [totalPrice, setTotalPrice] = useState<any>({});
   const [isChecked, setIsChecked] = useState(false);
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
@@ -32,10 +31,6 @@ const CheckOut = () => {
   useEffect(() => {
     if (itemProducts?.cartItemList?.length) {
       itemProducts?.cartItemList.forEach((item: any, index: number) => {
-        setTotalPrice((totalPrice: any) => ({
-          ...totalPrice,
-          [index]: item?.product?.price * item?.quantity,
-        }));
         setCountItem((oldState: any) => ({
           ...oldState,
           [index]: item?.quantity,
@@ -143,31 +138,32 @@ const CheckOut = () => {
     }
     countItem[index]--;
     setCountItem({ ...countItem, [index]: countItem[index] });
-    setTotalPrice({
-      ...totalPrice,
-      [index]: record?.product?.price * countItem[index],
+    dispatch(
+      updateCart({
+        productId: record?.product?.id,
+        quantity: countItem[index],
+        customerId: userInfo.customerId,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(viewCart());
+      }
     });
   };
   const handleIncreaseCount = (index: number, record: any) => {
     countItem[index]++;
     setCountItem({ ...countItem, [index]: countItem[index] });
-    setTotalPrice({
-      ...totalPrice,
-      [index]: record?.product?.price * countItem[index],
+    dispatch(
+      updateCart({
+        productId: record?.product?.id,
+        quantity: countItem[index],
+        customerId: userInfo.customerId,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(viewCart());
+      }
     });
-    const data = {
-      productId: 4,
-      quantity: countItem[index],
-      customerId: 4,
-    };
-    console.log("data", data);
-    // dispatch(
-    //   updateCart({
-    //     productId: 4,
-    //     quantity: countItem[index],
-    //     customerId: 4,
-    //   })
-    // );
   };
   const handleChangeCheckbox = (e: CheckboxChangeEvent) => {
     setIsChecked(e.target.checked);
@@ -182,7 +178,11 @@ const CheckOut = () => {
         </div>
         <div>
           <div className="item-checkout">
-            <Table columns={columns} dataSource={itemProducts?.cartItemList} />
+            <Table
+              columns={columns}
+              dataSource={itemProducts?.cartItemList}
+              pagination={false}
+            />
           </div>
           <div className="checkout-price">
             <div className="cart-total">
