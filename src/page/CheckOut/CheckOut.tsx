@@ -210,7 +210,7 @@ const CheckOut = () => {
                   </span>
                 </Checkbox>
                 <div className="custom-btn-checkout">
-                  <Button onClick={() => navigate(path.billingAddress)}>
+                  <Button onClick={() => navigate(path.billingAddress)} disabled={!itemProducts?.cartItemList?.length}>
                     <span>Proceed To Checkout</span>
                   </Button>
                 </div>

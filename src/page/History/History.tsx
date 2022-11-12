@@ -5,10 +5,12 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { USER_INFO } from "../utils/contants";
+import { TOKEN_KEY, USER_INFO } from "../utils/contants";
 import { getListHistoryOrder } from "./history.reducer";
 import ReasonModal from "./ReasonModal";
-import './history.scss'
+import "./history.scss";
+import { useNavigate } from "react-router-dom";
+import path from "../../router/path";
 
 const History = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,31 +18,49 @@ const History = () => {
   const userInfo: IFormUserInfo = JSON.parse(
     localStorage.getItem(USER_INFO) as string
   );
+  const navigate = useNavigate();
   const { dataHistoryOrder } = useAppSelector((state) => state.historyReducer);
   const dispatch = useAppDispatch();
   useEffect(() => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      navigate(path.login);
+      return;
+    }
     dispatch(getListHistoryOrder(userInfo?.customerId));
-  }, [userInfo?.customerId, dispatch]);
+  }, [userInfo?.customerId, dispatch, navigate]);
   const columns: ColumnsType<any> = [
     {
       title: <span className="cart-title">STT</span>,
       dataIndex: "stt",
       align: "center",
       render(value, record, index) {
-        return <span className="cart-title" style={{fontSize: '16px'}}>{index + 1}</span>
+        return (
+          <span className="cart-title" style={{ fontSize: "16px" }}>
+            {index + 1}
+          </span>
+        );
       },
     },
     {
       title: <span className="cart-title">Phương thức thanh toán</span>,
       dataIndex: "payment",
       align: "center",
-      render: (value) => <span className="cart-title" style={{fontSize: '16px'}}>{value?.paymentMethod}</span>,
+      render: (value) => (
+        <span className="cart-title" style={{ fontSize: "16px" }}>
+          {value?.paymentMethod}
+        </span>
+      ),
     },
     {
       title: <span className="cart-title">Phương thức vận chuyển</span>,
       dataIndex: "shipment",
       align: "center",
-      render: (value) => <span className="cart-title" style={{fontSize: '16px'}}>{value?.shippingMethod}</span>,
+      render: (value) => (
+        <span className="cart-title" style={{ fontSize: "16px" }}>
+          {value?.shippingMethod}
+        </span>
+      ),
     },
     {
       title: <span className="cart-title">Trạng thái</span>,
@@ -48,13 +68,37 @@ const History = () => {
       align: "center",
       render: (value) => {
         if (value === 0) {
-          return <Tag color="orange" className="cart-title2" style={{fontSize: '12px'}}>Đợi duyệt</Tag>;
+          return (
+            <Tag
+              color="orange"
+              className="cart-title2"
+              style={{ fontSize: "12px" }}
+            >
+              Đợi duyệt
+            </Tag>
+          );
         }
         if (value === 1) {
-          return <Tag color="green" className="cart-title2" style={{fontSize: '12px'}}>Chấp nhận</Tag>;
+          return (
+            <Tag
+              color="green"
+              className="cart-title2"
+              style={{ fontSize: "12px" }}
+            >
+              Chấp nhận
+            </Tag>
+          );
         }
         if (value === 2) {
-          return <Tag color="red" className="cart-title2" style={{fontSize: '12px'}}>Đã hủy</Tag>;
+          return (
+            <Tag
+              color="red"
+              className="cart-title2"
+              style={{ fontSize: "12px" }}
+            >
+              Đã hủy
+            </Tag>
+          );
         }
       },
     },
@@ -62,14 +106,23 @@ const History = () => {
       title: <span className="cart-title">Ngày đặt hàng</span>,
       dataIndex: "orderDate",
       align: "center",
-      render: (value) => value && <span className="cart-title" style={{fontSize: '16px'}}>{moment(value).format("YYYY-MM-DD")}</span>,
+      render: (value) =>
+        value && (
+          <span className="cart-title" style={{ fontSize: "16px" }}>
+            {moment(value).format("YYYY-MM-DD")}
+          </span>
+        ),
     },
     {
       title: <span className="cart-title">Tổng tiền</span>,
       dataIndex: "",
       align: "center",
       render(_, record) {
-        return <span className="cart-title" style={{fontSize: '16px'}}>{record?.grandTotal + record?.shippingTotal}</span>;
+        return (
+          <span className="cart-title" style={{ fontSize: "16px" }}>
+            {record?.grandTotal + record?.shippingTotal}
+          </span>
+        );
       },
     },
     {
@@ -86,9 +139,17 @@ const History = () => {
                 color: "#2db7f5",
               }}
             />
-            <Tooltip title={<span className="cart-title2">Xóa sản phẩm yêu thích</span>}>
+            <Tooltip
+              title={
+                <span className="cart-title2">Xóa sản phẩm yêu thích</span>
+              }
+            >
               <Popconfirm
-                title={<span className="cart-title2">Bạn có chắc muốn hủy đơn hàng?</span>}
+                title={
+                  <span className="cart-title2">
+                    Bạn có chắc muốn hủy đơn hàng?
+                  </span>
+                }
                 onConfirm={() => {
                   setOrderId(record?.orderId);
                   setIsOpen(true);
@@ -106,7 +167,11 @@ const History = () => {
   ];
   return (
     <div>
-      <Table columns={columns} dataSource={dataHistoryOrder} pagination={false} />
+      <Table
+        columns={columns}
+        dataSource={dataHistoryOrder}
+        pagination={false}
+      />
       <ReasonModal isOpen={isOpen} setIsOpen={setIsOpen} orderId={orderId} />
     </div>
   );
