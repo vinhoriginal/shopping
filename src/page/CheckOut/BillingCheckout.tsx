@@ -21,6 +21,7 @@ import {
   getDataDistrict,
   getDataWard,
   getProvince,
+  resetDataCalculate,
   shipFee,
   updateUserInfo,
 } from "./checkout.reducer";
@@ -52,6 +53,9 @@ const BillingCheckout = () => {
       }
     });
     dispatch(getProvince());
+    return () => {
+      dispatch(resetDataCalculate())
+    }
   }, []);
   const handleSubmit = (data: any) => {
     const formData = new FormData();

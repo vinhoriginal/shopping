@@ -117,7 +117,11 @@ export const updateCart = createAsyncThunk(
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState: initState,
-  reducers: {},
+  reducers: {
+    resetDataCalculate: (state) => {
+      state.dataCalculate = null;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getProvince.fulfilled, (state, action) => {
@@ -139,4 +143,5 @@ const checkoutSlice = createSlice({
 });
 
 const checkoutReducer = checkoutSlice.reducer;
+export const { resetDataCalculate } = checkoutSlice.actions;
 export default checkoutReducer;
