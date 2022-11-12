@@ -20,7 +20,7 @@ const History = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getListHistoryOrder(userInfo?.customerId));
-  }, []);
+  }, [userInfo?.customerId, dispatch]);
   const columns: ColumnsType<any> = [
     {
       title: <span className="cart-title">STT</span>,
@@ -106,7 +106,7 @@ const History = () => {
   ];
   return (
     <div>
-      <Table columns={columns} dataSource={dataHistoryOrder} />
+      <Table columns={columns} dataSource={dataHistoryOrder} pagination={false} />
       <ReasonModal isOpen={isOpen} setIsOpen={setIsOpen} orderId={orderId} />
     </div>
   );

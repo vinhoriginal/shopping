@@ -1,9 +1,11 @@
 import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
-import { addToCard, viewCart } from "../../page/Layout/layout.reducer";
+import { IFormUserInfo } from "../../model/userInfo.model";
+import { addToCard, addToLike, viewCart } from "../../page/Layout/layout.reducer";
 import { TOKEN_KEY, USER_INFO } from "../../page/utils/contants";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -27,6 +29,26 @@ const LeatestProducts = () => {
       ).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           dispatch(viewCart());
+        }
+      });
+    }
+  };
+  const handleAddToLike = (id: number) => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      navigate(path.login);
+    } else {
+      const userInfo: IFormUserInfo = JSON.parse(
+        localStorage.getItem(USER_INFO) as string
+      );
+      dispatch(
+        addToLike({
+          customerId: userInfo?.customerId,
+          productId: id,
+        })
+      ).then(res => {
+        if(res.meta.requestStatus === 'fulfilled') {
+          toast.success("Thêm sản phẩm yêu thích thành công")
         }
       });
     }
@@ -61,7 +83,7 @@ const LeatestProducts = () => {
                     />
                   </div>
                   <div className="heart">
-                    <img src={heart} alt="heart" />
+                    <img src={heart} alt="heart" onClick={() => handleAddToLike(item.id)} />
                   </div>
                 </div>
                 <div className="img-product">

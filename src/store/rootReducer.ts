@@ -7,6 +7,7 @@ import detailReducer from "../page/Detail/details.reducer";
 import checkoutReducer from "../page/CheckOut/checkout.reducer";
 import historyReducer from "../page/History/history.reducer";
 import detailOrderReducer from "../page/Order/detail-order.reducer";
+import listLikeReducer from "../page/ListLike/listlike.reducer";
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -17,5 +18,6 @@ const rootReducer = combineReducers({
   checkoutReducer,
   historyReducer,
   detailOrderReducer,
+  listLikeReducer
 });
 export default rootReducer;
