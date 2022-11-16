@@ -91,7 +91,6 @@ export const calculateShip = createAsyncThunk(
         },
       }
     );
-    console.log("result", result);
     return result;
   }
 );
