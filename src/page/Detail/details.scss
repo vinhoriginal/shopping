@@ -216,8 +216,7 @@
     }
     & > div:first-child {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
       margin-bottom: 8px;
       & > span:first-child {
         font-weight: 100;
@@ -252,7 +251,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  &>div:last-child {
+  & > div:last-child {
     margin-left: 130px;
   }
 }
