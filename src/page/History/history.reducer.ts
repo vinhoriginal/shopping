@@ -15,6 +15,14 @@ export const getListHistoryOrder = createAsyncThunk(
   }
 );
 
+export const reasonCancel = createAsyncThunk(
+  "history/reasonCancel",
+  async (data: any) => {
+    const result = await instance.post("/api/v2/customer/order/cancel", data);
+    return result;
+  }
+);
+
 const historySlice = createSlice({
   name: "history",
   initialState: initState,

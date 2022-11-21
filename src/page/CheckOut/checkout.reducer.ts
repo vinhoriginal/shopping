@@ -95,10 +95,33 @@ export const calculateShip = createAsyncThunk(
   }
 );
 
+export const buyItem = createAsyncThunk(
+  "checkout/buyItem",
+  async (data: any) => {
+    const result = await instance.post("/api/v2/customer/order/save", data);
+    return result;
+  }
+);
+
+export const updateCart = createAsyncThunk(
+  "checkout/updateCart",
+  async (data: any) => {
+    const result = await instance.post(
+      "/api/v2/customer/cart/update-cart",
+      data
+    );
+    return result;
+  }
+);
+
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState: initState,
-  reducers: {},
+  reducers: {
+    resetDataCalculate: (state) => {
+      state.dataCalculate = null;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getProvince.fulfilled, (state, action) => {
@@ -120,4 +143,5 @@ const checkoutSlice = createSlice({
 });
 
 const checkoutReducer = checkoutSlice.reducer;
+export const { resetDataCalculate } = checkoutSlice.actions;
 export default checkoutReducer;

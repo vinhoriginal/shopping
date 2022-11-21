@@ -1,26 +1,28 @@
 import {
   DeleteOutlined,
   MinusCircleOutlined,
-  PlusCircleOutlined,
+  PlusCircleOutlined
 } from "@ant-design/icons";
 import { Avatar, Button, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import Table, { ColumnsType } from "antd/lib/table";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { emptyCart, removeCart, viewCart } from "../Layout/layout.reducer";
 import { USER_INFO } from "../utils/contants";
+import { updateCart } from "./checkout.reducer";
 import "./checkout.scss";
 
 const CheckOut = () => {
   const [countItem, setCountItem] = useState<any>({});
-  const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
-  const [totalPrice, setTotalPrice] = useState<any>({});
+  const userInfo: IFormUserInfo = JSON.parse(
+    localStorage.getItem(USER_INFO) as string
+  );
   const [isChecked, setIsChecked] = useState(false);
-  const [subTotal, setSubTotal] = useState(0);
   const itemProducts = useAppSelector(
     (state) => state.layoutReducer.itemProducts
   );
@@ -29,10 +31,6 @@ const CheckOut = () => {
   useEffect(() => {
     if (itemProducts?.cartItemList?.length) {
       itemProducts?.cartItemList.forEach((item: any, index: number) => {
-        setTotalPrice((totalPrice: any) => ({
-          ...totalPrice,
-          [index]: item?.product?.price * item?.quantity,
-        }));
         setCountItem((oldState: any) => ({
           ...oldState,
           [index]: item?.quantity,
@@ -115,7 +113,7 @@ const CheckOut = () => {
     dispatch(
       removeCart({
         productId: record.product.id,
-        customerId: userInfo.id,
+        customerId: userInfo.customerId,
         quantity: record.product.make.id,
       })
     ).then((res) => {
@@ -127,7 +125,7 @@ const CheckOut = () => {
   };
   const handleDeleteAll = () => {
     if (itemProducts?.cartItemList?.length) {
-      dispatch(emptyCart({ customerId: userInfo.id })).then((res) => {
+      dispatch(emptyCart({ customerId: userInfo?.customerId })).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           dispatch(viewCart());
         }
@@ -140,34 +138,35 @@ const CheckOut = () => {
     }
     countItem[index]--;
     setCountItem({ ...countItem, [index]: countItem[index] });
-    setTotalPrice({
-      ...totalPrice,
-      [index]: record?.product?.price * countItem[index],
+    dispatch(
+      updateCart({
+        productId: record?.product?.id,
+        quantity: countItem[index],
+        customerId: userInfo.customerId,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(viewCart());
+      }
     });
   };
   const handleIncreaseCount = (index: number, record: any) => {
     countItem[index]++;
     setCountItem({ ...countItem, [index]: countItem[index] });
-    setTotalPrice({
-      ...totalPrice,
-      [index]: record?.product?.price * countItem[index],
+    dispatch(
+      updateCart({
+        productId: record?.product?.id,
+        quantity: countItem[index],
+        customerId: userInfo.customerId,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(viewCart());
+      }
     });
   };
   const handleChangeCheckbox = (e: CheckboxChangeEvent) => {
     setIsChecked(e.target.checked);
-  };
-  useEffect(() => {
-    calculatedTotalPrice(totalPrice);
-  }, [totalPrice]);
-  const calculatedTotalPrice = (totalPrice: any) => {
-    if (totalPrice && Object.keys(totalPrice).length) {
-      const totalValue: any = Object.values(totalPrice).reduce(
-        (total: any, currentValue: any) => {
-          return total + currentValue;
-        }
-      );
-      setSubTotal(totalValue);
-    }
   };
   return (
     <>
@@ -179,7 +178,11 @@ const CheckOut = () => {
         </div>
         <div>
           <div className="item-checkout">
-            <Table columns={columns} dataSource={itemProducts?.cartItemList} />
+            <Table
+              columns={columns}
+              dataSource={itemProducts?.cartItemList}
+              pagination={false}
+            />
           </div>
           <div className="checkout-price">
             <div className="cart-total">
@@ -187,7 +190,7 @@ const CheckOut = () => {
               <div>
                 <div className="sub-totals">
                   <span>Subtotals:</span>
-                  <span>${subTotal}</span>
+                  <span>${itemProducts?.subTotal}</span>
                 </div>
                 <div className="tax-rate">
                   <span>Tax Rate (%):</span>
@@ -195,7 +198,7 @@ const CheckOut = () => {
                 </div>
                 <div className="total">
                   <span>Total:</span>
-                  <span>${subTotal * itemProducts?.taxRate / 100 + subTotal}</span>
+                  <span>${itemProducts?.grandTotal}</span>
                 </div>
                 <Checkbox
                   className="shipping-checkbox"
@@ -207,7 +210,7 @@ const CheckOut = () => {
                   </span>
                 </Checkbox>
                 <div className="custom-btn-checkout">
-                  <Button onClick={() => navigate(path.billingAddress)}>
+                  <Button onClick={() => navigate(path.billingAddress)} disabled={!itemProducts?.cartItemList?.length}>
                     <span>Proceed To Checkout</span>
                   </Button>
                 </div>
