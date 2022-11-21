@@ -11,14 +11,17 @@ import {
 } from "antd";
 import moment from "moment";
 import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { FORMAT_DATE, USER_INFO } from "../utils/contants";
 import {
+  buyItem,
   calculateShip,
   getDataDistrict,
   getDataWard,
   getProvince,
+  resetDataCalculate,
   shipFee,
   updateUserInfo,
 } from "./checkout.reducer";
@@ -29,6 +32,9 @@ const BillingCheckout = () => {
   const [form] = Form.useForm();
   const districtId = Form.useWatch("district", form);
   const wardId = Form.useWatch("ward", form);
+  const userInfo: IFormUserInfo = JSON.parse(
+    localStorage.getItem(USER_INFO) as string
+  );
   const { dataProvince, dataDistrict, dataWard, dataShipFee, dataCalculate } =
     useAppSelector((state) => state.checkoutReducer);
   const { itemProducts } = useAppSelector((state) => state.layoutReducer);
@@ -47,11 +53,11 @@ const BillingCheckout = () => {
       }
     });
     dispatch(getProvince());
+    return () => {
+      dispatch(resetDataCalculate())
+    }
   }, []);
   const handleSubmit = (data: any) => {
-    const userInfo: IFormUserInfo = JSON.parse(
-      localStorage.getItem(USER_INFO) as string
-    );
     const formData = new FormData();
     formData.append("customerId", userInfo.customerId);
     Object.keys(data).forEach((item) => {
@@ -99,7 +105,20 @@ const BillingCheckout = () => {
     };
     dispatch(calculateShip(data));
   };
-  const handleUpdateAddress = () => {};
+  const handleCheckouItem = () => {
+    const data = {
+      customerId: userInfo.customerId,
+      cartId: itemProducts?.id,
+      shipmentId: 1,
+      paymentId: 1,
+      total: itemProducts?.subTotal + dataCalculate?.total,
+    };
+    dispatch(buyItem(data)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success("Đặt hàng thành công");
+      }
+    });
+  };
   return (
     <div style={{ display: "flex" }} className="billing-address">
       <div style={{ width: "50%" }}>
@@ -307,7 +326,7 @@ const BillingCheckout = () => {
                       type="link"
                       className="custom-btn"
                       htmlType="submit"
-                      onClick={handleUpdateAddress}
+                      // onClick={handleUpdateAddress}
                     >
                       Cập nhật địa chỉ
                     </Button>
@@ -322,7 +341,7 @@ const BillingCheckout = () => {
                     >
                       <span>Tính gói cước</span>
                     </Button>
-                    <span>Cước: {dataCalculate?.total}</span>
+                    <span>Cước: ${dataCalculate?.total}</span>
                   </div>
                 </div>
               </Form.Item>
@@ -341,18 +360,28 @@ const BillingCheckout = () => {
       >
         <div>
           {itemProducts?.cartItemList?.map((item: any) => (
-            <div key={item?.id}>
-              <div>
-                <img src={`data:image/jpeg;base64,${item?.product?.images[0]}`} />
+            <div
+              key={item?.id}
+              style={{
+                display: "flex",
+                marginBottom: "12px",
+                borderBottom: "1px solid #ccc",
+              }}
+            >
+              <div style={{ width: "100px", height: "100px" }}>
+                <img
+                  src={`data:image/jpeg;base64,${item?.product?.images[0]}`}
+                  style={{ width: "100%", height: "100%" }}
+                />
               </div>
-              <div>
+              <div className="billing-info">
                 <div>
-                  <p>{item?.product?.name}</p>
-                  <p>Loại sản phẩm: {item?.product?.productType?.name}</p>
-                  <p>Số lượng: {item?.quantity}</p>
+                  <span>{item?.product?.name}</span>
+                  <span>Loại sản phẩm: {item?.product?.productType?.name}</span>
+                  <span>Số lượng: {item?.quantity}</span>
                 </div>
                 <div>
-                  <p>Giá tiền</p>
+                  <span>Giá tiền: {item?.product?.price}</span>
                 </div>
               </div>
             </div>
@@ -364,31 +393,27 @@ const BillingCheckout = () => {
               <div className="cart-total">
                 <div>
                   <div className="sub-totals">
-                    <span>Subtotals:</span>
-                    <span>$</span>
+                    <span>Đơn hàng:</span>
+                    <span>${itemProducts?.subTotal}</span>
                   </div>
                   <div className="tax-rate">
-                    <span>Tax Rate (%):</span>
-                    <span>%</span>
+                    <span>Phí ship: </span>
+                    <span>${dataCalculate?.total}</span>
                   </div>
                   <div className="total">
-                    <span>Total:</span>
-                    <span>$</span>
+                    <span>Tổng:</span>
+                    <span>
+                      ${itemProducts?.subTotal + dataCalculate?.total ? itemProducts?.subTotal + dataCalculate?.total : ''}
+                    </span>
                   </div>
-                  <Checkbox
-                    className="shipping-checkbox"
-                    // onChange={handleChangeCheckbox}
-                    // checked={isChecked}
-                  >
+                  <Checkbox className="shipping-checkbox">
                     <span className="shipping">
                       Shipping & taxes calculated at checkout
                     </span>
                   </Checkbox>
                   <div className="custom-btn-checkout">
-                    <Button
-                    // onClick={() => navigate(path.billingAddress)}
-                    >
-                      <span>Proceed To Checkout</span>
+                    <Button onClick={handleCheckouItem}>
+                      <span>Mua hàng</span>
                     </Button>
                   </div>
                 </div>

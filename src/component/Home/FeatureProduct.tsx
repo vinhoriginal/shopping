@@ -1,10 +1,15 @@
 import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
 import { IFormUserInfo } from "../../model/userInfo.model";
-import { addToCard, addToLike, viewCart } from "../../page/Layout/layout.reducer";
+import {
+  addToCard,
+  addToLike,
+  viewCart,
+} from "../../page/Layout/layout.reducer";
 import { TOKEN_KEY, USER_INFO } from "../../page/utils/contants";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -20,15 +25,18 @@ const FeatureProduct = () => {
     if (!token) {
       navigate(path.login);
     } else {
-      const userInfo:IFormUserInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
+      const userInfo: IFormUserInfo = JSON.parse(
+        localStorage.getItem(USER_INFO) as string
+      );
       dispatch(
         addToCard({
           productId: item.id,
           customerId: userInfo.customerId,
-          quantity: '1',
+          quantity: "1",
         })
       ).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
+          toast.success("Thêm sản phẩm thành công");
           dispatch(viewCart());
         }
       });
@@ -39,11 +47,19 @@ const FeatureProduct = () => {
     if (!token) {
       navigate(path.login);
     } else {
-      const userInfo:IFormUserInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
-      dispatch(addToLike({
-        customerId: userInfo?.customerId,
-        productId: id
-      }))
+      const userInfo: IFormUserInfo = JSON.parse(
+        localStorage.getItem(USER_INFO) as string
+      );
+      dispatch(
+        addToLike({
+          customerId: userInfo?.customerId,
+          productId: id,
+        })
+      ).then(res => {
+        if(res.meta.requestStatus === 'fulfilled') {
+          toast.success("Thêm sản phẩm yêu thích thành công")
+        }
+      });
     }
   };
   return (
