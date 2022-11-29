@@ -11,15 +11,28 @@ import {
   viewCart,
 } from "../../page/Layout/layout.reducer";
 import { TOKEN_KEY, USER_INFO } from "../../page/utils/contants";
+import PaginationPage from "../../page/utils/Pagination";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import React, { useState, useEffect } from "react";
+import { getDataFeatureProduct } from "../../page/Home/home.reducer";
 
 const FeatureProduct = () => {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const dataFeatureProduct = useAppSelector(
-    (state) => state.homeReducer.dataFeatureProduct
+  const { dataFeatureProduct, totalFeature } = useAppSelector(
+    (state) => state.homeReducer
   );
+  useEffect(() => {
+    dispatch(
+      getDataFeatureProduct({
+        value: { enums: "PRODUCT_LASTEST" },
+        total: { page: page - 1, pageSize },
+      })
+    );
+  }, [dispatch, page, pageSize]);
   const handleAddToCart = (item: any) => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) {
@@ -55,9 +68,9 @@ const FeatureProduct = () => {
           customerId: userInfo?.customerId,
           productId: id,
         })
-      ).then(res => {
-        if(res.meta.requestStatus === 'fulfilled') {
-          toast.success("Thêm sản phẩm yêu thích thành công")
+      ).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          toast.success("Thêm sản phẩm yêu thích thành công");
         }
       });
     }
@@ -118,6 +131,15 @@ const FeatureProduct = () => {
             </Col>
           ))}
         </Row>
+      </div>
+      <div>
+        <PaginationPage
+          page={page}
+          pageSize={pageSize}
+          total={totalFeature}
+          setPage={setPage}
+          setPageSize={setPageSize}
+        />
       </div>
     </div>
   );

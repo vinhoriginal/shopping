@@ -82,7 +82,17 @@ const Layout = () => {
               <span>{userInfo.phone}</span>
             </Col>
             <Col
-              span={12}
+              span={6}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <span style={{ cursor: "pointer" }}>Thông tin tài khoản</span>
+            </Col>
+            <Col
+              span={6}
               style={{
                 display: "flex",
                 justifyContent: "flex-end",

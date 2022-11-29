@@ -1,19 +1,38 @@
 import { Col, Row } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import cart from "../../assets/cart.png";
 import group2 from "../../assets/Group2.png";
 import heart from "../../assets/heart.png";
 import { IFormUserInfo } from "../../model/userInfo.model";
-import { addToCard, addToLike, viewCart } from "../../page/Layout/layout.reducer";
+import { getDataTop } from "../../page/Home/home.reducer";
+import {
+  addToCard,
+  addToLike,
+  viewCart,
+} from "../../page/Layout/layout.reducer";
 import { TOKEN_KEY, USER_INFO } from "../../page/utils/contants";
+import PaginationPage from "../../page/utils/Pagination";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const LeatestProducts = () => {
-  const { dataTopProduct } = useAppSelector((state) => state.homeReducer);
-  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const dispatch = useAppDispatch();
+  const { dataTopProduct, totalLatest } = useAppSelector(
+    (state) => state.homeReducer
+  );
+  useEffect(() => {
+    dispatch(
+      getDataTop({
+        value: { enums: "PRODUCT_TOP" },
+        total: { page: page - 1, pageSize },
+      })
+    );
+  }, [dispatch, page, pageSize]);
+  const navigate = useNavigate();
   const handleAddToCart = (item: any) => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) {
@@ -46,9 +65,9 @@ const LeatestProducts = () => {
           customerId: userInfo?.customerId,
           productId: id,
         })
-      ).then(res => {
-        if(res.meta.requestStatus === 'fulfilled') {
-          toast.success("Thêm sản phẩm yêu thích thành công")
+      ).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          toast.success("Thêm sản phẩm yêu thích thành công");
         }
       });
     }
@@ -83,7 +102,11 @@ const LeatestProducts = () => {
                     />
                   </div>
                   <div className="heart">
-                    <img src={heart} alt="heart" onClick={() => handleAddToLike(item.id)} />
+                    <img
+                      src={heart}
+                      alt="heart"
+                      onClick={() => handleAddToLike(item.id)}
+                    />
                   </div>
                 </div>
                 <div className="img-product">
@@ -106,6 +129,13 @@ const LeatestProducts = () => {
           ))}
         </Row>
       </div>
+      <PaginationPage
+        page={page}
+        pageSize={pageSize}
+        total={totalLatest}
+        setPage={setPage}
+        setPageSize={setPageSize}
+      />
     </div>
   );
 };

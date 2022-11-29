@@ -96,6 +96,7 @@ export const RATING_ITEM = [
       require("../../assets/rate.png"),
       require("../../assets/rate.png"),
     ],
+    rate: 5,
   },
   {
     isChecked: false,
@@ -107,6 +108,7 @@ export const RATING_ITEM = [
       require("../../assets/rate.png"),
       require("../../assets/rate-none.png"),
     ],
+    rate: 4,
   },
   {
     isChecked: false,
@@ -118,6 +120,7 @@ export const RATING_ITEM = [
       require("../../assets/rate-none.png"),
       require("../../assets/rate-none.png"),
     ],
+    rate: 3,
   },
   {
     isChecked: false,
@@ -129,6 +132,7 @@ export const RATING_ITEM = [
       require("../../assets/rate-none.png"),
       require("../../assets/rate-none.png"),
     ],
+    rate: 2,
   },
   {
     isChecked: false,
@@ -140,6 +144,7 @@ export const RATING_ITEM = [
       require("../../assets/rate-none.png"),
       require("../../assets/rate-none.png"),
     ],
+    rate: 1,
   },
 ];
 
@@ -186,21 +191,29 @@ export const PRICE_FILTER = [
     isChecked: false,
     name: "$0.00 - $150.00",
     value: "$0.00 - $150.00",
+    from: "0.00",
+    to: "150.00",
   },
   {
     isChecked: false,
     name: "$150.00 - $350.00",
     value: "$150.00 - $350.00",
+    from: "150.00",
+    to: "350.00",
   },
   {
     isChecked: false,
     name: "$150.00 - $504.00",
     value: "$150.00 - $504.00",
+    from: "150.00",
+    to: "504.00",
   },
   {
     isChecked: false,
     name: "$450.00 +",
     value: "$450.00",
+    from: "450.00",
+    to: "",
   },
 ];
 
