@@ -1,9 +1,10 @@
-import { Checkbox } from "antd";
+import { Checkbox, Input } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cart from "../../assets/cart.png";
 import heart from "../../assets/heart.png";
+import { IFormBodyProducts } from "../../model/products.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
@@ -13,30 +14,34 @@ import {
 } from "../Home/home.reducer";
 import { addToCard, viewCart } from "../Layout/layout.reducer";
 import {
-  CATAGORIES,
   DISCOUNT_OFFER,
   PRICE_FILTER,
-  PRODUCT_BRAND,
   RATING_ITEM,
   TOKEN_KEY,
   USER_INFO,
 } from "../utils/contants";
+import PaginationPage from "../utils/Pagination";
 import "./products.scss";
 const Products = () => {
-  const [dataSearchProducts, setDataSearchProducts] = useState({
+  const [valueSearch, setValueSearch] = useState<IFormBodyProducts>({
+    enums: "PRODUCT_MULTI_SEARCH",
+    name: "",
     brandId: [],
     categoryId: [],
     star: [],
     fromPrice: "",
     toPrice: "",
   });
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const searchProducts = useAppSelector(
-    (state) => state.homeReducer.dataSearchProducts
+  const { dataBrand, dataCategory, dataSearchProducts, total } = useAppSelector(
+    (state) => state.homeReducer
   );
   const handleChangeProductBrand = (checkedValues: CheckboxValueType[]) => {
-    console.log("checkedValues", checkedValues);
+    setValueSearch((oldState) => ({ ...oldState, brandId: checkedValues }));
+    setPage(1);
   };
   const handleAddToCart = (item: any) => {
     const token = localStorage.getItem(TOKEN_KEY);
@@ -58,22 +63,25 @@ const Products = () => {
     }
   };
   useEffect(() => {
-    Promise.all([
-      dispatch(
-        searchDataProducts({
-          enums: "PRODUCT_MULTI_SEARCH",
-          name: "",
-          brandId: [],
-          categoryId: [],
-          star: [],
-          fromPrice: "",
-          toPrice: "",
-        })
-      ),
-      dispatch(getBrand()),
-      dispatch(getCategory()),
-    ]);
+    Promise.all([dispatch(getBrand()), dispatch(getCategory())]);
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      searchDataProducts({ valueSearch, total: { page: page - 1, pageSize } })
+    );
+  }, [valueSearch, page, pageSize, dispatch]);
+  const handleChangeRating = (checkedValues: CheckboxValueType[]) => {
+    setValueSearch((oldState) => ({ ...oldState, star: checkedValues }));
+    setPage(1);
+  };
+  const handleChangeCategory = (checkedValues: CheckboxValueType[]) => {
+    setValueSearch((oldState) => ({ ...oldState, categoryId: checkedValues }));
+    setPage(1);
+  };
+  const handleChangePrice = (checkedValues: CheckboxValueType[]) => {
+    console.log("checkedValues", checkedValues);
+  };
   return (
     <div>
       <div className="products-title">
@@ -85,9 +93,9 @@ const Products = () => {
             <span>Products Brand</span>
             <div className="item-filter">
               <Checkbox.Group onChange={handleChangeProductBrand}>
-                {PRODUCT_BRAND.map((item) => (
-                  <div key={item.value}>
-                    <Checkbox value={item.value} />
+                {dataBrand.map((item) => (
+                  <div key={item.id}>
+                    <Checkbox value={item.id} />
                     <span>{item.name}</span>
                   </div>
                 ))}
@@ -107,10 +115,10 @@ const Products = () => {
           </div>
           <div className="rating-item title">
             <span>Rating Item</span>
-            <Checkbox.Group>
+            <Checkbox.Group onChange={handleChangeRating}>
               {RATING_ITEM.map((item) => (
                 <div key={item.total}>
-                  <Checkbox value={item.total} />
+                  <Checkbox value={item.rate} />
                   {item.image.map((img, index) => (
                     <img src={img} alt="star" key={index} />
                   ))}
@@ -121,10 +129,10 @@ const Products = () => {
           </div>
           <div className="catagories title">
             <span>Categories</span>
-            <Checkbox.Group>
-              {CATAGORIES.map((item) => (
-                <div key={item.value}>
-                  <Checkbox value={item.value} />
+            <Checkbox.Group onChange={handleChangeCategory}>
+              {dataCategory.map((item) => (
+                <div key={item.id}>
+                  <Checkbox value={item.id} />
                   <span>{item.name}</span>
                 </div>
               ))}
@@ -132,18 +140,27 @@ const Products = () => {
           </div>
           <div className="price-filter title">
             <span>Price Filter</span>
-            <Checkbox.Group>
+            <Checkbox.Group onChange={handleChangePrice}>
               {PRICE_FILTER.map((item) => (
                 <div key={item.value}>
-                  <Checkbox value={item.value} />
+                  <Checkbox value={`${item.from} - ${item.to}`} name="price" />
                   <span>{item.name}</span>
                 </div>
               ))}
             </Checkbox.Group>
           </div>
+          <div>
+            <Input
+              placeholder="Tên sản phẩm"
+              value={valueSearch.name}
+              onChange={(e) =>
+                setValueSearch({ ...valueSearch, name: e.target.value })
+              }
+            />
+          </div>
         </div>
         <div className="item-info">
-          {searchProducts.map((item) => (
+          {dataSearchProducts.map((item) => (
             <div key={item.id}>
               <div>
                 <img
@@ -175,6 +192,13 @@ const Products = () => {
               </div>
             </div>
           ))}
+          <PaginationPage
+            page={page}
+            pageSize={pageSize}
+            total={total}
+            setPage={setPage}
+            setPageSize={setPageSize}
+          />
         </div>
       </div>
     </div>

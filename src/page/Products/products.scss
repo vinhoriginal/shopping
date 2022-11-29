@@ -61,6 +61,9 @@
 }
 
 .item-info {
+  & > div:last-child {
+    justify-content: center;
+  }
   & > div {
     background: #ffffff;
     box-shadow: 0px 0px 20px 5px rgba(248, 246, 253, 1);
@@ -108,12 +111,8 @@
   line-height: 14px;
   margin-top: 12px;
   margin-bottom: 12px;
-  & > span:first-child {
-    color: #111c85;
-  }
   & > span:last-child {
     color: #ff2aaa;
-    text-decoration-line: line-through;
     margin-left: 12px;
   }
 }
