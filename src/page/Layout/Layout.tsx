@@ -89,7 +89,12 @@ const Layout = () => {
                 alignContent: "center",
               }}
             >
-              <span style={{ cursor: "pointer" }}>Thông tin tài khoản</span>
+              <span
+                onClick={() => navigate(path.info)}
+                style={{ cursor: "pointer" }}
+              >
+                Thông tin tài khoản
+              </span>
             </Col>
             <Col
               span={6}
