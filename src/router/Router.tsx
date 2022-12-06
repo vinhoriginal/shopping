@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import Blog from "../page/Blog/Blog";
+import ChangeInfo from "../page/ChangeInfo/ChangeInfo";
 import BillingCheckout from "../page/CheckOut/BillingCheckout";
 import CheckOut from "../page/CheckOut/CheckOut";
 import Contact from "../page/Contact/Contact";
@@ -83,6 +84,10 @@ const Router = () => {
         {
           path: path.forgot,
           element: <ForgotPass />,
+        },
+        {
+          path: path.info,
+          element: <ChangeInfo />,
         },
       ],
     },
