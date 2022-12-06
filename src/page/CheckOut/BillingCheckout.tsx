@@ -11,9 +11,12 @@ import {
 } from "antd";
 import moment from "moment";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IFormUserInfo } from "../../model/userInfo.model";
+import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { viewCart } from "../Layout/layout.reducer";
 import { FORMAT_DATE, USER_INFO } from "../utils/contants";
 import {
   buyItem,
@@ -34,6 +37,7 @@ const BillingCheckout = () => {
   const [form] = Form.useForm();
   const districtId = Form.useWatch("district", form);
   const wardId = Form.useWatch("ward", form);
+  const navigate = useNavigate()
   const userInfo: IFormUserInfo = JSON.parse(
     localStorage.getItem(USER_INFO) as string
   );
@@ -125,7 +129,9 @@ const BillingCheckout = () => {
     };
     dispatch(buyItem(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        toast.success("Đặt hàng thành công");
+        toast.success("Đặt hàng thành công")
+        navigate(path.home)
+        dispatch(viewCart());
       }
     });
   };
