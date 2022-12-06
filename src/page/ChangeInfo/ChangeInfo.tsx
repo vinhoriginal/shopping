@@ -9,11 +9,12 @@ import {
   resetDataDistrict,
   resetDataWard,
 } from "../CheckOut/checkout.reducer";
-import { FORMAT_DATE } from "../utils/contants";
+import { FORMAT_DATE, USER_INFO } from "../utils/contants";
 import "../CheckOut/checkout.scss";
 import { updateUser } from "../Home/home.reducer";
 import UploadAvatar from "./UploadAvatar";
 import { RcFile } from "antd/lib/upload";
+import moment from "moment";
 
 const ChangeInfo = () => {
   const [file, setFile] = useState<any>(null);
@@ -60,13 +61,20 @@ const ChangeInfo = () => {
     dispatch(getDataWard(value));
   };
   const handleSubmit = (data: any) => {
+    const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
     const formData = new FormData();
     if (data && Object.keys(data).length) {
       Object.keys(data).forEach((item) => {
-        formData.append(item, data[item]);
+        if (item === "birthday") {
+          formData.append(
+            item,
+            data[item] ? moment(data[item]).format("YYYY-MM-DD") : ''
+          );
+        } else formData.append(item, data[item]);
       });
     }
-    formData.append("image", file);
+    formData.append("customerId", userInfo?.customerId);
+    formData.append("avatar", file);
     dispatch(updateUser(formData));
   };
   return (
