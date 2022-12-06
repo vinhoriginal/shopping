@@ -121,6 +121,12 @@ const checkoutSlice = createSlice({
     resetDataCalculate: (state) => {
       state.dataCalculate = null;
     },
+    resetDataDistrict: (state) => {
+      state.dataDistrict = [];
+    },
+    resetDataWard: (state) => {
+      state.dataWard = [];
+    },
   },
   extraReducers(builder) {
     builder
@@ -143,5 +149,6 @@ const checkoutSlice = createSlice({
 });
 
 const checkoutReducer = checkoutSlice.reducer;
-export const { resetDataCalculate } = checkoutSlice.actions;
+export const { resetDataCalculate, resetDataDistrict, resetDataWard } =
+  checkoutSlice.actions;
 export default checkoutReducer;

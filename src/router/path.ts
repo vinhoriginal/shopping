@@ -14,5 +14,6 @@ const path = {
   listLike: "/list-like",
   detailOrder: "/detail-order/:id",
   forgot: "/forgot-password",
+  info: "/info",
 };
 export default path;

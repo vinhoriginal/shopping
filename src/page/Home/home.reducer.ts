@@ -63,6 +63,14 @@ export const getCategory = createAsyncThunk("home/getCategory", async () => {
   return result;
 });
 
+export const updateUser = createAsyncThunk(
+  "home/updateUser",
+  async (data: any) => {
+    const result = await instance.post("/api/v1/customer/update", data);
+    return result;
+  }
+);
+
 const homeSlice = createSlice({
   name: "home",
   initialState: initState,

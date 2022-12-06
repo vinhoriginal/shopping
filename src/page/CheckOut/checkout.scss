@@ -108,7 +108,7 @@
       border-radius: 3px;
     }
     .ant-btn[disabled] {
-        background-color: #ccc !important;
+      background-color: #ccc !important;
     }
   }
   .shipping {
@@ -193,5 +193,32 @@
       font-size: 20px;
       font-weight: 500;
     }
+  }
+}
+
+.change-info {
+  display: flex;
+}
+.upload-avatar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.upload-outline {
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #19d16f;
+  color: white;
+  cursor: pointer;
+}
+
+.title-avatar {
+  span {
+    font-size: 20px;
+    font-weight: 600;
   }
 }

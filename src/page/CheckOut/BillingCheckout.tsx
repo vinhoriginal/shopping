@@ -10,7 +10,7 @@ import {
   Select,
 } from "antd";
 import moment from "moment";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -22,6 +22,8 @@ import {
   getDataWard,
   getProvince,
   resetDataCalculate,
+  resetDataDistrict,
+  resetDataWard,
   shipFee,
   updateUserInfo,
 } from "./checkout.reducer";
@@ -39,23 +41,10 @@ const BillingCheckout = () => {
     useAppSelector((state) => state.checkoutReducer);
   const { itemProducts } = useAppSelector((state) => state.layoutReducer);
   useEffect(() => {
-    dispatch(
-      shipFee({
-        shop_id: 3333362,
-        from_district: 1542,
-        to_district: 1448,
-      })
-    ).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        form.setFieldsValue({
-          service: (res.payload as any).data.data[0].short_name,
-        });
-      }
-    });
     dispatch(getProvince());
     return () => {
-      dispatch(resetDataCalculate())
-    }
+      dispatch(resetDataCalculate());
+    };
   }, []);
   const handleSubmit = (data: any) => {
     const formData = new FormData();
@@ -72,14 +61,35 @@ const BillingCheckout = () => {
   };
   const handleChangeProvince = (value: any) => {
     if (!value) {
-      return form.setFieldsValue({ district: undefined, ward: undefined });
+      form.setFieldsValue({
+        district: undefined,
+        ward: undefined,
+        service: undefined,
+      });
+      dispatch(resetDataDistrict());
+      dispatch(resetDataWard());
+      return;
     }
     dispatch(getDataDistrict(value));
   };
   const handleChangeDistrict = (value: any) => {
     if (!value) {
-      return form.setFieldsValue({ ward: undefined });
+      dispatch(resetDataWard());
+      return form.setFieldsValue({ ward: undefined, service: undefined });
     }
+    dispatch(
+      shipFee({
+        shop_id: 3333362,
+        from_district: 1542,
+        to_district: value,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        form.setFieldsValue({
+          service: (res.payload as any).data.data[0].short_name,
+        });
+      }
+    });
     dispatch(getDataWard(value));
   };
   const validateDate = (_: any, value: any) => {
@@ -96,7 +106,7 @@ const BillingCheckout = () => {
   const handleCalculateShip = () => {
     const data = {
       service_id: dataShipFee[0]?.service_id,
-      from_district_id: 1454,
+      from_district_id: 1542,
       insurance_value: itemProducts?.subTotal,
       to_district_id: districtId,
       to_ward_code: wardId,
@@ -403,7 +413,10 @@ const BillingCheckout = () => {
                   <div className="total">
                     <span>Tổng:</span>
                     <span>
-                      ${itemProducts?.subTotal + dataCalculate?.total ? itemProducts?.subTotal + dataCalculate?.total : ''}
+                      $
+                      {itemProducts?.subTotal + dataCalculate?.total
+                        ? itemProducts?.subTotal + dataCalculate?.total
+                        : ""}
                     </span>
                   </div>
                   <Checkbox className="shipping-checkbox">
