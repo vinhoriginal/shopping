@@ -11,17 +11,19 @@ import {
 } from "../CheckOut/checkout.reducer";
 import { FORMAT_DATE, USER_INFO } from "../utils/contants";
 import "../CheckOut/checkout.scss";
-import { updateUser } from "../Home/home.reducer";
+import { updatePassword, updateUser } from "../Home/home.reducer";
 import UploadAvatar from "./UploadAvatar";
 import { RcFile } from "antd/lib/upload";
 import moment from "moment";
 
 const ChangeInfo = () => {
+  const [isChangePassword, setIsChangePassword] = useState(false)
   const [file, setFile] = useState<any>(null);
   const [urlFile, setUrlFile] = useState("");
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-  const { dataProvince, dataDistrict, dataWard, dataShipFee, dataCalculate } =
+  const newPassword = Form.useWatch('newPassword', form)
+  const { dataProvince, dataDistrict, dataWard } =
     useAppSelector((state) => state.checkoutReducer);
   useEffect(() => {
     dispatch(getProvince());
@@ -40,6 +42,14 @@ const ChangeInfo = () => {
     }
     return Promise.resolve();
   };
+  const validateConfirmPassword = (_: any, value: any) => {
+    if (!value) return Promise.resolve()
+    if (value === newPassword) return Promise.resolve()
+    if (value !== newPassword) {
+      return Promise.reject('Nhập lại mật khẩu không đúng')
+    }
+    return Promise.resolve()
+  }
   const handleChangeProvince = (value: any) => {
     if (!value) {
       form.setFieldsValue({
@@ -62,6 +72,15 @@ const ChangeInfo = () => {
   };
   const handleSubmit = (data: any) => {
     const userInfo = JSON.parse(localStorage.getItem(USER_INFO) as string);
+    if (isChangePassword) {
+      dispatch(updatePassword({ ...data, customerId: userInfo?.customerId })).then(res => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          form.resetFields()
+          setIsChangePassword(false)
+        }
+      })
+      return
+    }
     const formData = new FormData();
     if (data && Object.keys(data).length) {
       Object.keys(data).forEach((item) => {
@@ -77,6 +96,7 @@ const ChangeInfo = () => {
     formData.append("avatar", file);
     dispatch(updateUser(formData));
   };
+  console.log('hello')
   return (
     <div className="billing-address change-info">
       <Form
@@ -84,8 +104,9 @@ const ChangeInfo = () => {
         style={{ width: "50%" }}
         requiredMark={false}
         onFinish={handleSubmit}
+        form={form}
       >
-        <Row gutter={12}>
+        {!isChangePassword ? <Row gutter={12}>
           <Col span={24}>
             <Form.Item
               name="fullName"
@@ -272,13 +293,70 @@ const ChangeInfo = () => {
               </Button>
             </Form.Item>
           </Col>
-        </Row>
+        </Row> : <>
+          <Row>
+            <Col span={24}>
+              <Form.Item
+                name="oldPassword"
+                label={<span className="label-title">Mật khẩu cũ</span>}
+                rules={[
+                  {
+                    required: true,
+                    message: "Mật khẩu cũ không được để trống",
+                  },
+                ]}
+              >
+                <Input type='password' bordered={false} allowClear className="custom-inp" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name="newPassword"
+                label={<span className="label-title">Mật khẩu mới</span>}
+                rules={[
+                  {
+                    required: true,
+                    message: "Mật khẩu mới không được để trống",
+                  },
+                ]}
+              >
+                <Input type='password' bordered={false} allowClear className="custom-inp" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name="confirmPassword"
+                label={<span className="label-title">Xác nhận mật khẩu mới</span>}
+                rules={[
+                  {
+                    required: true,
+                    message: "Xác nhận mật khẩu mới không được để trống",
+                  },
+                  {
+                    validator: validateConfirmPassword
+                  }
+                ]}
+              >
+                <Input type='password' bordered={false} allowClear className="custom-inp" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item>
+                <Button type="link" className="custom-btn" htmlType="submit">
+                  Đổi mật khẩu
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
+        </>}
       </Form>
       <div style={{ width: "50%" }}>
         <UploadAvatar
           setFile={setFile}
           urlFile={urlFile}
           setUrlFile={setUrlFile}
+          setIsChangePassword={setIsChangePassword}
+          isChangePassword={isChangePassword}
         />
       </div>
     </div>

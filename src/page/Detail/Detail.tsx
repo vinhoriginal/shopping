@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import heart from "../../assets/heart.png";
 import nonStar from "../../assets/rate-none.png";
 import star from "../../assets/rate.png";
@@ -61,6 +62,7 @@ const Detail = () => {
         })
       ).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
+          toast.success('Thêm sản phẩm vào giỏ hàng thành công')
           dispatch(viewCart());
         }
       });
