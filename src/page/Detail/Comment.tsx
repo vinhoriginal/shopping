@@ -101,7 +101,7 @@ const Comment = ({
         dispatch(
           updateComment({
             commentId,
-            customerId: userInfo.customerId,
+            customerId: userInfo?.customerId || userInfo?.userId,
             content: valueInput,
             productId: params.id,
           })
@@ -126,7 +126,7 @@ const Comment = ({
         dispatch(
           addComment({
             content: valueInput,
-            customerId: userInfo.customerId,
+            customerId: userInfo?.customerId || userInfo?.userId,
             productId: params.id,
             star: valueStar,
             replyCommentId: replyCommentIdChild,
@@ -148,7 +148,7 @@ const Comment = ({
         dispatch(
           addComment({
             content: valueInput,
-            customerId: userInfo.customerId,
+            customerId: userInfo?.customerId || userInfo?.userId,
             productId: params.id,
             star: 4,
           })
@@ -226,7 +226,7 @@ const Comment = ({
                 </span>
                 <span>{item?.content}</span>
                 <div className="edit-reply">
-                  {userInfo?.customerId === item?.customerDTO?.customerId ? (
+                  {(userInfo?.customerId || userInfo?.userId) === (item?.customerDTO?.customerId || item?.customerDTO?.userId) ? (
                     <span
                       onClick={() =>
                         handleEditComment(item.commentId, item.content)
@@ -275,7 +275,7 @@ const Comment = ({
                       </span>
                       <span>{item?.content}</span>
                       <div className="edit-reply">
-                        {userInfo.customerId === item.customerDTO.customerId ? (
+                        {(userInfo?.customerId || userInfo?.userId) === (item?.customerDTO?.customerId || item?.customerDTO?.userId) ? (
                           <span
                             onClick={() =>
                               handleEditComment(item.commentId, item.content)
