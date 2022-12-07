@@ -11,12 +11,13 @@ export interface IFormComment {
   lastModifiedDate:number | Date
 }
 export interface IFormCustomerDTO {
+  userId?: string
   allowReceiveExcel: string;
   allowReceivePdf: string;
   birthday: string;
   createdBy: string;
   createdDate: string;
-  customerId: string;
+  customerId?: string;
   deptId: string;
   deptName: string;
   email: string;
