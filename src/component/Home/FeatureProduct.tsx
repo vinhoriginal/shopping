@@ -78,7 +78,7 @@ const FeatureProduct = () => {
   return (
     <div>
       <div className="featured-title">
-        <span>Latest Products</span>
+        <span>SẢN PHẨM MỚI</span>
       </div>
       <div className="featured-products">
         <Row
@@ -124,8 +124,8 @@ const FeatureProduct = () => {
                 <div className="title">
                   <span>{item?.name}</span>
                   <img src={group2} alt="group2" />
-                  <span>Code - Y523201</span>
-                  <span>${item?.price}</span>
+                  <span className ='product_item' >{item?.code}</span>
+                  <span className='product_price'>{item?.price} VND</span>
                 </div>
               </div>
             </Col>
