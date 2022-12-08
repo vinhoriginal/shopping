@@ -75,7 +75,7 @@ const LeatestProducts = () => {
   return (
     <div style={{ marginTop: "50px" }}>
       <div className="featured-title">
-        <span>TOP Products</span>
+        <span>SẢN PHẨM BÁN CHẠY</span>
       </div>
       <div className="featured-products">
         <Row
@@ -121,8 +121,8 @@ const LeatestProducts = () => {
                 <div className="title">
                   <span>{item?.name}</span>
                   <img src={group2} alt="group2" />
-                  <span>Code - Y523201</span>
-                  <span>${item?.price}</span>
+                  <span className ='product_item' >{item?.code}</span>
+                  <span className='product_price'>{item?.price} VND</span>
                 </div>
               </div>
             </Col>

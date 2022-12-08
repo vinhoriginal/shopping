@@ -1,4 +1,4 @@
-import { Checkbox, Input } from "antd";
+import { Button, Checkbox, Input } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,12 @@ import { addToCard, viewCart } from "../Layout/layout.reducer";
 import {
   DISCOUNT_OFFER,
   PRICE_FILTER,
+  PRODUCTS,
+  PRODUCT_BRANDS,
+  PRODUCT_CATEGORY,
+  PRODUCT_DISCOUNT,
+  PRODUCT_PRICE_FILTER,
+  PRODUCT_STAR,
   RATING_ITEM,
   TOKEN_KEY,
   USER_INFO,
@@ -85,12 +91,14 @@ const Products = () => {
   return (
     <div>
       <div className="products-title">
-        <span>Products</span>
+        <span style={{ color: "#151875", fontFamily: "Segoe UI" }}>
+          {PRODUCTS}
+        </span>
       </div>
       <div className="container-products">
         <div>
           <div className="product-brand title">
-            <span>Products Brand</span>
+            <span>{PRODUCT_BRANDS}</span>
             <div className="item-filter">
               <Checkbox.Group onChange={handleChangeProductBrand}>
                 {dataBrand.map((item) => (
@@ -103,7 +111,7 @@ const Products = () => {
             </div>
           </div>
           <div className="discount-offer title">
-            <span>Discount Offer</span>
+            <span>{PRODUCT_DISCOUNT}</span>
             <Checkbox.Group>
               {DISCOUNT_OFFER.map((item) => (
                 <div key={item.value}>
@@ -114,7 +122,7 @@ const Products = () => {
             </Checkbox.Group>
           </div>
           <div className="rating-item title">
-            <span>Rating Item</span>
+            <span>{PRODUCT_STAR}</span>
             <Checkbox.Group onChange={handleChangeRating}>
               {RATING_ITEM.map((item) => (
                 <div key={item.total}>
@@ -122,13 +130,13 @@ const Products = () => {
                   {item.image.map((img, index) => (
                     <img src={img} alt="star" key={index} />
                   ))}
-                  <span>{`(${item.total})`}</span>
+                  <span style={{fontSize:"18px"}}>{`(${item.total})`}</span>
                 </div>
               ))}
             </Checkbox.Group>
           </div>
           <div className="catagories title">
-            <span>Categories</span>
+            <span>{PRODUCT_CATEGORY}</span>
             <Checkbox.Group onChange={handleChangeCategory}>
               {dataCategory.map((item) => (
                 <div key={item.id}>
@@ -139,7 +147,7 @@ const Products = () => {
             </Checkbox.Group>
           </div>
           <div className="price-filter title">
-            <span>Price Filter</span>
+            <span>{PRODUCT_PRICE_FILTER}</span>
             <Checkbox.Group onChange={handleChangePrice}>
               {PRICE_FILTER.map((item) => (
                 <div key={item.value}>
@@ -174,20 +182,21 @@ const Products = () => {
                 <span>{item?.name}</span>
                 <div className="price">
                   <span>${item.price}</span>
-                  {item?.oldPrice ? <span>${item?.oldPrice}</span> : null}
+                  {item?.ourPrice ? <span>${item?.ourPrice}</span> : null}
                 </div>
                 <span>{item?.description}</span>
                 <div className="image-products">
-                  <div>
+                  <div className="item_hover">
                     <img
                       src={cart}
                       alt="cart"
                       onClick={() => handleAddToCart(item)}
                     />
                   </div>
-                  <div>
+                  <div className="item_hover">
                     <img src={heart} alt="heart" />
                   </div>
+                  <Button className="item_hover" onClick={() => navigate(`/detail/${item.id}`)} type="primary" style={{backgroundColor:"#19D16F", border:"none", borderRadius:"5px"}}>Xem chi tiết</Button>
                 </div>
               </div>
             </div>

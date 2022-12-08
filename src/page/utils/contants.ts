@@ -9,22 +9,22 @@ export const FORMAT_DATE = {
   DDMMYYYY: "DD/MM/YYYY",
 };
 export const TAB_MENU = [
-  { name: "Home", key: "home", path: "/home" },
+  { name: "Trang chủ", key: "home", path: "/home" },
+  // {
+  //   name: "Pages",
+  //   key: "pages",
+  //   path: "/pages",
+  // },
   {
-    name: "Pages",
-    key: "pages",
-    path: "/pages",
-  },
-  {
-    name: "Products",
+    name: "Danh mục sản phẩm",
     key: "products",
     path: "/products",
   },
-  {
-    name: "Blog",
-    key: "blog",
-    path: "/blog",
-  },
+  // {
+  //   name: "Blog",
+  //   key: "blog",
+  //   path: "/blog",
+  // },
   {
     name: "Lịch sử mua hàng",
     key: "history",
@@ -232,3 +232,9 @@ export const FAKE_PRODUCTS_ITEM = [
 
 export const VALUE_MEMO = "asdasfsdg";
 export const VALUE_INP_COMMENT = "sdgvbcnvbcn";
+export const PRODUCTS = "TẤT CẢ SẢN PHẨM";
+export const PRODUCT_BRANDS = "Nhãn hàng";
+export const PRODUCT_CATEGORY = "Danh mục sản phẩm";
+export const PRODUCT_STAR = "Đánh giá sản phẩm";
+export const PRODUCT_DISCOUNT = "Khuyến mãi";
+export const PRODUCT_PRICE_FILTER = "Lọc giá sản phẩm";

@@ -29,7 +29,7 @@
 .title {
   & > span:first-child {
     font-family: "Josefin Sans";
-    font-size: 20px;
+    font-size: 34px;
     line-height: 30px;
     text-align: center;
     color: #151875;
@@ -47,10 +47,10 @@
       font-family: "Lato";
       font-style: normal;
       font-weight: 400;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 30px;
       text-align: center;
-      color: #7e81a2;
+      color: #000000;
     }
   }
 }
@@ -131,4 +131,17 @@
     box-shadow: 0px 0px 25px rgb(0 0 0 / 10%);
     margin-right: 8px;
   }
+}
+.item_hover:hover,
+.item_hover:focus{
+  background:#63eb90;
+  animation: pulse 1s;
+  box-shadow: 0 0 0 2em rgba(rgb(255, 255, 255),0);
+}
+.item_hover .heart:focus,
+.item_hover .heart:hover{
+  background:#ff2aaa;
+}
+@keyframes item_hover {
+  0% { box-shadow: 0 0 0 0 var(--hover); }
 }

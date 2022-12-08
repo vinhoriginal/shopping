@@ -65,6 +65,7 @@ const Layout = () => {
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
+                fontSize:"20px"
               }}
             >
               <MailOutlined />
@@ -76,6 +77,7 @@ const Layout = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                fontSize: "20px"
               }}
             >
               <PhoneOutlined />
@@ -87,11 +89,12 @@ const Layout = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignContent: "center",
+                fontSize:"20px"
               }}
             >
               <span
                 onClick={() => navigate(path.info)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", fontSize: "20px" }}
               >
                 Thông tin tài khoản
               </span>
@@ -102,6 +105,7 @@ const Layout = () => {
                 display: "flex",
                 justifyContent: "flex-end",
                 alignItems: "center",
+                fontSize: "20px"
               }}
             >
               <div className="header-cart" onClick={handleToCart}>
@@ -128,7 +132,7 @@ const Layout = () => {
                 <span
                   onClick={() => handleChangeTab(item)}
                   key={item.key}
-                  style={{ color: keyActive === item.path ? "#FB2E86" : "" }}
+                  style={{ color: keyActive === item.path ? "#FB2E86" : "", fontSize:20, fontFamily:"Segoe UI" }}
                 >
                   {item.name}
                 </span>

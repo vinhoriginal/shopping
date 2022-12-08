@@ -38,6 +38,7 @@ export interface IFormCustomerDTO {
   username: string;
 }
 export interface IFormDetailProducts {
+  ourPrice: number;
   code: string;
   description: string;
   expiredDate: string;
