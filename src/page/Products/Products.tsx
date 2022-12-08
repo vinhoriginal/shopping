@@ -179,10 +179,10 @@ const Products = () => {
                 />
               </div>
               <div className="info">
-                <span>{item?.name}</span>
-                <div className="price">
+                <span style={{fontSize:"18px", fontFamily:"Segoe UI", color:"#333", fontWeight:"400"}}>{item?.name}</span>
+                <div style={{fontSize:"20px", fontFamily:"Segoe UI", color:"#333", fontWeight:"400"}} className="price">
                   <span>${item.price}</span>
-                  {item?.ourPrice ? <span>${item?.ourPrice}</span> : null}
+                  {item?.ourPrice ? <span style={{color:"#ff2aaa"}}>${item?.ourPrice}</span> : null}
                 </div>
                 <span>{item?.description}</span>
                 <div className="image-products">

@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -69,9 +70,9 @@ const Detail = () => {
     }
   };
   return (
-    <div>
+    <div className="detail-page">
       <div className="details">
-        <span>Products Details</span>
+        <span style={{fontFamily:"Segoe UI"}}>Chi tiết sản phẩm</span>
       </div>
       <div>
         <div className="details-products">
@@ -84,7 +85,7 @@ const Detail = () => {
             />
           </div>
           <div>
-            <span>{dataDetail?.name}</span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", textAlign:"start"}}>{dataDetail?.name}</span>
             <div className="star">
               <div>
                 {starImage.map((item, index) => (
@@ -94,21 +95,21 @@ const Detail = () => {
               <span>(22)</span>
             </div>
             <div className="price">
-              <span>${dataDetail?.price}</span>
-              <span></span>
+              <span style={{fontSize:"20px",fontFamily:"Segoe UI"}} >{dataDetail?.price} VND</span>
+              <span style={{fontSize:"20px",fontFamily:"Segoe UI",color:"#ff2aaa"}}>{dataDetail?.ourPrice} VND</span>
             </div>
-            <span className="description">{dataDetail?.description}</span>
+            <span style={{fontSize:"15px",fontFamily:"Segoe UI"}} className="description">{dataDetail?.description}</span>
             <div className="add-to-cart">
-              <span onClick={handleAddToCart}>Add To Cart</span>
+            <Button onClick={handleAddToCart} type="primary" style={{backgroundColor:"#19D16F", border:"none", borderRadius:"5px", marginRight:"5px"}}>Thêm vào giỏ hàng</Button>
               <div className="heart">
                 <img src={heart} alt="heart" />
               </div>
             </div>
-            <span className="category">
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI"}} className="category">
               Category: {dataDetail?.productType?.name}
             </span>
-            <span className="tags">Tags</span>
-            <span className="share">Share</span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI"}} className="tags">Tags</span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI"}} className="share">Share</span>
           </div>
         </div>
       </div>
