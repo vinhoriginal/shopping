@@ -20,7 +20,7 @@ const ListLike = () => {
   }, [dispatch, userInfo.customerId]);
   const columns: ColumnsType<any> = [
     {
-      title: <span className="cart-title">Products</span>,
+      title: <span className="cart-title">Sản phẩm</span>,
       dataIndex: "",
       render: (_, record) => (
         <div style={{ display: "flex" }}>
@@ -43,7 +43,7 @@ const ListLike = () => {
           <div
             style={{ display: "flex", flexDirection: "column", width: "50%" }}
           >
-            <span className="cart-title" style={{ fontSize: "16px" }}>
+            <span className="cart-title">
               {record?.name}
             </span>
             <div
@@ -54,14 +54,14 @@ const ListLike = () => {
                 margin: "8px 0",
               }}
             >
-              <span className="cart-title" style={{ fontSize: "16px" }}>
+              <span className="cart-title">
                 {record?.productType?.name}
               </span>
-              <span className="cart-title" style={{ fontSize: "16px" }}>
+              <span className="cart-title">
                 {record?.price}
               </span>
             </div>
-            <span className="cart-title" style={{ fontSize: "16px" }}>
+            <span className="cart-title">
               {record?.stockQty}
             </span>
           </div>
@@ -69,16 +69,16 @@ const ListLike = () => {
       ),
     },
     {
-      title: <span className="cart-title">Price</span>,
+      title: <span className="cart-title">Giá sản phẩm</span>,
       dataIndex: "price",
       render: (value) => (
-        <span className="cart-title" style={{ fontSize: "16px" }}>
+        <span className="cart-title">
           {value}
         </span>
       ),
     },
     {
-      title: <span className="cart-title">Rate</span>,
+      title: <span className="cart-title">Chất lượng</span>,
       dataIndex: "star",
       render: (value) => {
         const arrStar = Array.from({ length: value }, () =>
@@ -120,7 +120,7 @@ const ListLike = () => {
     <div>
       <div style={{ textAlign: "end" }}>
         <Button
-          style={{ width: "100px", background: "#fb2e86", color: "white" }}
+          style={{ width: "100px", background: "#fb2e86", color: "white" ,borderRadius:"5px"}}
           type="link"
           onClick={handleCancelLike}
         >

@@ -238,3 +238,18 @@ export const PRODUCT_CATEGORY = "Danh mục sản phẩm";
 export const PRODUCT_STAR = "Đánh giá sản phẩm";
 export const PRODUCT_DISCOUNT = "Khuyến mãi";
 export const PRODUCT_PRICE_FILTER = "Lọc giá sản phẩm";
+export const CANCEL_ORDER = "Huỷ đơn đặt hàng";
+export const CANCEL_ORDER_CONFIRM = "Bạn có chắc muốn hủy đơn hàng?";
+
+
+//common css
+export const FONT_SIZE_TITLE="45px";
+export const FONT_SIZE_NAME="20px";
+export const FONT_SIZE_DES="18px";
+export const FONT_SIZE="18px";
+export const FONT_FAMILY="Segoe UI"
+export const FONT_WEIGHT="400"
+export const MARGIN_LEFT="15px"
+export const MARGIN_BOTTOM="20px"
+export const COLOR_TITLE="#0d0e43"
+export const COLOR_SPAN="#0d0e43"
