@@ -50,7 +50,7 @@ const Login = () => {
           <Col span={24}>
             <Form.Item
               name="username"
-              label="Username"
+              label="Tên đăng nhập"
               rules={[
                 {
                   required: true,
@@ -64,7 +64,7 @@ const Login = () => {
           <Col span={24}>
             <Form.Item
               name="password"
-              label="Password"
+              label="Mật khẩu"
               rules={[
                 {
                   required: true,
@@ -88,7 +88,7 @@ const Login = () => {
                 htmlType="submit"
                 style={{ background: "#FB2E86", borderColor: "#FB2E86" }}
               >
-                Login
+                Đăng nhập
               </Button>
             </Form.Item>
           </Col>

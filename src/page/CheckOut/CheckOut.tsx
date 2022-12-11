@@ -40,11 +40,13 @@ const CheckOut = () => {
   }, [itemProducts]);
   const columns: ColumnsType<any> = [
     {
-      title: <span className="cart-title" style={{color:"#1d3178",fontFamily: "Lato",
-      fontStyle: "normal",
-      fontWeight: 600,
-      fontSize: "18px",
-      lineHeight: "22px"}}>Sản phẩm</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Sản phẩm</span>,
       dataIndex: "products",
       render(_, record) {
         return (
@@ -57,7 +59,7 @@ const CheckOut = () => {
               />
             </div>
             <div>
-              <span style={{fontFamily:FONT_FAMILY, fontSize:FONT_SIZE, lineHeight:"20px"}} >{record?.product?.name}</span>
+              <span style={{ fontFamily: FONT_FAMILY, fontSize: FONT_SIZE, lineHeight: "20px" }} >{record?.product?.name}</span>
               <span>{PRODUCT_CATEGORY}: {record.product?.productType?.name}</span>
               <span >Số lượng: {record.product?.stockQty}</span>
             </div>
@@ -66,22 +68,26 @@ const CheckOut = () => {
       },
     },
     {
-      title: <span className="cart-title" style={{color:"#1d3178",fontFamily: "Lato",
-      fontStyle: "normal",
-      fontWeight: 600,
-      fontSize: "18px",
-      lineHeight: "22px"}}>Giá tiền</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Giá tiền</span>,
       dataIndex: "price",
       render(_, record) {
         return <span>{record?.product?.price}</span>;
       },
     },
     {
-      title: <span className="cart-title" style={{color:"#1d3178",fontFamily: "Lato",
-      fontStyle: "normal",
-      fontWeight: 600,
-      fontSize: "18px",
-      lineHeight: "22px"}}>Số lượng</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Số lượng</span>,
       dataIndex: "quantity",
       render: (value, record, index) => {
         return (
@@ -102,22 +108,26 @@ const CheckOut = () => {
       },
     },
     {
-      title: <span className="cart-title" style={{color:"#1d3178",fontFamily: "Lato",
-      fontStyle: "normal",
-      fontWeight: 600,
-      fontSize: "18px",
-      lineHeight: "22px"}}>Tổng tiền</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Tổng tiền</span>,
       dataIndex: "total",
       render: (_, record, index) => {
         return record?.product?.price * countItem[index] || 0;
       },
     },
     {
-      title: <span className="cart-title" style={{color:"#1d3178",fontFamily: "Lato",
-      fontStyle: "normal",
-      fontWeight: 600,
-      fontSize: "18px",
-      lineHeight: "22px"}}>Hành động</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Hành động</span>,
       dataIndex: "action",
       render: (_, record) => (
         <div>
@@ -190,6 +200,7 @@ const CheckOut = () => {
   };
   return (
     <>
+      <div>
       <div className="checkout">
         <div className="empty-cart">
           <Button type="primary" danger onClick={handleDeleteAll}>
@@ -206,11 +217,13 @@ const CheckOut = () => {
           </div>
           <div className="checkout-price">
             <div className="cart-total">
-              <span className="title" style={{color:"#1d3178",fontFamily: "Lato",
-    fontStyle: "normal",
-    fontWeight: 600,
-    fontSize: "18px",
-    lineHeight: "22px"}}>Giá trị đơn hàng</span>
+              <span className="title" style={{
+                color: "#1d3178", fontFamily: "Lato",
+                fontStyle: "normal",
+                fontWeight: 600,
+                fontSize: "18px",
+                lineHeight: "22px"
+              }}>Giá trị đơn hàng</span>
               <div>
                 <div className="sub-totals">
                   <span>Giá trị chưa thuế:</span>
@@ -241,6 +254,13 @@ const CheckOut = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="empty-cart">
+
+          <Button type="primary" style={{ backgroundColor: "#FB2E86", borderRadius:"5px", border:"none" }} onClick={handleDeleteAll}>
+            Tiếp tục mua sắm
+          </Button>
         </div>
       </div>
     </>

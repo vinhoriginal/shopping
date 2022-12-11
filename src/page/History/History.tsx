@@ -69,12 +69,13 @@ const History = () => {
       render: (value) => {
         if (value === 0) {
           return (
-            <Tag
-              color="orange"
-              className="cart-title2"
+            <Button
+              type="primary"
+              style={{color:"#fff", borderRadius:"5px"}}
+              danger
             >
               Đợi duyệt
-            </Tag>
+            </Button>
           );
         }
         if (value === 1) {
