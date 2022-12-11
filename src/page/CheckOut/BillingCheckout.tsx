@@ -17,7 +17,7 @@ import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { viewCart } from "../Layout/layout.reducer";
-import { FORMAT_DATE, USER_INFO } from "../utils/contants";
+import { COLOR_SPAN, FONT_FAMILY, FONT_SIZE, FORMAT_DATE, USER_INFO } from "../utils/contants";
 import {
   buyItem,
   calculateShip,
@@ -357,7 +357,7 @@ const BillingCheckout = () => {
                     >
                       <span>Tính gói cước</span>
                     </Button>
-                    <span>Cước: ${dataCalculate?.total}</span>
+                    <span>Cước: {dataCalculate?.total} VND</span>
                   </div>
                 </div>
               </Form.Item>
@@ -367,7 +367,7 @@ const BillingCheckout = () => {
       </div>
       <div
         style={{
-          width: "50%",
+          width: "60%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -392,12 +392,12 @@ const BillingCheckout = () => {
               </div>
               <div className="billing-info">
                 <div>
-                  <span>{item?.product?.name}</span>
-                  <span>Loại sản phẩm: {item?.product?.productType?.name}</span>
-                  <span>Số lượng: {item?.quantity}</span>
+                  <span style={{fontFamily:FONT_FAMILY, fontSize:FONT_SIZE, lineHeight:"20px"}}>{item?.product?.name}</span>
+                  <span style={{fontFamily:FONT_FAMILY, fontSize:"14px", lineHeight:"20px"}}>Loại sản phẩm: {item?.product?.productType?.name}</span>
+                  <span style={{fontFamily:FONT_FAMILY, fontSize:"14px", lineHeight:"20px"}}>Số lượng: {item?.quantity}</span>
                 </div>
                 <div>
-                  <span>Giá tiền: {item?.product?.price}</span>
+                  <span style={{fontFamily:FONT_FAMILY, fontSize:FONT_SIZE, lineHeight:"20px", color:COLOR_SPAN}}>Giá tiền: {item?.product?.price}</span>
                 </div>
               </div>
             </div>
@@ -410,19 +410,18 @@ const BillingCheckout = () => {
                 <div>
                   <div className="sub-totals">
                     <span>Đơn hàng:</span>
-                    <span>${itemProducts?.subTotal}</span>
+                    <span>{itemProducts?.subTotal} VND</span>
                   </div>
                   <div className="tax-rate">
                     <span>Phí ship: </span>
-                    <span>${dataCalculate?.total}</span>
+                    <span>{dataCalculate?.total} VND</span>
                   </div>
                   <div className="total">
                     <span>Tổng:</span>
                     <span>
-                      $
                       {itemProducts?.subTotal + dataCalculate?.total
                         ? itemProducts?.subTotal + dataCalculate?.total
-                        : ""}
+                        : ""} VND
                     </span>
                   </div>
                   <Checkbox className="shipping-checkbox">

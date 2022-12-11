@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IFormDetailProducts } from "../../model/detail.model";
 import { useAppSelector } from "../../store/hooks";
+import { COLOR_SPAN, COLOR_TITLE, FONT_FAMILY, FONT_SIZE_DES, FONT_SIZE_NAME, FONT_SIZE_TITLE } from "../utils/contants";
 
 const RelatedProducts = () => {
   const [relateData, setRelateData] = useState<IFormDetailProducts[]>([]);
@@ -25,7 +26,7 @@ const RelatedProducts = () => {
   return (
     <div className="related-products">
       <div className="details">
-        <span>Related Products</span>
+        <span style={{fontSize:FONT_SIZE_TITLE, fontFamily:FONT_FAMILY,color:COLOR_TITLE}}>Sản phẩm liên quan</span>
       </div>
       <div>
         <Row
@@ -47,14 +48,14 @@ const RelatedProducts = () => {
                 </div>
                 <div className="title">
                   <div>
-                    <span>{item?.name}</span>
+                    <span style={{lineHeight:"20px", fontSize:FONT_SIZE_DES, color:COLOR_SPAN, fontFamily:FONT_FAMILY}}>{item?.name}</span>
                     <div>
                       {item?.arrStar?.map((item, index) => (
                         <img src={item} alt="star" key={index} />
                       ))}
                     </div>
                   </div>
-                  <span>${item?.price}</span>
+                  <span style={{lineHeight:"20px", color:COLOR_SPAN, fontSize:FONT_SIZE_DES, fontFamily:FONT_FAMILY}}>{item?.price} VND</span>
                 </div>
               </div>
             </Col>

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import { useAppDispatch } from "../../store/hooks";
-import { USER_INFO } from "../utils/contants";
+import { FONT_FAMILY, FONT_SIZE_DES, FONT_SIZE_TITLE, USER_INFO } from "../utils/contants";
 import { getListHistoryOrder, reasonCancel } from "./history.reducer";
 
 interface Props {
@@ -60,7 +60,7 @@ const ReasonModal = ({ isOpen, setIsOpen, orderId }: Props) => {
         closable={false}
       >
         <div>
-          <span className="cart-title">Vui lòng nhập lý do hủy đơn hàng</span>
+          <span style={{fontFamily:FONT_FAMILY, fontSize:"40px", lineHeight:"30px"}} className="cart-title">Vui lòng nhập lý do hủy đơn hàng</span>
           <div style={{ marginTop: "12px" }}>
             <TextArea
               rows={4}
