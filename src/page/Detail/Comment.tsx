@@ -220,13 +220,13 @@ const Comment = ({
                 <Avatar src={imageTest} size={50} />
               </div>
               <div>
-                <span>{item?.customerDTO?.fullName}</span>
+                <span>{(item?.customerDTO?.fullName)||(item?.userDTO?.fullName)}</span>
                 <span>
                   <ReactTimeAgo date={item.lastModifiedDate} />
                 </span>
                 <span>{item?.content}</span>
                 <div className="edit-reply">
-                  {(userInfo?.customerId || userInfo?.userId) === (item?.customerDTO?.customerId || item?.customerDTO?.userId) ? (
+                  {(userInfo?.customerId || userInfo?.userId) === (item?.customerDTO?.customerId || item?.userDTO?.userId) ? (
                     <span
                       onClick={() =>
                         handleEditComment(item.commentId, item.content)
@@ -240,7 +240,7 @@ const Comment = ({
                   <span
                     onClick={() =>
                       handleReplyParent(
-                        item.customerDTO.fullName,
+                        item.customerDTO.fullName|| item?.userDTO?.fullName,
                         item.commentId
                       )
                     }
@@ -269,13 +269,13 @@ const Comment = ({
                       <Avatar src={imageTest} size={50} />
                     </div>
                     <div>
-                      <span>{item?.customerDTO?.fullName}</span>
+                      <span>{(item?.customerDTO?.fullName)||(item?.userDTO?.fullName)}</span>
                       <span>
                         <ReactTimeAgo date={item.lastModifiedDate} />
                       </span>
                       <span>{item?.content}</span>
                       <div className="edit-reply">
-                        {(userInfo?.customerId || userInfo?.userId) === (item?.customerDTO?.customerId || item?.customerDTO?.userId) ? (
+                        {(userInfo?.customerId || userInfo?.userId) === (item?.customerDTO?.customerId || item?.userDTO?.userId) ? (
                           <span
                             onClick={() =>
                               handleEditComment(item.commentId, item.content)
@@ -289,7 +289,7 @@ const Comment = ({
                         <span
                           onClick={() =>
                             handleReplyChild(
-                              item.customerDTO.fullName,
+                              item.customerDTO.fullName || item?.userDTO?.fullName,
                               item.commentId
                             )
                           }

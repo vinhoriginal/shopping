@@ -9,8 +9,37 @@ export interface IFormComment {
   replyTo?: string;
   lastModifiedBy:string
   lastModifiedDate:number | Date
+  userDTO: IFormUserDTO
 }
 export interface IFormCustomerDTO {
+  userId?: string
+  allowReceiveExcel: string;
+  allowReceivePdf: string;
+  birthday: string;
+  createdBy: string;
+  createdDate: string;
+  customerId?: string;
+  deptId: string;
+  deptName: string;
+  email: string;
+  employeeCode: string;
+  fullName: string;
+  id: string;
+  idNumber: string;
+  ipAddress: string;
+  isViettel: string;
+  issueBy: string;
+  issueDate: string;
+  lastModifiedBy: string;
+  lastModifiedDate: string;
+  passwordRaw: string;
+  phone: string;
+  roles: any[];
+  status: string;
+  username: string;
+}
+
+export interface IFormUserDTO {
   userId?: string
   allowReceiveExcel: string;
   allowReceivePdf: string;
