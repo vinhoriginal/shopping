@@ -4,6 +4,7 @@ import { Key, TableRowSelection } from "antd/lib/table/interface";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Footer from "../../component/Footer/Footer";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -27,7 +28,7 @@ const ListLike = () => {
   }, [dispatch, userInfo?.customerId]);
   const columns: ColumnsType<any> = [
     {
-      title: <span className="cart-title">Products</span>,
+      title: <span className="cart-title">Sản phẩm</span>,
       dataIndex: "",
       render: (_, record) => (
         <div style={{ display: "flex" }}>
@@ -50,7 +51,7 @@ const ListLike = () => {
           <div
             style={{ display: "flex", flexDirection: "column", width: "50%" }}
           >
-            <span className="cart-title" style={{ fontSize: "16px" }}>
+            <span className="cart-title">
               {record?.name}
             </span>
             <div
@@ -61,14 +62,14 @@ const ListLike = () => {
                 margin: "8px 0",
               }}
             >
-              <span className="cart-title" style={{ fontSize: "16px" }}>
+              <span className="cart-title">
                 {record?.productType?.name}
               </span>
-              <span className="cart-title" style={{ fontSize: "16px" }}>
+              <span className="cart-title">
                 {record?.price}
               </span>
             </div>
-            <span className="cart-title" style={{ fontSize: "16px" }}>
+            <span className="cart-title">
               {record?.stockQty}
             </span>
           </div>
@@ -76,16 +77,16 @@ const ListLike = () => {
       ),
     },
     {
-      title: <span className="cart-title">Price</span>,
+      title: <span className="cart-title">Giá sản phẩm</span>,
       dataIndex: "price",
       render: (value) => (
-        <span className="cart-title" style={{ fontSize: "16px" }}>
+        <span className="cart-title">
           {value}
         </span>
       ),
     },
     {
-      title: <span className="cart-title">Rate</span>,
+      title: <span className="cart-title">Chất lượng</span>,
       dataIndex: "star",
       render: (value) => {
         const arrStar = Array.from({ length: value }, () =>
@@ -132,7 +133,7 @@ const ListLike = () => {
     <div>
       <div style={{ textAlign: "end" }}>
         <Button
-          style={{ width: "100px", background: "#fb2e86", color: "white" }}
+          style={{ width: "100px", background: "#fb2e86", color: "white" ,borderRadius:"5px"}}
           type="link"
           onClick={handleCancelLike}
         >
@@ -146,6 +147,7 @@ const ListLike = () => {
         rowKey="id"
         pagination={false}
       />
+      <Footer/>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Col, Row } from "antd";
 import Table, { ColumnsType } from "antd/lib/table";
 import React from "react";
+import Footer from "../../component/Footer/Footer";
 import "./order.scss";
 
 const DetailOrder = () => {
@@ -91,6 +92,7 @@ const DetailOrder = () => {
           </Row>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
