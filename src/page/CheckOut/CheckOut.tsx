@@ -9,11 +9,12 @@ import Table, { ColumnsType } from "antd/lib/table";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Footer from "../../component/Footer/Footer";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { emptyCart, removeCart, viewCart } from "../Layout/layout.reducer";
-import { USER_INFO } from "../utils/contants";
+import { FONT_FAMILY, FONT_SIZE, PRODUCT_BRAND, PRODUCT_BRANDS, PRODUCT_CATEGORY, USER_INFO } from "../utils/contants";
 import { updateCart } from "./checkout.reducer";
 import "./checkout.scss";
 
@@ -40,7 +41,13 @@ const CheckOut = () => {
   }, [itemProducts]);
   const columns: ColumnsType<any> = [
     {
-      title: <span className="cart-title">Products</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Sản phẩm</span>,
       dataIndex: "products",
       render(_, record) {
         return (
@@ -53,23 +60,35 @@ const CheckOut = () => {
               />
             </div>
             <div>
-              <span>{record?.product?.name}</span>
-              <span>Type: {record.product?.productType?.name}</span>
-              <span>Stock: {record.product?.stockQty}</span>
+              <span style={{ fontFamily: FONT_FAMILY, fontSize: FONT_SIZE, lineHeight: "20px" }} >{record?.product?.name}</span>
+              <span>{PRODUCT_CATEGORY}: {record.product?.productType?.name}</span>
+              <span >Số lượng: {record.product?.stockQty}</span>
             </div>
           </div>
         );
       },
     },
     {
-      title: <span className="cart-title">Price</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Giá tiền</span>,
       dataIndex: "price",
       render(_, record) {
         return <span>{record?.product?.price}</span>;
       },
     },
     {
-      title: <span className="cart-title">Quantity</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Số lượng</span>,
       dataIndex: "quantity",
       render: (value, record, index) => {
         return (
@@ -90,14 +109,26 @@ const CheckOut = () => {
       },
     },
     {
-      title: <span className="cart-title">Total</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Tổng tiền</span>,
       dataIndex: "total",
       render: (_, record, index) => {
         return record?.product?.price * countItem[index] || 0;
       },
     },
     {
-      title: <span className="cart-title">Hành động</span>,
+      title: <span className="cart-title" style={{
+        color: "#1d3178", fontFamily: "Lato",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "18px",
+        lineHeight: "22px"
+      }}>Hành động</span>,
       dataIndex: "action",
       render: (_, record) => (
         <div>
@@ -170,10 +201,11 @@ const CheckOut = () => {
   };
   return (
     <>
+      <div>
       <div className="checkout">
         <div className="empty-cart">
-          <Button danger onClick={handleDeleteAll}>
-            Empty Cart
+          <Button type="primary" danger onClick={handleDeleteAll}>
+            Xóa giỏ hàng
           </Button>
         </div>
         <div>
@@ -186,19 +218,25 @@ const CheckOut = () => {
           </div>
           <div className="checkout-price">
             <div className="cart-total">
-              <span className="title">Cart Totals</span>
+              <span className="title" style={{
+                color: "#1d3178", fontFamily: "Lato",
+                fontStyle: "normal",
+                fontWeight: 600,
+                fontSize: "18px",
+                lineHeight: "22px"
+              }}>Giá trị đơn hàng</span>
               <div>
                 <div className="sub-totals">
-                  <span>Subtotals:</span>
-                  <span>${itemProducts?.subTotal}</span>
+                  <span>Giá trị chưa thuế:</span>
+                  <span>{itemProducts?.subTotal} VND</span>
                 </div>
                 <div className="tax-rate">
-                  <span>Tax Rate (%):</span>
+                  <span>Thuế gia tăng (%):</span>
                   <span>{itemProducts?.taxRate}%</span>
                 </div>
                 <div className="total">
-                  <span>Total:</span>
-                  <span>${itemProducts?.grandTotal}</span>
+                  <span>Tổng tiền:</span>
+                  <span>{itemProducts?.grandTotal} VND</span>
                 </div>
                 <Checkbox
                   className="shipping-checkbox"
@@ -211,13 +249,21 @@ const CheckOut = () => {
                 </Checkbox>
                 <div className="custom-btn-checkout">
                   <Button onClick={() => navigate(path.billingAddress)} disabled={!itemProducts?.cartItemList?.length}>
-                    <span>Proceed To Checkout</span>
+                    <span>Đặt hàng</span>
                   </Button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="empty-cart">
+
+          <Button type="primary" style={{ backgroundColor: "#FB2E86", borderRadius:"5px", border:"none" }} onClick={handleDeleteAll}>
+            Tiếp tục mua sắm
+          </Button>
+        </div>
+        <Footer/>
       </div>
     </>
   );

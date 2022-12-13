@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cart from "../../assets/cart.png";
 import heart from "../../assets/heart.png";
+import Footer from "../../component/Footer/Footer";
 import { IFormBodyProducts } from "../../model/products.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -187,7 +188,7 @@ const Products = () => {
                 <span>{item?.description}</span>
                 <div className="image-products">
                   <div className="item_hover">
-                    <img
+                    <img className="image"
                       src={cart}
                       alt="cart"
                       onClick={() => handleAddToCart(item)}
@@ -210,6 +211,7 @@ const Products = () => {
           />
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

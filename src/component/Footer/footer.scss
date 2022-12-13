@@ -1,0 +1,39 @@
+#footer{
+  margin-top: 20px;
+}
+.dark{
+  background-color: #19D16F;
+  border-radius: 5px;
+  box-shadow: rgb(220, 220, 180);
+}
+.container,h2,h3, a{
+  color:#ddd
+}
+a{
+  font-size: 13px;
+  font-weight: 400;
+}
+a:hover{
+  color: antiquewhite,
+}
+.first{
+  margin-left: 20px;
+}
+.end{
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.bottom-bar{
+  margin-top: 20px;
+}
+h6,p,div{
+  color:#ddd
+}
+.icon{
+  font-size: 30px;
+  margin-right: 10px;
+}
+.icon-service{
+  margin-top: 10px;
+  display: flex;
+}

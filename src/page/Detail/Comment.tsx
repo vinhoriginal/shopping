@@ -8,6 +8,10 @@ import { IFormValueMemo } from "../../model/login.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
+  COLOR_SPAN,
+  FONT_FAMILY,
+  MARGIN_BOTTOM,
+  MARGIN_LEFT,
   TOKEN_KEY,
   USER_INFO,
   VALUE_INP_COMMENT,
@@ -198,8 +202,8 @@ const Comment = ({
 
   return (
     <div className="comment">
-      <div className="title-comment">
-        <span>Comment</span>
+      <div className="title-comment" style={{marginBlock:MARGIN_BOTTOM}}>
+        <span style={{fontFamily:FONT_FAMILY}}>Comment</span>
         <div>
           {starArr.map((item) => (
             <img
@@ -270,13 +274,14 @@ const Comment = ({
                     </div>
                     <div>
                       <span>{(item?.customerDTO?.fullName)||(item?.userDTO?.fullName)}</span>
+                      <span style={{fontFamily:FONT_FAMILY}}>{item?.customerDTO?.fullName}</span>
                       <span>
                         <ReactTimeAgo date={item.lastModifiedDate} />
                       </span>
                       <span>{item?.content}</span>
                       <div className="edit-reply">
                         {(userInfo?.customerId || userInfo?.userId) === (item?.customerDTO?.customerId || item?.userDTO?.userId) ? (
-                          <span
+                          <span style={{color:COLOR_SPAN}}
                             onClick={() =>
                               handleEditComment(item.commentId, item.content)
                             }

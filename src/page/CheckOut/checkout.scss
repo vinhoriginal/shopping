@@ -7,6 +7,11 @@
 }
 .empty-cart {
   margin-bottom: 12px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
 }
 .products-item {
   display: flex;
@@ -46,7 +51,7 @@
   & > div:last-child {
     display: flex;
     .item-checkout {
-      width: 70%;
+      width: 80%;
       margin-right: 100px;
     }
   }

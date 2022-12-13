@@ -1,16 +1,17 @@
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Popconfirm, Tag, Tooltip } from "antd";
+import { Button, Popconfirm, Tag, Tooltip } from "antd";
 import Table, { ColumnsType } from "antd/lib/table";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { TOKEN_KEY, USER_INFO } from "../utils/contants";
+import { CANCEL_ORDER, CANCEL_ORDER_CONFIRM, TOKEN_KEY, USER_INFO } from "../utils/contants";
 import { getListHistoryOrder } from "./history.reducer";
 import ReasonModal from "./ReasonModal";
 import "./history.scss";
 import { useNavigate } from "react-router-dom";
 import path from "../../router/path";
+import Footer from "../../component/Footer/Footer";
 
 const History = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ const History = () => {
       align: "center",
       render(value, record, index) {
         return (
-          <span className="cart-title" style={{ fontSize: "16px" }}>
+          <span className="cart-title2" >
             {index + 1}
           </span>
         );
@@ -47,7 +48,7 @@ const History = () => {
       dataIndex: "payment",
       align: "center",
       render: (value) => (
-        <span className="cart-title" style={{ fontSize: "16px" }}>
+        <span className="cart-title2" >
           {value?.paymentMethod}
         </span>
       ),
@@ -57,7 +58,7 @@ const History = () => {
       dataIndex: "shipment",
       align: "center",
       render: (value) => (
-        <span className="cart-title" style={{ fontSize: "16px" }}>
+        <span className="cart-title2" >
           {value?.shippingMethod}
         </span>
       ),
@@ -69,24 +70,24 @@ const History = () => {
       render: (value) => {
         if (value === 0) {
           return (
-            <Tag
-              color="orange"
-              className="cart-title2"
-              style={{ fontSize: "12px" }}
+            <Button
+              type="primary"
+              style={{color:"#fff", borderRadius:"5px"}}
+              danger
             >
               Đợi duyệt
-            </Tag>
+            </Button>
           );
         }
         if (value === 1) {
           return (
-            <Tag
-              color="green"
-              className="cart-title2"
-              style={{ fontSize: "12px" }}
+            <Button
+            type="primary"
+              style={{color:"#fff", borderRadius:"5px"}}
+
             >
               Chấp nhận
-            </Tag>
+            </Button>
           );
         }
         if (value === 2) {
@@ -94,7 +95,6 @@ const History = () => {
             <Tag
               color="red"
               className="cart-title2"
-              style={{ fontSize: "12px" }}
             >
               Đã hủy
             </Tag>
@@ -108,7 +108,7 @@ const History = () => {
       align: "center",
       render: (value) =>
         value && (
-          <span className="cart-title" style={{ fontSize: "16px" }}>
+          <span className="cart-title2">
             {moment(value).format("YYYY-MM-DD")}
           </span>
         ),
@@ -141,21 +141,21 @@ const History = () => {
             />
             <Tooltip
               title={
-                <span className="cart-title2">Xóa sản phẩm yêu thích</span>
+                <span className="cart-title3">{CANCEL_ORDER}</span>
               }
             >
               <Popconfirm
                 title={
                   <span className="cart-title2">
-                    Bạn có chắc muốn hủy đơn hàng?
+                    {CANCEL_ORDER_CONFIRM}
                   </span>
                 }
                 onConfirm={() => {
                   setOrderId(record?.orderId);
                   setIsOpen(true);
                 }}
-                okText={<span className="cart-title2">Đồng ý</span>}
-                cancelText={<span className="cart-title2">Hủy</span>}
+                okText={<span className="cart-title3">Đồng ý</span>}
+                cancelText={<span className="cart-title3">Hủy</span>}
               >
                 <DeleteOutlined style={{ cursor: "pointer", color: "#f50" }} />
               </Popconfirm>
@@ -173,6 +173,7 @@ const History = () => {
         pagination={false}
       />
       <ReasonModal isOpen={isOpen} setIsOpen={setIsOpen} orderId={orderId} />
+      <Footer/>
     </div>
   );
 };
