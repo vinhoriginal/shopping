@@ -9,6 +9,7 @@ import Table, { ColumnsType } from "antd/lib/table";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Footer from "../../component/Footer/Footer";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -262,6 +263,7 @@ const CheckOut = () => {
             Tiếp tục mua sắm
           </Button>
         </div>
+        <Footer/>
       </div>
     </>
   );

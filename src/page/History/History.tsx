@@ -11,6 +11,7 @@ import ReasonModal from "./ReasonModal";
 import "./history.scss";
 import { useNavigate } from "react-router-dom";
 import path from "../../router/path";
+import Footer from "../../component/Footer/Footer";
 
 const History = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -172,6 +173,7 @@ const History = () => {
         pagination={false}
       />
       <ReasonModal isOpen={isOpen} setIsOpen={setIsOpen} orderId={orderId} />
+      <Footer/>
     </div>
   );
 };

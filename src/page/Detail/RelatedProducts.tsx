@@ -1,4 +1,5 @@
 import { Col, Row } from "antd";
+import { Footer } from "antd/lib/layout/layout";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IFormDetailProducts } from "../../model/detail.model";
