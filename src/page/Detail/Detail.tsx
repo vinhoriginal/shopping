@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import heart from "../../assets/heart.png";
 import nonStar from "../../assets/rate-none.png";
 import star from "../../assets/rate.png";
+import Footer from "../../component/Footer/Footer";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { addToCard, viewCart } from "../Layout/layout.reducer";
@@ -119,6 +120,7 @@ const Detail = () => {
       <div style={{ marginTop: "12px" }}>
         <RelatedProducts />
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -13,50 +13,50 @@ import vnpost from "../../assets/vnpost.jpg";
 const Footer = () => {
   return (
     <footer id="footer" className="dark ">
-      <div className="row-top">
+      <div className="row-top first">
         <Row>
           <Col md={6} sm={24} xs={24} className="column">
             <div className="icon-service">
-              <CarOutlined />
+              <CarOutlined className="icon"/>
               <div className="text">
-                <h6>Free shipping</h6>
+                <h3>Free shipping</h3>
                 <p className="no-margin">On all orders over $99.00</p>
               </div>
             </div>
           </Col>
           <Col md={6} sm={24} xs={24} className="column">
             <div className="icon-service">
-              <ReloadOutlined />
+              <ReloadOutlined className="icon" />
               <div className="text">
-                <h6>30 days return</h6>
+                <h3>30 days return</h3>
                 <p className="no-margin">You have 30 days to return</p>
               </div>
             </div>
           </Col>
           <Col md={6} sm={24} xs={24} className="column">
             <div className="icon-service">
-              <SafetyOutlined />
+              <SafetyOutlined className="icon" />
               <div className="text">
-                <h6>Safe Shopping</h6>
+                <h3>Safe Shopping</h3>
                 <p className="no-margin">Payment 100% secure</p>
               </div>
             </div>
           </Col>
           <Col md={6} sm={24} xs={24} className="column">
             <div className="icon-service">
-              <UsergroupAddOutlined />
+              <UsergroupAddOutlined className="icon" />
               <div className="text">
-                <h6>Online support</h6>
+                <h3>Online support</h3>
                 <p className="no-margin">Contact us 24 hours a day</p>
               </div>
             </div>
           </Col>
         </Row>
       </div>
-      <div className="footer-wrap">
+      <div className="footer-wrap container">
         <Row>
           <Col md={6} sm={24} xs={24}>
-            <div className="footer-center">
+            <div className="footer-center first">
               <h2>Thông tin liên hệ</h2>
               <div>
                 <a target="_blank " href="http://ant.design">
@@ -119,26 +119,26 @@ const Footer = () => {
             <div className="footer-center">
               <h2>Thanh toán miễn phí</h2>
               <div style={{display:"flex", marginBottom:"10px"}}>
-                <div style={{marginRight:"10px"}}><img src={logo_atm} alt="logo-atm" /></div>
+                <div style={{marginRight:"10px"}}><img className="image-logo" src={logo_atm} alt="logo-atm" /></div>
 
                 <div>
-                  <img src={logo_jcb} alt="logo-jcb" />
+                  <img className="image-logo" src={logo_jcb} alt="logo-jcb" />
                 </div>
               </div>
               <div style={{display:"flex", marginBottom:"10px"}}>
               <div>
-                <img style={{marginRight:"10px"}} src={logo_master} alt="logo-master" />
+                <img className="image-logo" style={{marginRight:"10px"}} src={logo_master} alt="logo-master" />
               </div>
               <div>
-                <img src={logog_samsungpay} alt="logo-samsungpay" />
+                <img className="image-logo" src={logog_samsungpay} alt="logo-samsungpay" />
               </div>
               </div>
               <div style={{display:"flex", marginBottom:"10px"}}>
               <div>
-                <img style={{marginRight:"10px"}} src={logo_visa} alt="logo-visa" />
+                <img className="image-logo" style={{marginRight:"10px"}} src={logo_visa} alt="logo-visa" />
               </div>
               <div>
-                <img src={logo_vnpay} alt="logo-vnpay" />
+                <img className="image-logo" src={logo_vnpay} alt="logo-vnpay" />
               </div>
               </div>
             </div>
@@ -166,7 +166,7 @@ const Footer = () => {
           </Col>
         </Row>
       </div>
-      <div style ={{display:"flex", justifyContent:"space-between"}} className="bottom-bar">
+      <div style ={{display:"flex", justifyContent:"space-between"}} className="bottom-bar first">
         <div>
         Công ty cổ phần công nghệ TechFormal
         {' '}
@@ -178,7 +178,7 @@ const Footer = () => {
           vinhtq.b18cn693@stu.ptit.edu.vn
         </a>
         </div>
-        <img src={payment} alt="payment" />
+        <img className="end" src={payment} alt="payment" />
       </div>
     </footer>
   );

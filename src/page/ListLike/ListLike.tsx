@@ -3,6 +3,7 @@ import { ColumnsType } from "antd/lib/table";
 import { Key, TableRowSelection } from "antd/lib/table/interface";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Footer from "../../component/Footer/Footer";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { USER_INFO } from "../utils/contants";
@@ -134,6 +135,7 @@ const ListLike = () => {
         rowKey="id"
         pagination={false}
       />
+      <Footer/>
     </div>
   );
 };
