@@ -2,9 +2,11 @@ import { Button, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { Key, TableRowSelection } from "antd/lib/table/interface";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../../component/Footer/Footer";
 import { IFormUserInfo } from "../../model/userInfo.model";
+import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { USER_INFO } from "../utils/contants";
 import { cancelLike, getDataListLike } from "./listlike.reducer";
@@ -16,9 +18,14 @@ const ListLike = () => {
   );
   const dispatch = useAppDispatch();
   const { dataListLike } = useAppSelector((state) => state.listLikeReducer);
+  const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getDataListLike(userInfo.customerId));
-  }, [dispatch, userInfo.customerId]);
+    if (!userInfo?.customerId) {
+      navigate(path.login);
+      return;
+    }
+    dispatch(getDataListLike(userInfo?.customerId));
+  }, [dispatch, userInfo?.customerId]);
   const columns: ColumnsType<any> = [
     {
       title: <span className="cart-title">Sản phẩm</span>,
@@ -38,7 +45,7 @@ const ListLike = () => {
             <img
               src={`data:image/jpeg;base64,${record?.images[0]}`}
               style={{ width: "100%", height: "100%" }}
-              alt='asd'
+              alt="asd"
             />
           </div>
           <div
@@ -91,7 +98,12 @@ const ListLike = () => {
         return (
           <div>
             {arrStar.concat(arrNonStar).map((item, index) => (
-              <img key={index} src={item} alt='star' style={{marginRight: '4px'}} />
+              <img
+                key={index}
+                src={item}
+                alt="star"
+                style={{ marginRight: "4px" }}
+              />
             ))}
           </div>
         );
