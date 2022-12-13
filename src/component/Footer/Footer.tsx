@@ -1,165 +1,186 @@
+import { CarOutlined, ReloadOutlined, SafetyOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Col, Row } from "antd";
+import './footer.scss'
+import payment from "../../assets/payment.png";
+import logo_atm from "../../assets/logo-atm.png";
+import logo_jcb from "../../assets/logo-jcb.png";
+import logo_master from "../../assets/logo-master.png";
+import logog_samsungpay from "../../assets/logo-samsungpay.png";
+import logo_visa from "../../assets/logo-visa.png";
+import logo_vnpay from "../../assets/logo-vnpay.png";
+import nhattin from "../../assets/nhattin.jpg";
+import vnpost from "../../assets/vnpost.jpg";
+const Footer = () => {
+  return (
+    <footer id="footer" className="dark ">
+      <div className="row-top">
+        <Row>
+          <Col md={6} sm={24} xs={24} className="column">
+            <div className="icon-service">
+              <CarOutlined />
+              <div className="text">
+                <h6>Free shipping</h6>
+                <p className="no-margin">On all orders over $99.00</p>
+              </div>
+            </div>
+          </Col>
+          <Col md={6} sm={24} xs={24} className="column">
+            <div className="icon-service">
+              <ReloadOutlined />
+              <div className="text">
+                <h6>30 days return</h6>
+                <p className="no-margin">You have 30 days to return</p>
+              </div>
+            </div>
+          </Col>
+          <Col md={6} sm={24} xs={24} className="column">
+            <div className="icon-service">
+              <SafetyOutlined />
+              <div className="text">
+                <h6>Safe Shopping</h6>
+                <p className="no-margin">Payment 100% secure</p>
+              </div>
+            </div>
+          </Col>
+          <Col md={6} sm={24} xs={24} className="column">
+            <div className="icon-service">
+              <UsergroupAddOutlined />
+              <div className="text">
+                <h6>Online support</h6>
+                <p className="no-margin">Contact us 24 hours a day</p>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </div>
+      <div className="footer-wrap">
+        <Row>
+          <Col md={6} sm={24} xs={24}>
+            <div className="footer-center">
+              <h2>Thông tin liên hệ</h2>
+              <div>
+                <a target="_blank " href="http://ant.design">
+                  Bán hàng online
+                </a>
+              </div>
+              <div>
+                <a target="_blank " href="https://pro.ant.design/">
+                  Chăm sóc khách hàng
+                </a>
+              </div>
+              <div>
+                <a href="http://mobile.ant.design">Hỗ trợ kỹ thuật</a>
+              </div>
+              <div>
+                <a target="_blank" rel="noopener" href="http://motion.ant.design">Hỗ trợ bảo hành & sửa chữa</a>
+                <span> - </span>
+                {/* <FormattedMessage id="app.footer.motion" /> */}
+              </div>
+              <div>
+                <a target="_blank" rel="noopener" href="http://motion.ant.design">Liên hệ khối văn phòng</a>
+                <span> - </span>
+              </div>
+            </div>
+          </Col>
+          <Col md={6} sm={24} xs={24}>
+            <div className="footer-center">
+              <h2>Hỗ trợ - dịch vụ</h2>
+              <div>
+                <a target="_blank " href="http://ant.design">
+                  Mua hàng trả góp
+                </a>
+              </div>
+              <div>
+                <a target="_blank " href="https://pro.ant.design/">
+                  Hướng dẫn đặt hàng và thanh toán
+                </a>
+              </div>
+              <div>
+                <a href="http://mobile.ant.design">Tra cứu đơn hàng</a>
+              </div>
+              <div>
+                <a target="_blank" rel="noopener" href="http://motion.ant.design">Chính sách bảo hành</a>
+              </div>
+              <div>
+                <a target="_blank" rel="noopener noreferrer" href="http://kitchen.alipay.com">Chính sách bảo mật</a>
+              </div>
+              <div>
+                <a href="http://scaffold.ant.design">Điều khoản mua bản</a>
+              </div>
+              <div>
+                <a target="_blank" rel="noopener" href="http://library.ant.design/">Chính sách giải quyết khiếu nại</a>
+              </div>
+              <div>
+                <a target="_blank" rel="noopener" href="http://ux.ant.design">Câu hỏi thường gặp</a>
+              </div>
+            </div>
+          </Col>
+          <Col md={6} sm={24} xs={24}>
+            <div className="footer-center">
+              <h2>Thanh toán miễn phí</h2>
+              <div style={{display:"flex", marginBottom:"10px"}}>
+                <div style={{marginRight:"10px"}}><img src={logo_atm} alt="logo-atm" /></div>
 
-const Footer=()=>{
-    return (
-        <footer id="footer" className="dark">
-          <div className="footer-wrap">
-            <Row>
-              <Col md={6} sm={24} xs={24}>
-                <div className="footer-center">
-                  <h2>Ant Design Landing</h2>
-                  <div>
-                    <a target="_blank " href="https://github.com/ant-design/ant-design-landing">
-                      {/* <FormattedMessage id="app.footer.repo" /> */}
-                    </a>
-                  </div>
-                  <div>
-                    <a target="_blank " href="https://github.com/ant-motion">
-                      {/* <FormattedMessage id="app.footer.template" /> */}
-                    </a>
-                  </div>
-                  <div>
-                    <a href="http://ant-design-landing.gitee.io/" target="_blank ">
-                      {/* <FormattedMessage id="app.footer.chinamirror" /> */}
-                    </a>
-                  </div>
+                <div>
+                  <img src={logo_jcb} alt="logo-jcb" />
                 </div>
-              </Col>
-              <Col md={6} sm={24} xs={24}>
-                <div className="footer-center">
-                  {/* <h2><FormattedMessage id="app.footer.links" /></h2> */}
-                  <div>
-                    <a target="_blank " href="http://ant.design">
-                      Ant Design
-                    </a>
-                  </div>
-                  <div>
-                    <a target="_blank " href="https://pro.ant.design/">
-                      Ant Design Pro
-                    </a>
-                  </div>
-                  <div>
-                    <a href="http://mobile.ant.design">Ant Design Mobile</a>
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener" href="http://motion.ant.design">Ant Motion</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.motion" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="http://kitchen.alipay.com">Kitchen</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.kitchen" /> */}
-                  </div>
-                  <div>
-                    <a href="http://scaffold.ant.design">Scaffolds</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.scaffolds" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener" href="http://library.ant.design/">Axure Library</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.antd-library" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener" href="http://ux.ant.design">Ant UX</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.antux" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="http://umijs.org/">Umi</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.umi" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="http://d.umijs.org/">Dumi</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.dumi" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/dvajs/dva">dva</a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.dva" /> */}
-                  </div>
-                </div>
-              </Col>
-              <Col md={6} sm={24} xs={24}>
-                <div className="footer-center">
-                  {/* <h2><FormattedMessage id="app.footer.community" /></h2> */}
-                  <div>
-                    <a target="_blank" rel="noopener" href="https://github.com/ant-design/ant-design-landing/issues">
-                      {/* <FormattedMessage id="app.footer.issues" /> */}
-                    </a>
-                  </div>
-                  <div>
-                    <a
-                      target="_blank"
-                      rel="noopener"
-                      href={`http://ant.design/docs/spec/work-with-us`}
-                    >
-                      {/* <FormattedMessage id="app.footer.work-with-us" /> */}
-                    </a>
-                  </div>
-                </div>
-              </Col>
-              <Col md={6} sm={24} xs={24}>
-                <div className="footer-center">
-                  <h2>
-                    <img
-                      className="title-icon"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/nBVXkrFdWHxbZlmMbsaH.svg"
-                      alt="AFX Cloud"
-                    />
-                    {/* <FormattedMessage id="app.footer.more-product" /> */}
-                  </h2>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="https://yuque.com/">
-                      {/* <FormattedMessage id="app.footer.yuque" /> */}
-                    </a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.yuque.slogan" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="https://yunfengdie.com/">
-                      {/* <FormattedMessage id="app.footer.fengdie" /> */}
-                    </a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.fengdie.slogan" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="https://antv.alipay.com/">
-                      AntV
-                    </a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.data-vis" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="https://eggjs.org/">
-                      Egg
-                    </a>
-                    <span> - </span>
-                    {/* <FormattedMessage id="app.footer.eggjs" /> */}
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noopener noreferrer" href="http://xcloud.alipay.com/">
-                      {/* <FormattedMessage id="app.footer.xcloud" /> */}
-                    </a>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </div>
-          <div className="bottom-bar">
-            Made with
-            {' '}
-            <span className="heart">❤</span>
-            {' '}
-            by
-            <a target="_blank" rel="noopener noreferrer" href="https://yuque.com/afx/blog">
-              AFX
-            </a>
-          </div>
-        </footer>
-      );
+              </div>
+              <div style={{display:"flex", marginBottom:"10px"}}>
+              <div>
+                <img style={{marginRight:"10px"}} src={logo_master} alt="logo-master" />
+              </div>
+              <div>
+                <img src={logog_samsungpay} alt="logo-samsungpay" />
+              </div>
+              </div>
+              <div style={{display:"flex", marginBottom:"10px"}}>
+              <div>
+                <img style={{marginRight:"10px"}} src={logo_visa} alt="logo-visa" />
+              </div>
+              <div>
+                <img src={logo_vnpay} alt="logo-vnpay" />
+              </div>
+              </div>
+            </div>
+          </Col>
+          <Col md={6} sm={24} xs={24}>
+            <div className="footer-center">
+              <h2>
+                <img
+                  className="title-icon"
+                  src="https://gw.alipayobjects.com/zos/rmsportal/nBVXkrFdWHxbZlmMbsaH.svg"
+                  alt="AFX Cloud"
+                />
+                {/* <FormattedMessage id="app.footer.more-product" /> */}
+                Hình thức vận chuyển
+              </h2>
+              <div style={{display:"flex", marginBottom:"10px"}}>
+              <div>
+                <img style={{marginRight:"10px"}} src={nhattin} alt="nhattin" />
+              </div>
+              <div>
+                <img src={vnpost} alt="vnpost" />
+              </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </div>
+      <div style ={{display:"flex", justifyContent:"space-between"}} className="bottom-bar">
+        <div>
+        Công ty cổ phần công nghệ TechFormal
+        {' '}
+        <span className="heart">❤</span>
+        {' '}
+        by
+        {' '}
+        <a target="_blank" rel="noopener noreferrer" href="https://yuque.com/afx/blog">
+          vinhtq.b18cn693@stu.ptit.edu.vn
+        </a>
+        </div>
+        <img src={payment} alt="payment" />
+      </div>
+    </footer>
+  );
 }
 export default Footer;

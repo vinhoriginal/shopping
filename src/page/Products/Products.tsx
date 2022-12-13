@@ -187,7 +187,7 @@ const Products = () => {
                 <span>{item?.description}</span>
                 <div className="image-products">
                   <div className="item_hover">
-                    <img
+                    <img className="image"
                       src={cart}
                       alt="cart"
                       onClick={() => handleAddToCart(item)}
