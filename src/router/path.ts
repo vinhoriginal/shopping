@@ -15,5 +15,6 @@ const path = {
   detailOrder: "/detail-order/:id",
   forgot: "/forgot-password",
   info: "/info",
+  oauth2: "/oauth2/redirect",
 };
 export default path;

@@ -1,4 +1,5 @@
 import { useRoutes } from "react-router-dom";
+import OAuth2RedirectHandler from "../component/oauth2/OAuth2RedirectHandler";
 import Blog from "../page/Blog/Blog";
 import ChangeInfo from "../page/ChangeInfo/ChangeInfo";
 import BillingCheckout from "../page/CheckOut/BillingCheckout";
@@ -88,6 +89,10 @@ const Router = () => {
         {
           path: path.info,
           element: <ChangeInfo />,
+        },
+        {
+          path: path.oauth2,
+          element: <OAuth2RedirectHandler />,
         },
       ],
     },
