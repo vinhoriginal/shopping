@@ -99,7 +99,9 @@ const Detail = () => {
               <span style={{fontSize:"20px",fontFamily:"Segoe UI"}} >{dataDetail?.price} VND</span>
               <span style={{fontSize:"20px",fontFamily:"Segoe UI",color:"#ff2aaa"}}>{dataDetail?.ourPrice} VND</span>
             </div>
-            <span style={{fontSize:"15px",fontFamily:"Segoe UI"}} className="description">{dataDetail?.description}</span>
+            <span style={{fontSize:"15px",fontFamily:"Segoe UI"}} className="description">Mô tả: {dataDetail?.description}</span>
+            <label style={{fontSize:"15px",fontFamily:"Segoe UI"}} className="discount">Khuyến mãi:{dataDetail?.discount}</label>
+            <span style={{fontSize:"15px",fontFamily:"Segoe UI"}} className="description">Mô tả: {dataDetail?.description}</span>
             <div className="add-to-cart">
             <Button onClick={handleAddToCart} type="primary" style={{backgroundColor:"#19D16F", border:"none", borderRadius:"5px", marginRight:"5px"}}>Thêm vào giỏ hàng</Button>
               <div className="heart">
@@ -111,6 +113,14 @@ const Detail = () => {
             </span>
             <span style={{fontSize:"20px",fontFamily:"Segoe UI"}} className="tags">Tags</span>
             <span style={{fontSize:"20px",fontFamily:"Segoe UI"}} className="share">Share</span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", fontWeight:"bold"}} className="share">Thông số kỹ thuật</span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI",color:"#000", fontWeight:"400" }} className="share">CPU: <span style={{fontWeight:"200"}}>{dataDetail?.hardDisk}</span></span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", color:"#000", fontWeight:"400"}} className="share">Card đồ họa: <span style={{fontWeight:"200"}} >{dataDetail?.card}</span> </span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", color:"#000", fontWeight:"400"}} className="share">Ổ cứng: <span style={{fontWeight:"200"}} >{dataDetail?.hardDisk}</span></span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", color:"#000",fontWeight:"400"}} className="share">Pin: <span style={{fontWeight:"200"}} >{dataDetail?.pin}</span></span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", color:"#000",fontWeight:"400" }} className="share">Ram: <span style={{fontWeight:"200"}} >{dataDetail?.ram}</span></span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", color:"#000",fontWeight:"400" }} className="share">Màn hình: <span style={{fontWeight:"200"}} >{dataDetail?.screenHd}</span></span>
+            <span style={{fontSize:"20px",fontFamily:"Segoe UI", color:"#000", fontWeight:"400"}} className="share">Kích thước màn hình: <span style={{fontWeight:"200"}} >{dataDetail?.screenSize}</span></span>
           </div>
         </div>
       </div>

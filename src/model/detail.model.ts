@@ -67,6 +67,14 @@ export interface IFormUserDTO {
   username: string;
 }
 export interface IFormDetailProducts {
+  card:String;
+  coreQuantity:number;
+  discount:String;
+  hardDisk:String;
+  pin:String;
+  ram:String;
+  screenHd:String;
+  screenSize:String;
   ourPrice: number;
   code: string;
   description: string;

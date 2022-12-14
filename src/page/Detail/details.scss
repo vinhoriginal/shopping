@@ -1,5 +1,5 @@
-span{
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+span {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .details {
   text-align: center;
@@ -257,4 +257,14 @@ span{
   & > div:last-child {
     margin-left: 130px;
   }
+}
+
+.discount {
+  font-family: "Segoe UI";
+  background-color: "#f7941e";
+  font-style: normal;
+  font-weight: 100;
+  font-size: 16px;
+  line-height: 29px;
+  border-radius: 5px;
 }
