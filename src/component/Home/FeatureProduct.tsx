@@ -124,8 +124,16 @@ const FeatureProduct = () => {
                 <div className="title">
                   <span>{item?.name}</span>
                   <img src={group2} alt="group2" />
-                  <span className ='product_item' >{item?.code}</span>
-                  <span className='product_price'>{item?.price} VND</span>
+                  <span className="product_item">{item?.code}</span>
+                  <div className="price">
+                    {" "}
+                    <span className="product_price root">
+                      {item?.price} VND
+                    </span>
+                    <span className="product_our_price">
+                      {item?.ourPrice} VND
+                    </span>
+                  </div>
                 </div>
               </div>
             </Col>

@@ -68,7 +68,8 @@ span {
     font-weight: 100;
     font-size: 16px;
     line-height: 29px;
-    color: #a9acc6;
+    color: #333;
+    font-weight: bold;
   }
   .add-to-cart {
     display: flex;
@@ -261,10 +262,40 @@ span {
 
 .discount {
   font-family: "Segoe UI";
-  background-color: "#f7941e";
+  background-color: #FB2E86;
   font-style: normal;
   font-weight: 100;
   font-size: 16px;
   line-height: 29px;
   border-radius: 5px;
+  color:#fff;
+  text-align: center;
+  padding: 0 5px 0 5px;
+}
+.voucherList{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.voucherLabel{
+  display: inline-block;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px #00000029;
+  font-family: "Segoe UI";
+  background-color: #f7941e;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 16px;
+  line-height: 29px;
+  border-radius: 5px;
+  color:#fff;
+  text-align: center;
+  padding: 0 5px 0 5px;
+  word-wrap: break-word;
+}
+.voucher, .price{
+  font-size: "15px"; 
+  font-family: "Segoe UI";
+  font-weight: bold;
+  color:#333;
 }
