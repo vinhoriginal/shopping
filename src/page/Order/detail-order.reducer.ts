@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../contants/axios.config";
+import { IFormDetailOrder } from "../../model/order.model";
 
-const initState = {};
+const initState = {
+  dataDetailOrder: {} as IFormDetailOrder,
+};
 
 export const getDetailOrder = createAsyncThunk(
   "detailOrder/getDetailOrder",
@@ -15,7 +18,11 @@ const detailOrderSlice = createSlice({
   name: "detailOrder",
   initialState: initState,
   reducers: {},
-  extraReducers(builder) {},
+  extraReducers(builder) {
+    builder.addCase(getDetailOrder.fulfilled, (state, action) => {
+      state.dataDetailOrder = action.payload.data.data;
+    });
+  },
 });
 
 const detailOrderReducer = detailOrderSlice.reducer;

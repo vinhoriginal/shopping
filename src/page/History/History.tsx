@@ -130,6 +130,7 @@ const History = () => {
       dataIndex: "",
       align: "center",
       render: (_, record) => {
+        console.log('record', record)
         return (
           <div>
             <EyeOutlined
@@ -138,6 +139,7 @@ const History = () => {
                 marginRight: "12px",
                 color: "#2db7f5",
               }}
+              onClick={() => navigate(`/detail-order/${record.orderId}`)}
             />
             <Tooltip
               title={

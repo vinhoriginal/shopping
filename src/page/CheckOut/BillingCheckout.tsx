@@ -132,8 +132,8 @@ const BillingCheckout = () => {
     const data = {
       customerId: userInfo.customerId,
       cartId: itemProducts?.id,
-      shipmentId: shipmentId,
-      paymentId: paymentId,
+      shipmentId: shipmentId[0],
+      paymentId: paymentId[0],
       total: itemProducts?.subTotal + dataCalculate?.total,
     };
     dispatch(buyItem(data)).then((res) => {
