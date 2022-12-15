@@ -1,5 +1,5 @@
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Card, Col, Row } from "antd";
+import { BackTop, Card, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cart from "../../assets/Group.png";
@@ -144,6 +144,14 @@ const Layout = () => {
           <Outlet />
         </Card>
       </div>
+      <div>
+    <BackTop>
+      <div className="ant-back-top-inner">UP</div>
+    </BackTop>
+    Scroll down to see the bottom-right
+    <strong style={{ color: '#1088e9' }}> blue </strong>
+    button.
+  </div>,
     </div>
   );
 };
