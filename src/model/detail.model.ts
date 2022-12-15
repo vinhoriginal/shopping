@@ -103,6 +103,7 @@ export interface IFormDetailProducts {
   weight: number;
   arrStar?: any[];
   oldPrice?: string;
+  voucherList?: any[]
 }
 
 export interface IFormDataGetAllChild {

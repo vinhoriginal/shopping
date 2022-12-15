@@ -2,10 +2,12 @@ import { Button, Checkbox, Input } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import cart from "../../assets/cart.png";
 import heart from "../../assets/heart.png";
 import Footer from "../../component/Footer/Footer";
 import { IFormBodyProducts } from "../../model/products.model";
+import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
@@ -13,7 +15,7 @@ import {
   getCategory,
   searchDataProducts,
 } from "../Home/home.reducer";
-import { addToCard, viewCart } from "../Layout/layout.reducer";
+import { addToCard, addToLike, viewCart } from "../Layout/layout.reducer";
 import {
   DISCOUNT_OFFER,
   PRICE_FILTER,
@@ -49,6 +51,26 @@ const Products = () => {
   const handleChangeProductBrand = (checkedValues: CheckboxValueType[]) => {
     setValueSearch((oldState) => ({ ...oldState, brandId: checkedValues }));
     setPage(1);
+  };
+  const handleAddToLike = (id: number) => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      navigate(path.login);
+    } else {
+      const userInfo: IFormUserInfo = JSON.parse(
+        localStorage.getItem(USER_INFO) as string
+      );
+      dispatch(
+        addToLike({
+          customerId: userInfo?.customerId,
+          productId: id,
+        })
+      ).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          toast.success("Thêm sản phẩm yêu thích thành công");
+        }
+      });
+    }
   };
   const handleAddToCart = (item: any) => {
     const token = localStorage.getItem(TOKEN_KEY);
@@ -195,7 +217,7 @@ const Products = () => {
                     />
                   </div>
                   <div className="item_hover">
-                    <img src={heart} alt="heart" />
+                    <img src={heart} alt="heart" onClick={() => handleAddToLike(item.id)}/>
                   </div>
                   <Button className="item_hover" onClick={() => navigate(`/detail/${item.id}`)} type="primary" style={{backgroundColor:"#19D16F", border:"none", borderRadius:"5px"}}>Xem chi tiết</Button>
                 </div>
