@@ -1,16 +1,18 @@
-import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { BackTop, Card, Col, Row } from "antd";
+import { BellOutlined, CloseCircleOutlined, MailOutlined, NotificationFilled, PhoneOutlined, ToTopOutlined, WechatOutlined } from "@ant-design/icons";
+import { BackTop, Button, Card, Col, Row, FloatButton, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cart from "../../assets/Group.png";
 import { IFormUserInfo } from "../../model/userInfo.model";
 import path from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { TAB_MENU, TOKEN_KEY, USER_INFO } from "../utils/contants";
+import { FONT_SIZE, TAB_MENU, TOKEN_KEY, USER_INFO } from "../utils/contants";
 import { viewCart } from "./layout.reducer";
 import "./layout.scss";
+import ViewModal from "./ViewModal";
 
 const Layout = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [keyActive, setKeyActive] = useState("/home");
   const [token, setToken] = useState(
     () => localStorage.getItem(TOKEN_KEY) || ""
@@ -54,6 +56,9 @@ const Layout = () => {
       navigate(path.checkout);
     }
   };
+  const handleNotification = ()=>{
+    setIsOpen(false);
+  }
   return (
     <div>
       <div>
@@ -119,6 +124,16 @@ const Layout = () => {
                 className="logout"
               >
                 {token ? (
+                  <Button onClick={() => setIsOpen(true)} style={{backgroundColor:"#19D16F", border:"none"}} icon={<BellOutlined style={{color:"#fff", fontSize:FONT_SIZE}} />} />
+                ) : (
+                  <span></span>
+                )}
+              </div>
+              <div
+                style={{ width: "50%", textAlign: "end" }}
+                className="logout"
+              >
+                {token ? (
                   <span onClick={handleLogout}>Logout</span>
                 ) : (
                   <span onClick={() => navigate(path.login)}>Login</span>
@@ -144,15 +159,16 @@ const Layout = () => {
           <Outlet />
         </Card>
       </div>
-      <div>
-    <BackTop>
-      <div className="ant-back-top-inner">UP</div>
-    </BackTop>
-    Scroll down to see the bottom-right
-    <strong style={{ color: '#1088e9' }}> blue </strong>
-    button.
-  </div>,
-    </div>
+      {/* <Button type="primary" shape="circle" className="top_back" icon={<WechatOutlined />}/> */}
+      <BackTop>
+        <div className="back_to_top"><ToTopOutlined /></div>
+      </BackTop>
+      <FloatButton icon={<WechatOutlined />} type="primary" style={{ right: 24, bottom:100, color:"#19D16F" }} />
+      <ViewModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+      </div>
   );
 };
 

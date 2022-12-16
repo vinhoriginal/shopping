@@ -4,6 +4,7 @@ import "./App.scss";
 import Router from "./router/Router";
 import TimeAgo from "javascript-time-ago";
 import vi from "javascript-time-ago/locale/vi.json";
+
 TimeAgo.addDefaultLocale(vi);
 
 function App() {
