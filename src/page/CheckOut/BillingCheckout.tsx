@@ -128,12 +128,13 @@ const BillingCheckout = () => {
     };
     dispatch(calculateShip(data));
   };
+  console.log('paymentId', paymentId)
   const handleCheckouItem = () => {
     const data = {
       customerId: userInfo.customerId,
       cartId: itemProducts?.id,
-      shipmentId: shipmentId[0],
-      paymentId: paymentId[0],
+      shipmentId: shipmentId,
+      paymentId: paymentId,
       total: itemProducts?.subTotal + dataCalculate?.total,
     };
     dispatch(buyItem(data)).then((res) => {
@@ -246,49 +247,49 @@ const BillingCheckout = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <div style={{display:"flex"}}>
-            <Row gutter={40}>
-              <Col span={24}>
-                <Form.Item
-                  name="paymentId"
-                  label={
-                    <span className="label-title">Phương thức thanh toán</span>
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Phương thức thanh toán không được để trống",
-                    },
-                  ]}
-                >
-                  <Checkbox.Group>
-                    <Checkbox value="1">Thanh toán sau giao hàng</Checkbox>
-                    <Checkbox value="2">Thanh toán bằng paypal</Checkbox>
-                  </Checkbox.Group>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={40}>
-              <Col span={24}>
-                <Form.Item
-                  name="shipmentId"
-                  label={
-                    <span className="label-title">Phương thức vận chuyển</span>
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Phương thức vận chuyển không được để trống",
-                    },
-                  ]}
-                >
-                  <Checkbox.Group>
-                    <Checkbox value="1">Giao hàng nhanh</Checkbox>
-                    <Checkbox value="2">Vận chuyển miễn phí</Checkbox>
-                  </Checkbox.Group>
-                </Form.Item>
-              </Col>
-            </Row>
+            <div style={{ display: "flex", flexDirection: 'column' }}>
+              <Row gutter={40}>
+                <Col span={24}>
+                  <Form.Item
+                    name="paymentId"
+                    label={
+                      <span className="label-title">Phương thức thanh toán</span>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Phương thức thanh toán không được để trống",
+                      },
+                    ]}
+                  >
+                    <Radio.Group>
+                      <Radio value="1" style={{ marginBottom: 20 }}>Thanh toán sau giao hàng</Radio>
+                      <Radio value="2">Thanh toán bằng paypal</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={40}>
+                <Col span={24}>
+                  <Form.Item
+                    name="shipmentId"
+                    label={
+                      <span className="label-title">Phương thức vận chuyển</span>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Phương thức vận chuyển không được để trống",
+                      },
+                    ]}
+                  >
+                    <Radio.Group>
+                      <Radio value="1" style={{ marginBottom: 20 }}>Giao hàng nhanh</Radio>
+                      <Radio value="2">Vận chuyển miễn phí</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+              </Row>
             </div>
             <Row gutter={40}>
               <Col span={12}>
@@ -396,7 +397,7 @@ const BillingCheckout = () => {
                         type="link"
                         className="custom-btn"
                         htmlType="submit"
-                        // onClick={handleUpdateAddress}
+                      // onClick={handleUpdateAddress}
                       >
                         Cập nhật địa chỉ
                       </Button>
