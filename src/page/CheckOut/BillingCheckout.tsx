@@ -139,6 +139,11 @@ const BillingCheckout = () => {
     };
     dispatch(buyItem(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
+        const newPayload: any = res.payload
+        if (newPayload.data.data.isPaypal) {
+          window.open(newPayload.data.data.paypalUrl, 'blank')
+          return
+        }
         toast.success("Đặt hàng thành công");
         navigate(path.home);
         dispatch(viewCart());
@@ -223,7 +228,7 @@ const BillingCheckout = () => {
                   <Input
                     bordered={false}
                     allowClear
-                    className="custom-inp"
+                    // className="custom-inp"
                     type="number"
                   />
                 </Form.Item>
@@ -263,8 +268,8 @@ const BillingCheckout = () => {
                     ]}
                   >
                     <Radio.Group>
-                      <Radio value="1" style={{ marginBottom: 20 }}>Thanh toán sau giao hàng</Radio>
-                      <Radio value="2">Thanh toán bằng paypal</Radio>
+                      <Radio value={1} style={{ marginBottom: 20 }}>Thanh toán sau giao hàng</Radio>
+                      <Radio value={2}>Thanh toán bằng paypal</Radio>
                     </Radio.Group>
                   </Form.Item>
                 </Col>
@@ -284,8 +289,8 @@ const BillingCheckout = () => {
                     ]}
                   >
                     <Radio.Group>
-                      <Radio value="1" style={{ marginBottom: 20 }}>Giao hàng nhanh</Radio>
-                      <Radio value="2">Vận chuyển miễn phí</Radio>
+                      <Radio value={1} style={{ marginBottom: 20 }}>Giao hàng nhanh</Radio>
+                      <Radio value={2}>Vận chuyển miễn phí</Radio>
                     </Radio.Group>
                   </Form.Item>
                 </Col>
@@ -320,13 +325,14 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="province"
-                  label={<span className="label-title">Tỉnh</span>}
+                  label={<span style ={{color:"#000"}}className="label-title">Tỉnh</span>}
                 >
                   <Select
+                    style ={{color:"#000"}}
                     placeholder="Tỉnh"
                     showArrow={false}
                     bordered={false}
-                    className="custom-inp"
+                    // className="custom-inp"
                     options={dataProvince}
                     onChange={handleChangeProvince}
                     allowClear
@@ -336,13 +342,14 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="district"
-                  label={<span className="label-title">Quận huyện</span>}
+                  label={<span style ={{color:"#000"}} className="label-title">Quận huyện</span>}
                 >
                   <Select
+                    style ={{color:"#000"}}
                     placeholder="Quận huyện"
                     showArrow={false}
                     bordered={false}
-                    className="custom-inp"
+                    // className="custom-inp"
                     options={dataDistrict}
                     onChange={handleChangeDistrict}
                     allowClear
@@ -352,13 +359,14 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="ward"
-                  label={<span className="label-title">Xã phường</span>}
+                  label={<span style ={{color:"#000"}} className="label-title">Xã phường</span>}
                 >
                   <Select
+                    style ={{color:"#000"}}
                     placeholder="Xã phường"
                     showArrow={false}
                     bordered={false}
-                    className="custom-inp"
+                    // className="custom-inp"
                     allowClear
                     options={dataWard}
                   />
@@ -367,12 +375,14 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="address"
-                  label={<span className="label-title">Địa chỉ</span>}
+                  label={<span style ={{color:"#000"}} className="label-title">Địa chỉ</span>}
                 >
                   <Input
+                    color="#000"
+                    style ={{color:"#000"}}
                     bordered={false}
                     allowClear
-                    className="custom-inp"
+                    // className="custom-inp"
                     placeholder="Địa chỉ"
                   />
                 </Form.Item>
@@ -380,7 +390,7 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="service"
-                  label={<span className="label-title">Dịch vụ khả dụng</span>}
+                  label={<span style ={{color:"#000"}} className="label-title">Dịch vụ khả dụng</span>}
                 >
                   <Input className="custom-inp" bordered={false} allowClear />
                 </Form.Item>
@@ -412,7 +422,7 @@ const BillingCheckout = () => {
                       >
                         <span>Tính gói cước</span>
                       </Button>
-                      <span>Cước: {dataCalculate?.total} VND</span>
+                      <span style ={{color:"#000"}}>Cước: {dataCalculate?.total} VND</span>
                     </div>
                   </div>
                 </Form.Item>

@@ -163,6 +163,9 @@ const CheckOut = () => {
       });
     }
   };
+  const handleReturnShoping = () => {
+    navigate(path.home)
+  };
   const handleDecreaseCount = (index: number, record: any) => {
     if (countItem[index] === 0) {
       return;
@@ -259,7 +262,7 @@ const CheckOut = () => {
       </div>
       <div className="empty-cart">
 
-          <Button type="primary" style={{ backgroundColor: "#FB2E86", borderRadius:"5px", border:"none" }} onClick={handleDeleteAll}>
+          <Button type="primary" style={{ backgroundColor: "#FB2E86", borderRadius:"5px", border:"none" }} onClick={handleReturnShoping}>
             Tiếp tục mua sắm
           </Button>
         </div>

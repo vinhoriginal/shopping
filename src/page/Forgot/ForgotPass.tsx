@@ -107,7 +107,7 @@ const ForgotPass = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={24}>
+                {/* <Col span={24}>
                   <Form.Item
                     name="oldPassword"
                     rules={[
@@ -123,7 +123,7 @@ const ForgotPass = () => {
                       type="password"
                     />
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={24}>
                   <Form.Item
                     name="newPassword"
