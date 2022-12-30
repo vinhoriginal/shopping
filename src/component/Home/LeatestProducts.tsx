@@ -118,8 +118,9 @@ const LeatestProducts = () => {
                     />
                   </div>
                 </div>
-                <div className="title">
-                  <span>{item?.name}</span>
+                <div className="title1">
+                  <span className="name">{item?.name}</span>
+                  <div className="border-bottom" />
                   <img src={group2} alt="group2" />
                   <span className="product_item">{item?.code}</span>
                   <div className="price">
