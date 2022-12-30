@@ -9,7 +9,9 @@ const initState = {
 export const login = createAsyncThunk(
   "Login/Login",
   async (data: IFormLogin) => {
-    return await instance.post("/api/v1/customer", data);
+    const result = await instance.post("/api/v1/customer", data);
+    localStorage.setItem("account", JSON.stringify(result.data.customerDTO));
+    return result;
   }
 );
 

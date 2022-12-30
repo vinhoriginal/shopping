@@ -55,6 +55,8 @@ const BillingCheckout = () => {
   const { itemProducts } = useAppSelector((state) => state.layoutReducer);
   useEffect(() => {
     dispatch(getProvince());
+    const userInfo = JSON.parse(localStorage.getItem("account") as string);
+    form.setFieldsValue({ ...userInfo });
     return () => {
       dispatch(resetDataCalculate());
     };
@@ -128,7 +130,7 @@ const BillingCheckout = () => {
     };
     dispatch(calculateShip(data));
   };
-  console.log('paymentId', paymentId)
+  console.log("paymentId", paymentId);
   const handleCheckouItem = () => {
     const data = {
       customerId: userInfo.customerId,
@@ -139,10 +141,10 @@ const BillingCheckout = () => {
     };
     dispatch(buyItem(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        const newPayload: any = res.payload
+        const newPayload: any = res.payload;
         if (newPayload.data.data.isPaypal) {
-          window.open(newPayload.data.data.paypalUrl, 'blank')
-          return
+          window.open(newPayload.data.data.paypalUrl, "blank");
+          return;
         }
         toast.success("Đặt hàng thành công");
         navigate(path.home);
@@ -252,13 +254,15 @@ const BillingCheckout = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <div style={{ display: "flex", flexDirection: 'column' }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <Row gutter={40}>
                 <Col span={24}>
                   <Form.Item
                     name="paymentId"
                     label={
-                      <span className="label-title">Phương thức thanh toán</span>
+                      <span className="label-title">
+                        Phương thức thanh toán
+                      </span>
                     }
                     rules={[
                       {
@@ -268,7 +272,9 @@ const BillingCheckout = () => {
                     ]}
                   >
                     <Radio.Group>
-                      <Radio value={1} style={{ marginBottom: 20 }}>Thanh toán sau giao hàng</Radio>
+                      <Radio value={1} style={{ marginBottom: 20 }}>
+                        Thanh toán sau giao hàng
+                      </Radio>
                       <Radio value={2}>Thanh toán bằng paypal</Radio>
                     </Radio.Group>
                   </Form.Item>
@@ -279,7 +285,9 @@ const BillingCheckout = () => {
                   <Form.Item
                     name="shipmentId"
                     label={
-                      <span className="label-title">Phương thức vận chuyển</span>
+                      <span className="label-title">
+                        Phương thức vận chuyển
+                      </span>
                     }
                     rules={[
                       {
@@ -289,7 +297,9 @@ const BillingCheckout = () => {
                     ]}
                   >
                     <Radio.Group>
-                      <Radio value={1} style={{ marginBottom: 20 }}>Giao hàng nhanh</Radio>
+                      <Radio value={1} style={{ marginBottom: 20 }}>
+                        Giao hàng nhanh
+                      </Radio>
                       <Radio value={2}>Vận chuyển miễn phí</Radio>
                     </Radio.Group>
                   </Form.Item>
@@ -325,10 +335,14 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="province"
-                  label={<span style ={{color:"#000"}}className="label-title">Tỉnh</span>}
+                  label={
+                    <span style={{ color: "#000" }} className="label-title">
+                      Tỉnh
+                    </span>
+                  }
                 >
                   <Select
-                    style ={{color:"#000"}}
+                    style={{ color: "#000" }}
                     placeholder="Tỉnh"
                     showArrow={false}
                     bordered={false}
@@ -342,10 +356,14 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="district"
-                  label={<span style ={{color:"#000"}} className="label-title">Quận huyện</span>}
+                  label={
+                    <span style={{ color: "#000" }} className="label-title">
+                      Quận huyện
+                    </span>
+                  }
                 >
                   <Select
-                    style ={{color:"#000"}}
+                    style={{ color: "#000" }}
                     placeholder="Quận huyện"
                     showArrow={false}
                     bordered={false}
@@ -359,10 +377,14 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="ward"
-                  label={<span style ={{color:"#000"}} className="label-title">Xã phường</span>}
+                  label={
+                    <span style={{ color: "#000" }} className="label-title">
+                      Xã phường
+                    </span>
+                  }
                 >
                   <Select
-                    style ={{color:"#000"}}
+                    style={{ color: "#000" }}
                     placeholder="Xã phường"
                     showArrow={false}
                     bordered={false}
@@ -375,11 +397,15 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="address"
-                  label={<span style ={{color:"#000"}} className="label-title">Địa chỉ</span>}
+                  label={
+                    <span style={{ color: "#000" }} className="label-title">
+                      Địa chỉ
+                    </span>
+                  }
                 >
                   <Input
                     color="#000"
-                    style ={{color:"#000"}}
+                    style={{ color: "#000" }}
                     bordered={false}
                     allowClear
                     // className="custom-inp"
@@ -390,7 +416,11 @@ const BillingCheckout = () => {
               <Col span={12}>
                 <Form.Item
                   name="service"
-                  label={<span style ={{color:"#000"}} className="label-title">Dịch vụ khả dụng</span>}
+                  label={
+                    <span style={{ color: "#000" }} className="label-title">
+                      Dịch vụ khả dụng
+                    </span>
+                  }
                 >
                   <Input className="custom-inp" bordered={false} allowClear />
                 </Form.Item>
@@ -407,7 +437,7 @@ const BillingCheckout = () => {
                         type="link"
                         className="custom-btn"
                         htmlType="submit"
-                      // onClick={handleUpdateAddress}
+                        // onClick={handleUpdateAddress}
                       >
                         Cập nhật địa chỉ
                       </Button>
@@ -422,7 +452,9 @@ const BillingCheckout = () => {
                       >
                         <span>Tính gói cước</span>
                       </Button>
-                      <span style ={{color:"#000"}}>Cước: {dataCalculate?.total} VND</span>
+                      <span style={{ color: "#000" }}>
+                        Cước: {dataCalculate?.total} VND
+                      </span>
                     </div>
                   </div>
                 </Form.Item>
