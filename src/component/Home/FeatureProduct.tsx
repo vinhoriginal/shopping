@@ -116,7 +116,7 @@ const FeatureProduct = () => {
                   <div>
                     <img
                       onClick={() => navigate(`/detail/${item?.id}`)}
-                      src={`data:image/jpeg;base64,${item?.images[0]}`}
+                      src={item?.path[0]}
                       alt="image1"
                     />
                   </div>

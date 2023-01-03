@@ -100,9 +100,7 @@ const Detail = () => {
         <div className="details-products">
           <div>
             <img
-              src={`data:image/jpeg;base64,${
-                dataDetail?.images?.length ? dataDetail?.images[0] : ""
-              }`}
+              src={dataDetail?.path?.length ? dataDetail?.path[0] : ""}
               alt="img products"
             />
           </div>

@@ -195,7 +195,7 @@ const Products = () => {
             <div key={item.id}>
               <div>
                 <img
-                  src={`data:image/jpeg;base64,${item?.images[0]}`}
+                  src={item?.path[0]}
                   alt="item"
                   onClick={() => navigate(`/detail/${item.id}`)}
                   style={{ cursor: "pointer" }}

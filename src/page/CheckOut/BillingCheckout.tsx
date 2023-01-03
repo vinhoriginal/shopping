@@ -483,7 +483,7 @@ const BillingCheckout = () => {
               >
                 <div style={{ width: "100px", height: "100px" }}>
                   <img
-                    src={`data:image/jpeg;base64,${item?.product?.images[0]}`}
+                    src={item?.path[0]}
                     style={{ width: "100%", height: "100%" }}
                   />
                 </div>

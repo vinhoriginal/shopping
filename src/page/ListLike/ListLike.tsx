@@ -43,7 +43,7 @@ const ListLike = () => {
             }}
           >
             <img
-              src={`data:image/jpeg;base64,${record?.images[0]}`}
+              src={record?.path[0]}
               style={{ width: "100%", height: "100%" }}
               alt="asd"
             />

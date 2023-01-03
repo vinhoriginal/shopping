@@ -55,7 +55,7 @@ const CheckOut = () => {
             <div>
               <Avatar
                 shape="square"
-                src={`data:image/jpeg;base64,${record?.product?.images[0]}`}
+                src={record?.path[0]}
                 size={70}
               />
             </div>
